@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>1.3 ¿La IA local es menos capaz o más lenta? | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5,150,105,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha1/modulo-1-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha1/modulo-1-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha1/modulo-1-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalación</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avanzado</span></a>
+<button aria-label="Cambiar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Barra de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Fundamentos</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🐘 ¿Lo local es más torpe/lento? El elefante en la habitación</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Hay un elefante en medio de la sala y nadie quiere enfrentarlo: <strong class="text-neutral-100">sí, hoy muchos modelos locales son más sencillos y más lentos que los mejores de la nube.</strong> Este módulo no esquiva el tema: aborda la objeción de frente, muestra por qué la brecha se está reduciendo rápidamente y enseña a ajustar las expectativas según el caso de uso. Primero, honestidad; después, entusiasmo.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Teoría</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. La objeción honesta</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. La distancia está disminuyendo</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. El triángulo de trade-offs</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. El ciclo de hardware cambió</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Cómo leer benchmarks</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Calibrar según el caso de uso</a></li>
+</ol>
+<div aria-label="Progreso del módulo 1.3" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:1-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-emerald-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="1-3" data-inema-topic="modulo-1-3#topico-1" data-inema-track="1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🗣️ La objeción honesta</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t1-p1">Enfrentemos al elefante antes de cualquier entusiasmo: <strong class="text-emerald-400">si tomas el modelo abierto más potente que cabe en una laptop y lo comparas con lo mejor de la nube (Opus, GPT o Gemini, en su mejor versión), el modelo en la nube aún gana en razonamiento difícil y responde más rápido.</strong> Negarlo sería vender una ilusión. La buena noticia es que esta frase tiene tres asteriscos que lo cambian todo.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">⚖️</span> La comparación justa (y la injusta)</h3>
+<p class="text-neutral-300 text-sm mb-3">Casi toda decepción con la IA local nace de una comparación injusta: ejecutar un modelo de 7B en una laptop y esperar que piense como un modelo de frontera que ocupa cientos de gigabytes en un centro de datos. Son pesos de categorías diferentes.</p>
+<p class="text-neutral-300 text-sm">La pregunta correcta no es «¿lo local iguala a lo mejor?», sino <strong class="text-blue-300">"¿lo local es suficientemente bueno para ESTA tarea?"</strong>. Para la mayoría de las tareas cotidianas, la respuesta sorprende.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dónde lo local todavía se queda corto</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Razonamiento en varias etapas para problemas realmente difíciles</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Velocidad bruta (tokens/s) en hardware modesto</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conocimiento enciclopédico del mundo en el menor tamaño</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Código complejo de producción en una sola pasada</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Dónde lo local ya cumple</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Resumir, reescribir, traducir, clasificar texto</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Borradores, correos electrónicos, lluvia de ideas, extracción de datos</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Embeddings y búsqueda semántica (RAG) sobre tus archivos</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tareas repetitivas en volumen: donde gana el 24/7 ilimitado</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">No tomes «tonto» y «lento» como verdades fijas: son <strong>relativos al tamaño del modelo, la cuantización y tu hardware</strong>. Un mismo modelo puede parecer lento en una laptop y volar en una GPU. Espera a probarlo en tu máquina y con tu tarea antes de juzgarlo.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Comparación</div><div class="text-xs text-neutral-400">justa por tarea</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">"Tonto"</div><div class="text-xs text-neutral-400">es relativo</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Tope en la nube</div><div class="text-xs text-neutral-400">sigue liderando el pico</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Lo bastante bueno</div><div class="text-xs text-neutral-400">cubre la mayoría</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📈 ...pero la distancia se está acortando rápido</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t2-p1">El elefante se está encogiendo. Lo que hace un año era "frontera cerrada" hoy aparece en un <strong class="text-emerald-400">modelo abierto que descargas gratis</strong>. Familias como <strong class="text-emerald-400">Qwen</strong> (Alibaba), <strong class="text-emerald-400">Llama</strong> (Meta), <strong class="text-emerald-400">DeepSeek</strong>, <strong class="text-emerald-400">GLM</strong> (Zhipu/Z.ai) y <strong class="text-emerald-400">Gemma</strong> (Google) mejoran su calidad con cada generación, y la distancia respecto al nivel más alto de los modelos cerrados se reduce mes a mes.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Lo que era la frontera se vuelve abierto</h4>
+<p class="text-neutral-300 text-sm">Capacidades que solo existían en los modelos pagos de gama alta (razonamiento paso a paso, contexto largo, código) llegan a versiones abiertas — DeepSeek-V3/R1, Qwen3, Llama 3.x, GLM-4.x — meses después, no años.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Los pequeños se vuelven más listos</h4>
+<p class="text-neutral-300 text-sm">Los modelos de 3B a 8B (Gemma, Qwen, Phi) hoy hacen lo que hace poco requería 30B. "Pequeño" dejó de ser sinónimo de "inútil".</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">"Lo suficientemente bueno" ya llegó</h4>
+<p class="text-neutral-300 text-sm">Para la mayoría de las tareas reales, la diferencia con los modelos pagos de primer nivel se volvió imperceptible; y lo que les falta en inteligencia máxima, los modelos locales lo compensan con privacidad, costo y disponibilidad.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">La foto de hoy no es la película completa. Un modelo que te decepcionó hace seis meses puede haber recibido una versión nueva mucho mejor. Vale la pena <strong>volver a probar periódicamente</strong> — la curva de mejora de los modelos abiertos es pronunciada y continua.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Brecha</div><div class="text-xs text-neutral-400">bajando mes a mes</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Abiertos</div><div class="text-xs text-neutral-400">Qwen, Llama, GLM</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Pequeños</div><div class="text-xs text-neutral-400">cada vez más potentes</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Volver a probar</div><div class="text-xs text-neutral-400">la foto cambia rápido</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔺 El triángulo: inteligencia × velocidad × costo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t3-p1">Existe un triángulo de hierro en IA: <strong class="text-emerald-400">inteligencia, velocidad y costo</strong>. Rara vez llevas las tres al máximo al mismo tiempo; en la práctica, eliges dos. El detalle que cambia todo: <strong class="text-emerald-400">ejecutar localmente reescribe el vértice del costo</strong>, y eso cambia por completo la decisión.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Triángulo de trade-offs con tres vértices: inteligencia arriba, velocidad abajo a la izquierda y costo abajo a la derecha; tú eliges dos a la vez, y ejecutarlo localmente acerca el vértice del costo a cero" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m13-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m13-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m13-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+</defs>
+<rect fill="url(#m13-grid)" height="300" width="1000" x="0" y="0"></rect>
+<polygon fill="#0e2018" opacity="0.92" points="500,46 150,250 850,250" stroke="url(#m13-grad)" stroke-width="2.5"></polygon>
+<g filter="url(#m13-glow)">
+<circle cx="500" cy="46" fill="#34d399" r="9"></circle>
+<circle cx="150" cy="250" fill="#34d399" r="9"></circle>
+<circle cx="850" cy="250" fill="#34d399" r="9"></circle>
+</g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="500" y="30">Inteligencia</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="150" y="278">Velocidad</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="850" y="278">Costo bajo</text>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<text fill="#9fe6c8" text-anchor="middle" x="318" y="150">parte superior de la nube:</text>
+<text fill="#9fe6c8" text-anchor="middle" x="318" y="168">inteligente y rápido, $$$</text>
+<text fill="#9fe6c8" text-anchor="middle" x="682" y="150">local grande:</text>
+<text fill="#9fe6c8" text-anchor="middle" x="682" y="168">inteligente y barato, lento</text>
+<text fill="#9fe6c8" text-anchor="middle" x="500" y="244">local pequeño: rápido y barato, sencillo</text>
+</g>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="500" y="180">Elige 2</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Lee el triángulo así: cada lado conecta dos vértices que puedes maximizar juntos, y el tercero es a lo que renuncias. <strong class="text-neutral-200">Local no incumple la regla</strong>, pero reduce el costo a casi cero, así que queda presupuesto para alternar entre «rápido y simple» (modelo pequeño) e «inteligente y lento» (modelo grande) sin pagar un costo extra por uso.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Inteligente + rápido</div>
+<p class="text-neutral-400 text-sm">Sacrifica costo. Es el nivel más alto de la nube de pago: pagas por token y, a escala, eso pesa.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Inteligente + barato</div>
+<p class="text-neutral-400 text-sm">Sacrifica velocidad. Modelo local grande en hardware modesto: excelente resultado, pero lento.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Rápido + económico</div>
+<p class="text-neutral-400 text-sm">Sacrifica el pico de inteligencia. Modelo local pequeño: vuela, cuesta casi nada y resuelve lo trivial.</p>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔓</span> Por qué esto cambia la economía</h3>
+<p class="text-neutral-300 text-sm">Cuando el costo por uso llega a cero, las decisiones que antes eran costosas se vuelven triviales: ejecutar el modelo grande «por la noche, sin prisa» para tareas pesadas y el pequeño «al instante» para el resto. La nube te obliga a optimizar cada llamada; el modelo local te permite <strong>desperdiciar inteligencia gratis</strong> — y eso es una enorme libertad.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Triángulo</div><div class="text-xs text-neutral-400">elegir 2 de 3</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Inteligencia</div><div class="text-xs text-neutral-400">tamaño del modelo</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Velocidad</div><div class="text-xs text-neutral-400">hardware + tamaño</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Costo local</div><div class="text-xs text-neutral-400">casi cero</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🪜 El ciclo del hardware cambió</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t4-p1">Antes la regla era cruel: tu hardware quedaba obsoleto en 2-3 años y no había remedio. En IA local, <strong class="text-emerald-400">se invirtió el sentido</strong>. En vez de que solo envejezca el hardware, los <em>modelos</em> se vuelven más eficientes y hacen que una máquina de hace 5 años vuelva a ejecutar cosas útiles. Es una escalera de eficiencia que sube sola.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Cuantización"</strong> es reducir los pesos del modelo (de alta a baja precisión) para que quepa en menos memoria; pierdes un poquito de calidad y ganas mucho espacio. <strong>"Destilación"</strong> es entrenar un modelo pequeño para que imite a uno grande, heredando buena parte de su capacidad en un paquete liviano. Los dos hacen que el hardware antiguo vuelva a rendir.</p>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Escalera de eficiencia: un hardware antiguo a la izquierda sube peldaños de eficiencia —cuantización, modelos más pequeños y destilación— hasta volver a ejecutar tareas útiles en la parte superior derecha" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m13-step" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m13-stepglow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m13-stepgrid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m13-up" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+</defs>
+<rect fill="url(#m13-stepgrid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- degraus ascendentes -->
+<g fill="#0e2018" stroke="url(#m13-step)" stroke-width="2">
+<rect height="54" rx="10" width="150" x="60" y="214"></rect>
+<rect height="98" rx="10" width="150" x="270" y="170"></rect>
+<rect height="142" rx="10" width="150" x="480" y="126"></rect>
+<rect height="186" rx="10" width="150" x="690" y="82"></rect>
+</g>
+<!-- topo: roda de novo -->
+<g filter="url(#m13-stepglow)"><rect fill="#0e2018" height="44" rx="12" stroke="url(#m13-step)" stroke-width="2.5" width="250" x="690" y="30"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="815" y="58">Vuelve a ejecutar algo útil ✓</text>
+<!-- setas de subida -->
+<g fill="none" opacity="0.7" stroke="#34d399" stroke-width="2">
+<path d="M215,224 C245,224 245,196 268,196" marker-end="url(#m13-up)"></path>
+<path d="M425,180 C455,180 455,152 478,152" marker-end="url(#m13-up)"></path>
+<path d="M635,136 C665,136 665,100 688,100" marker-end="url(#m13-up)"></path>
+</g>
+<!-- rótulos dos degraus -->
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="135" y="238">Hardware</text>
+<text fill="#9fe6c8" font-size="11" x="135" y="255">de hace 5 años</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="345" y="200">+ Cuantización</text>
+<text fill="#9fe6c8" font-size="11" x="345" y="217">Q4/Q5: cabe en menos RAM</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="555" y="156">+ Modelos más pequeños</text>
+<text fill="#9fe6c8" font-size="11" x="555" y="173">Gemma, Qwen, Phi 3-8B</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="765" y="112">+ Destilación</text>
+<text fill="#9fe6c8" font-size="11" x="765" y="129">el pequeño imita al grande</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Lee la escala de izquierda a derecha: la misma <strong class="text-neutral-200">máquina antigua</strong> sube escalones de eficiencia —cuantización, modelos más pequeños, destilación— y llega hasta arriba <strong class="text-neutral-200">volviendo a ejecutar algo útil</strong>. Cada mejora de software es un escalón que ganas sin cambiar de hardware.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Ciclo anterior</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El hardware quedaba obsoleto en 2-3 años</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El software exigía cada vez MÁS de la máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La única salida: comprar una pieza nueva</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Ciclo de la IA local</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Los modelos se vuelven más eficientes con cada generación</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La misma máquina ejecuta modelos mejores con el tiempo</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Actualizas descargando un archivo, no cambiando una pieza</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Inversión</div><div class="text-xs text-neutral-400">el software te ayuda</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Cuantización</div><div class="text-xs text-neutral-400">cabe en menos RAM</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Destilación</div><div class="text-xs text-neutral-400">el pequeño imita al grande</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Hardware</div><div class="text-xs text-neutral-400">dura más</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📊 Benchmarks: cómo leerlos sin engañarte</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t5-p1">Toda tabla de "modelo X supera al modelo Y" sale de benchmarks. Ayudan a comparar, pero <strong class="text-emerald-400">un número atractivo en una tabla no garantiza que el modelo sea bueno para TU tarea</strong>. Saber leer benchmarks con escepticismo es lo que distingue a quienes eligen bien de quienes caen en el marketing.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Benchmark"</strong> es una prueba estandarizada que mide la capacidad de un modelo en una habilidad. Las más conocidas: <strong>MMLU</strong> (conocimiento general de opción múltiple), <strong>GPQA</strong> (preguntas científicas difíciles), <strong>HumanEval</strong> (escribir código), <strong>GSM8K</strong> (matemáticas). Cada uno se convierte en un porcentaje, y ahí está el peligro.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Trampas comunes</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Contaminación:</strong> el modelo ya vio las respuestas de la prueba durante el entrenamiento → calificación inflada</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Cherry-pick:</strong> solo muestran los benchmarks en los que ganan</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>0,5% de diferencia:</strong> ruido, no superioridad real</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Comparar cuantizaciones diferentes como si fueran el «mismo» modelo</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Cómo leer correctamente</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Usa el benchmark para <strong>filtrar candidatos</strong>, no para decidir</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>La prueba que importa es la <strong>tu</strong>: ejecútalo en tu tarea real</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Prefiere evaluaciones abiertas y comunitarias (arenas de votación a ciegas)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compara con la misma cuantización y el mismo prompt</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: prompt-padrão para comparar dois modelos -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Ejemplo práctico: tu «mini-benchmark» personal</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> comparar dos modelos en la MISMA tarea, con el MISMO prompt — el único benchmark que realmente cuenta es el de tu tarea. (Lo haces en la Ruta 3; aquí solo es para ver la idea.)</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># abre el modelo A y pega el prompt predeterminado</div>
+<div>ollama run qwen2.5:7b</div>
+<div class="text-neutral-500 mt-2"># después abre el modelo B y pega el MISMO prompt</div>
+<div>ollama run llama3.1:8b</div>
+<div class="text-neutral-500 mt-3"># prompt predeterminado (idéntico en ambos):</div>
+<div class="mt-1">Resume el texto siguiente en exactamente 3 viñetas,</div>
+<div>cada uno con un máximo de 15 palabras, sin inventar hechos:</div>
+<div>"""</div>
+<div>&lt;pega aquí un texto tuyo de ~300 palabras&gt;</div>
+<div>"""</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> compáralos lado a lado: ¿cuál siguió la regla de los 3 bullets y el límite de palabras? ¿Cuál inventó un hecho? ¿Cuál fue más rápido? <span class="font-mono text-emerald-400">Ese</span> es el resultado lo que decide, no el porcentaje de la tabla.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Benchmark</div><div class="text-xs text-neutral-400">prueba estandarizada</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Contaminación</div><div class="text-xs text-neutral-400">viste la respuesta correcta</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Cherry-pick</div><div class="text-xs text-neutral-400">solo lo que gana</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Tu prueba</div><div class="text-xs text-neutral-400">es lo que cuenta</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎚️ Ajustando las expectativas según el caso de uso</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t6-p1">Aquí está la síntesis práctica del módulo: <strong class="text-emerald-400">la pregunta no es «¿lo local es bueno?», sino «¿lo local es bueno para ESTO?»</strong>. Algunas tareas funcionan muy bien hoy en tu máquina; otras todavía requieren lo mejor de la nube. La tabla de abajo es tu mapa de calibración.</p>
+<!-- TABELA MONO: tarefa → viável local? -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🗂️</span> Tarea → ¿viable en local?</h3>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto">
+<div class="text-neutral-500">tarea                         ¿viable localmente?   rango sugerido</div>
+<div class="text-neutral-500">────────────────────────────────────────────────────────────</div>
+<div>resumir / reescribir texto     <span class="text-emerald-400">sí ✓✓✓</span>       3-8B Q4</div>
+<div>traducir                       <span class="text-emerald-400">sí ✓✓✓</span>       7-14B Q4</div>
+<div>clasificar / extraer datos    <span class="text-emerald-400">sí ✓✓✓</span>       3-8B Q4</div>
+<div>embeddings / búsqueda (RAG)       <span class="text-emerald-400">sí ✓✓✓</span>       modelo de embeddings</div>
+<div>chat general / borradores         <span class="text-emerald-400">sí ✓✓</span>        7-14B Q4</div>
+<div>código simple / scripts       <span class="text-emerald-400">sí ✓✓</span>        14-32B Q4</div>
+<div>razonamiento matemático medio    <span class="text-yellow-400">depende ~</span>      32B+ o nube</div>
+<div>código complejo de producción    <span class="text-yellow-400">depende ~</span>      grande o en la nube</div>
+<div>investigación de vanguardia / SOTA       <span class="text-red-400">hoy no ✗</span>    parte superior de la nube</div>
+</div>
+<p class="text-neutral-500 text-xs mt-3">✓✓✓ excelente incluso con hardware modesto · ~ requiere un modelo grande/hardware potente · ✗ todavía es territorio de los modelos pagos de gama alta. (Rangos en miles de millones de parámetros; cuantización Q4 detallada en la Trilha 1.4 y 3.3.)</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Envíalo a lo local</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Todo lo privado y sensible (legal, salud, personal)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Todo lo que se ejecuta a gran escala / 24/7 (conviene que el costo sea cero)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Tareas «bien definidas»: resumen, clasificación, extracción</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Por ahora, usa la nube</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Máximo absoluto de razonamiento ante un problema nuevo y difícil</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Uso poco frecuente y esporádico sin hardware adecuado</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Código de producción extenso que debe quedar bien a la primera</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">No es «local O nube»: es <strong>local por defecto, nube por excepción</strong>. Empieza todo en local; pasa a la nube solo cuando la tarea realmente requiera el máximo rendimiento. Con el tiempo, la columna "depende" se irá convirtiendo en "sí", porque los modelos mejoran y tu máquina no cambia.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-1-3#q1">
+<p class="font-medium mb-4">Autoevaluación (opcional): ¿cuál es la forma más honesta de evaluar si un modelo local te sirve?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Mirar el porcentaje de MMLU más alto en la tabla del fabricante y elegir</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Ejecutar TU tarea real con un prompt estándar y comparar los candidatos lado a lado</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Suponer que, por ser local, iguala a la nube en todo</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Conceptos clave</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Por tarea</div><div class="text-xs text-neutral-400">no en general</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Local predeterminado</div><div class="text-xs text-neutral-400">excepción en la nube</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Bien definido</div><div class="text-xs text-neutral-400">va a lo local</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">"Depende"</div><div class="text-xs text-neutral-400">se convierte en "sí" con el tiempo</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">El elefante es real — y relativo</strong><span class="text-neutral-400"> — sí, la cima de la nube todavía lidera en rendimiento máximo; pero que sea «tonto/lento» depende del tamaño, la cuantización y el hardware.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">La distancia está disminuyendo rápido</strong><span class="text-neutral-400"> — Qwen, Llama, DeepSeek, GLM y Gemma ofrecen al código abierto lo que antes era de frontera.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">El triángulo y el ciclo cambiaron</strong><span class="text-neutral-400"> — lo local elimina el costo; el software eficiente hace que el hardware antiguo vuelva a rendir.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Calibra según el caso de uso</strong><span class="text-neutral-400"> — los benchmarks filtran; la prueba con TU tarea decide. Local por defecto, nube por excepción.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">1.4 — Anatomía de un LLM local</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-2.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-4.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-1-3#q1',{answer:1,explain:{0:'Cuidado — a tabela do fabricante sofre cherry-pick e contaminação. Número alto não garante que serve pra sua tarefa.',1:'Isso. O único benchmark que conta é o da SUA tarefa: mesmo prompt, candidatos lado a lado, você julga o resultado.',2:'Não. Hoje o topo da nuvem ainda lidera o pico de raciocínio; o local ganha em privacidade, custo e disponibilidade — por tarefa.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

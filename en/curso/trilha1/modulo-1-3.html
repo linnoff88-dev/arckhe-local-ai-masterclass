@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>1.3 Is local dumber/slower? | Local AI Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5,150,105,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha1/modulo-1-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha1/modulo-1-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha1/modulo-1-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Fundamentals</a><span>/</span>
+<span class="text-emerald-400">Module 1.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MODULE 1.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🐘 Is local dumber/slower? The elephant in the room</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">There’s an elephant in the room and no one wants to face it: <strong class="text-neutral-100">yes, many local models today are simpler and slower than the top cloud models.</strong> This module doesn't shy away from that—it addresses the objection head-on, shows why the gap is closing quickly, and teaches you to set expectations for each use case. Honesty first; enthusiasm second.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Basic</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Theory</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. The honest objection</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. The gap is narrowing</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. The trade-off triangle</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. The hardware cycle has changed</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. How to read benchmarks</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Calibrating for each use case</a></li>
+</ol>
+<div aria-label="Module 1.3 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:1-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-emerald-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="1-3" data-inema-topic="modulo-1-3#topico-1" data-inema-track="1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🗣️ The honest objection</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t1-p1">Let's face the elephant before getting carried away: <strong class="text-emerald-400">if you take the strongest open model that fits on a laptop and compare it with the cloud’s top-of-the-line models (Opus, GPT, or Gemini at their best), the cloud model still wins at difficult reasoning—and responds faster.</strong> Denying this would be selling an illusion. The good news is that this statement has three asterisks that change everything.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">⚖️</span> The fair (and unfair) comparison</h3>
+<p class="text-neutral-300 text-sm mb-3">Almost every disappointment with local AI stems from an unfair comparison: running a 7B model on a laptop and expecting it to think like a frontier model that takes up hundreds of gigabytes in a data center. They belong to different categories of weights.</p>
+<p class="text-neutral-300 text-sm">The right question isn't "does local match the top-tier models?" — it's <strong class="text-blue-300">"is the local model good enough for THIS task?"</strong>. For most everyday tasks, the answer is surprising.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Where local setups still fall short</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Multi-step reasoning for genuinely difficult problems</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Raw speed (tokens/s) on modest hardware</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Encyclopedic world knowledge in the smallest size</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Complex production code in one shot</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Where local already delivers</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Summarize, rewrite, translate, classify text</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Drafts, emails, brainstorming, data extraction</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Embeddings and semantic search (RAG) across your files</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Repetitive tasks at scale — where unlimited 24/7 access wins</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Don’t treat “dumb” and “slow” as fixed truths — they’re <strong>relative to the model size, quantization, and your hardware</strong>. The same model can seem sluggish on a laptop and fly on a GPU. Hold off on judging until you’ve tested it on your machine, with your task.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Comparison</div><div class="text-xs text-neutral-400">fair per task</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">"Dumb"</div><div class="text-xs text-neutral-400">is relative</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Cloud top tier</div><div class="text-xs text-neutral-400">still leads at the peak</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Good enough</div><div class="text-xs text-neutral-400">covers most cases</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📈 ...but the gap is closing fast</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t2-p1">The elephant is shrinking. What was "closed frontier" a year ago now appears in a <strong class="text-emerald-400">open model that you download for free</strong>. Families like <strong class="text-emerald-400">Qwen</strong> (Alibaba), <strong class="text-emerald-400">Llama</strong> (Meta), <strong class="text-emerald-400">DeepSeek</strong>, <strong class="text-emerald-400">GLM</strong> (Zhipu/Z.ai) and <strong class="text-emerald-400">Gemma</strong> (Google) improve in quality with each generation — and the gap with the closed-source leaders shrinks month by month.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">What used to be frontier becomes open</h4>
+<p class="text-neutral-300 text-sm">Capabilities that used to exist only at the top paid tier (step-by-step reasoning, long context, code) arrive in open versions—DeepSeek-V3/R1, Qwen3, Llama 3.x, GLM-4.x—months later, not years.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Small models getting smarter</h4>
+<p class="text-neutral-300 text-sm">Models from 3B to 8B (Gemma, Qwen, Phi) can now do what required 30B not long ago. "Small" is no longer synonymous with "useless."</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">"Good enough" has arrived</h4>
+<p class="text-neutral-300 text-sm">For most real-world tasks, the difference from the paid top tier has become imperceptible—and what it lacks in peak intelligence, it makes up for in privacy, cost, and availability.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Today's snapshot isn't the whole story. A model that disappointed you six months ago may have a much better new version. It's worth <strong>re-test periodically</strong> — the improvement curve for open models is steep and continuous.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Gap</div><div class="text-xs text-neutral-400">falling month by month</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Open</div><div class="text-xs text-neutral-400">Qwen, Llama, GLM</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Small</div><div class="text-xs text-neutral-400">increasingly powerful</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Retest</div><div class="text-xs text-neutral-400">the photo changes quickly</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔺 The triangle: intelligence × speed × cost</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t3-p1">There is a trilemma in AI: <strong class="text-emerald-400">intelligence, speed, and cost</strong>. You rarely get all three at their maximum at the same time — in practice, you choose two. The detail that changes the game: <strong class="text-emerald-400">running locally rewrites the cost equation</strong>, and that shifts the entire decision.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A trade-off triangle with three vertices: intelligence at the top, speed at the bottom left, and cost at the bottom right; you choose two at a time, and running locally moves the cost vertex close to zero" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m13-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m13-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m13-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+</defs>
+<rect fill="url(#m13-grid)" height="300" width="1000" x="0" y="0"></rect>
+<polygon fill="#0e2018" opacity="0.92" points="500,46 150,250 850,250" stroke="url(#m13-grad)" stroke-width="2.5"></polygon>
+<g filter="url(#m13-glow)">
+<circle cx="500" cy="46" fill="#34d399" r="9"></circle>
+<circle cx="150" cy="250" fill="#34d399" r="9"></circle>
+<circle cx="850" cy="250" fill="#34d399" r="9"></circle>
+</g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="500" y="30">Intelligence</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="150" y="278">Speed</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="850" y="278">Low cost</text>
+<g font-family="Inter,sans-serif" font-size="12.5">
+<text fill="#9fe6c8" text-anchor="middle" x="318" y="150">top of the cloud:</text>
+<text fill="#9fe6c8" text-anchor="middle" x="318" y="168">smart and fast, $$$</text>
+<text fill="#9fe6c8" text-anchor="middle" x="682" y="150">large local:</text>
+<text fill="#9fe6c8" text-anchor="middle" x="682" y="168">smart and cheap, slow</text>
+<text fill="#9fe6c8" text-anchor="middle" x="500" y="244">small local: fast and cheap, simple</text>
+</g>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="500" y="180">Choice 2</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read the triangle this way: each side connects two vertices that you can maximize together—and the third is what you give up. <strong class="text-neutral-200">Local doesn't break the rule</strong>, but brings the cost down to almost zero, leaving budget to switch between “fast and simple” (small model) and “smart and slow” (large model) without paying a usage toll.</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Smart + fast</div>
+<p class="text-neutral-400 text-sm">Sacrifices cost. It’s the top paid option in the cloud—you pay per token, and that adds up at scale.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Smart + cheap</div>
+<p class="text-neutral-400 text-sm">Sacrifices speed. Large local model on modest hardware: great results, but slow.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-emerald-400 font-bold mb-1">Fast + cheap</div>
+<p class="text-neutral-400 text-sm">Sacrifices peak intelligence. Small local model: fast, costs almost nothing, handles trivial tasks.</p>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔓</span> Why this changes the economics</h3>
+<p class="text-neutral-300 text-sm">When the cost per use drops to zero, decisions that used to be expensive become trivial: run the large model “at night, with no rush” for heavy tasks, and the small one “right away” for everything else. The cloud forces you to optimize every call; local lets you <strong>waste free intelligence</strong> — and that’s an enormous freedom.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Triangle</div><div class="text-xs text-neutral-400">choose 2 of 3</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Intelligence</div><div class="text-xs text-neutral-400">model size</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Speed</div><div class="text-xs text-neutral-400">hardware + size</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Local cost</div><div class="text-xs text-neutral-400">almost zero</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🪜 The hardware cycle has changed</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t4-p1">The old rule was brutal: your hardware became obsolete in 2-3 years, and there was nothing you could do. With local AI, <strong class="text-emerald-400">the meaning was reversed</strong>. Instead of only the hardware getting old, the <em>models</em> become more efficient — and make a 5-year-old machine useful again. It's an efficiency ladder that climbs on its own.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Quantization"</strong> is shrinking the model’s weights (from high to low precision) so they fit in less memory — you lose a tiny bit of quality and save a lot of space. <strong>"Distillation"</strong> is training a small model to imitate a large one, inheriting much of its capability in a lightweight package. These two are what make old hardware productive again.</p>
+</div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Efficiency ladder: older hardware on the left climbs efficiency steps—quantization, smaller models, and distillation—until it can run useful tasks again at the top right" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m13-step" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m13-stepglow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m13-stepgrid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m13-up" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+</defs>
+<rect fill="url(#m13-stepgrid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- degraus ascendentes -->
+<g fill="#0e2018" stroke="url(#m13-step)" stroke-width="2">
+<rect height="54" rx="10" width="150" x="60" y="214"></rect>
+<rect height="98" rx="10" width="150" x="270" y="170"></rect>
+<rect height="142" rx="10" width="150" x="480" y="126"></rect>
+<rect height="186" rx="10" width="150" x="690" y="82"></rect>
+</g>
+<!-- topo: roda de novo -->
+<g filter="url(#m13-stepglow)"><rect fill="#0e2018" height="44" rx="12" stroke="url(#m13-step)" stroke-width="2.5" width="250" x="690" y="30"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="815" y="58">Runs useful things again ✓</text>
+<!-- setas de subida -->
+<g fill="none" opacity="0.7" stroke="#34d399" stroke-width="2">
+<path d="M215,224 C245,224 245,196 268,196" marker-end="url(#m13-up)"></path>
+<path d="M425,180 C455,180 455,152 478,152" marker-end="url(#m13-up)"></path>
+<path d="M635,136 C665,136 665,100 688,100" marker-end="url(#m13-up)"></path>
+</g>
+<!-- rótulos dos degraus -->
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="135" y="238">Hardware</text>
+<text fill="#9fe6c8" font-size="11" x="135" y="255">from 5 years ago</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="345" y="200">+ Quantization</text>
+<text fill="#9fe6c8" font-size="11" x="345" y="217">Q4/Q5: fits in less RAM</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="555" y="156">+ Smaller models</text>
+<text fill="#9fe6c8" font-size="11" x="555" y="173">Gemma, Qwen, Phi 3-8B</text>
+<text fill="#9fe6c8" font-size="13" font-weight="700" x="765" y="112">+ Distillation</text>
+<text fill="#9fe6c8" font-size="11" x="765" y="129">small imitates the large one</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read the ladder from left to right: the same <strong class="text-neutral-200">old machine</strong> climbs the efficiency steps — quantization, smaller models, distillation — and makes it to the top <strong class="text-neutral-200">getting useful things running again</strong>. Every software improvement is a step up you gain without replacing your hardware.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Old cycle</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardware became obsolete in 2-3 years</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Software demanded more and more from the machine</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Only option: buy a new component</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ The local AI cycle</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Models get more efficient with each generation</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>The same machine runs better models over time</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>You update by downloading a file, not swapping out a component</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Inversion</div><div class="text-xs text-neutral-400">software helps you</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Quantization</div><div class="text-xs text-neutral-400">fits in less RAM</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Distillation</div><div class="text-xs text-neutral-400">small imitates large</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Hardware</div><div class="text-xs text-neutral-400">lasts longer</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📊 Benchmarks: how to read them without being misled</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t5-p1">Every “model X beats model Y” spreadsheet comes from benchmarks. They help you compare, but <strong class="text-emerald-400">a nice-looking number in a table doesn't guarantee the model is good at YOUR task</strong>. Knowing how to read benchmarks skeptically is what separates people who choose well from those who fall for marketing.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Benchmark"</strong> is a standardized test that measures a model’s ability in a particular skill. The well-known ones: <strong>MMLU</strong> (general knowledge in multiple choice), <strong>GPQA</strong> (difficult scientific questions), <strong>HumanEval</strong> (writing code), <strong>GSM8K</strong> (mathematics). Each becomes a percentage—and that’s where the danger lies.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Common pitfalls</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Contamination:</strong> the model has already seen the test answers during training → inflated score</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Cherry-pick:</strong> show only the benchmarks where they win</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>0.5% difference:</strong> noise, not real superiority</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compare different quantizations as if they were the “same” model</span></li>
+</ul>
+</div>
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ How to read correctly</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Use the benchmark to <strong>filter candidates</strong>, not to decide</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>The test that matters is the <strong>your</strong>: run it on your real task</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Prefer open, community-driven evaluations (blind-voting arenas)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Compare using the same quantization and the same prompt</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: prompt-padrão para comparar dois modelos -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: your personal "mini-benchmark"</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> compare two models on the SAME task, with the SAME prompt — the only benchmark that really matters is the one for your task. (You’ll run this in Track 3; here, it’s just to get the idea.)</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Open model A and paste the default prompt</div>
+<div>ollama run qwen2.5:7b</div>
+<div class="text-neutral-500 mt-2"># then open model B and paste the SAME prompt</div>
+<div>ollama run llama3.1:8b</div>
+<div class="text-neutral-500 mt-3"># default prompt (identical in both):</div>
+<div class="mt-1">Summarize the text below in exactly 3 bullets,</div>
+<div>each with no more than 15 words, without making up facts:</div>
+<div>"""</div>
+<div>&lt;paste a text of your own here, ~300 words&gt;</div>
+<div>"""</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> compare them side by side — which followed the rule of 3 bullets and the word limit? Which made up a fact? Which was faster? <span class="font-mono text-emerald-400">This</span> is the result that decides, not the percentage in the table.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Benchmark</div><div class="text-xs text-neutral-400">standardized test</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Contamination</div><div class="text-xs text-neutral-400">saw the answer key</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Cherry-pick</div><div class="text-xs text-neutral-400">only what wins</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Your test</div><div class="text-xs text-neutral-400">is what matters</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🎚️ Setting expectations by use case</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-3-t6-p1">Here’s the practical summary of the module: <strong class="text-emerald-400">the question isn't "is local good?" It's "is local good for THIS?"</strong>. Some tasks run great on your machine today; others still need top-tier cloud resources. The table below is your calibration map.</p>
+<!-- TABELA MONO: tarefa → viável local? -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-3 flex items-center"><span class="mr-2">🗂️</span> Task → feasible to run locally?</h3>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto">
+<div class="text-neutral-500">task                         locally feasible?   suggested range</div>
+<div class="text-neutral-500">────────────────────────────────────────────────────────────</div>
+<div>summarize / rewrite text     <span class="text-emerald-400">yes ✓✓✓</span>       3-8B Q4</div>
+<div>translate                       <span class="text-emerald-400">yes ✓✓✓</span>       7-14B Q4</div>
+<div>classify / extract data    <span class="text-emerald-400">yes ✓✓✓</span>       3-8B Q4</div>
+<div>embeddings / search (RAG)       <span class="text-emerald-400">yes ✓✓✓</span>       embedding model</div>
+<div>general chat / drafts         <span class="text-emerald-400">yes ✓✓</span>        7-14B Q4</div>
+<div>simple code / scripts       <span class="text-emerald-400">yes ✓✓</span>        14-32B Q4</div>
+<div>medium mathematical reasoning    <span class="text-yellow-400">depends ~</span>      32B+ or cloud</div>
+<div>complex production code    <span class="text-yellow-400">depends ~</span>      large or cloud</div>
+<div>cutting-edge research / SOTA       <span class="text-red-400">not today ✗</span>    top of the cloud</div>
+</div>
+<p class="text-neutral-500 text-xs mt-3">✓✓✓ great even with modest hardware · ~ requires a large model/strong hardware · ✗ still the territory of the paid top tier. (Ranges in billions of parameters; Q4 quantization detailed in Tracks 1.4 and 3.3.)</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Send it to local</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Everything private and sensitive (legal, health, personal)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Everything that runs at scale / 24/7 (zero cost wins)</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>“Well-defined” tasks: summarization, classification, extraction</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ For now, use the cloud</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Absolute peak reasoning on a new, difficult problem</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rare, occasional use without suitable hardware</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Large production code that needs to be right the first time</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">It’s not “local OR cloud” — it’s <strong>local by default, cloud by exception</strong>. Start everything locally; move to the cloud only when the task truly requires peak performance. Over time, the "depends" column will turn into "yes"—because models improve and your machine stays the same.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-1-3#q1">
+<p class="font-medium mb-4">Self-check (optional): what's the most honest way to evaluate whether a local model works for you?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Look for the highest MMLU percentage in the manufacturer’s table and choose that model</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Run YOUR actual task with a standard prompt and compare candidates side by side</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Assume that because it’s local, it matches the cloud’s top models at everything</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-5 mb-6">
+<p class="text-sm font-semibold text-neutral-200 mb-3">Key concepts</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">By task</div><div class="text-xs text-neutral-400">not in general</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Local default</div><div class="text-xs text-neutral-400">cloud exception</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Well-defined</div><div class="text-xs text-neutral-400">goes local</div></div>
+<div class="bg-dark-900/40 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">"It depends"</div><div class="text-xs text-neutral-400">turns into "yes" over time</div></div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">The elephant is real — and relative</strong><span class="text-neutral-400"> — yes, the cloud’s top tier still leads in peak performance; but “dumb/slow” depends on size, quantization, and hardware.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">The gap is closing fast</strong><span class="text-neutral-400"> — Qwen, Llama, DeepSeek, GLM, and Gemma bring what was once frontier-level capability to open models.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">The triangle and the cycle have changed</strong><span class="text-neutral-400"> — local use eliminates the cost; efficient software makes old hardware useful again.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Calibrate for each use case</strong><span class="text-neutral-400"> — benchmarks narrow the field; testing YOUR task decides. Local by default, cloud by exception.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">1.4 — Anatomy of a local LLM</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-2.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-4.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-1-3#q1',{answer:1,explain:{0:'Cuidado — a tabela do fabricante sofre cherry-pick e contaminação. Número alto não garante que serve pra sua tarefa.',1:'Isso. O único benchmark que conta é o da SUA tarefa: mesmo prompt, candidatos lado a lado, você julga o resultado.',2:'Não. Hoje o topo da nuvem ainda lidera o pico de raciocínio; o local ganha em privacidade, custo e disponibilidade — por tarefa.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

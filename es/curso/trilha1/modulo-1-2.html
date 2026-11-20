@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>1.2 Qué es realmente la IA local | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5,150,105,0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5,150,105,0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5,150,105,0.25); }
+    html:not(.dark) .hover\:bg-emerald-500\/30:hover { background-color: rgba(5,150,105,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha1/modulo-1-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha1/modulo-1-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha1/modulo-1-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha1/modulo-1-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-1-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalación</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avanzado</span></a>
+<button aria-label="Cambiar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Barra de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-emerald-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-emerald-400" href="index.html">Fundamentos</a><span>/</span>
+<span class="text-emerald-400">Módulo 1.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">MÓDULO 1.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧠 Qué es realmente la IA local</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">"Local" no es un detalle técnico: es una <strong class="text-neutral-100">cambio de quién manda</strong>. En este módulo abrimos la caja: dónde se ejecuta realmente el modelo, qué es concretamente un LLM y las tres ventajas que solo existen cuando la inteligencia está en tu máquina — además de hablar con honestidad de cuándo <em>no</em> usar localmente.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-emerald-400">Teoría</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Dónde se ejecuta el modelo</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Qué es un LLM</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Privacidad real</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Ilimitado: sin peaje</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. No se puede quitar</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Cuándo NO usar local</a></li>
+</ol>
+<div aria-label="Progreso del módulo 1.2" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:1-2" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-emerald-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="1-2" data-inema-topic="modulo-1-2#topico-1" data-inema-track="1" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🛰️ Dónde se ejecuta el modelo: nube vs local</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t1-p1">La diferencia entre la IA en la nube y la IA local cabe en una pregunta: <strong class="text-emerald-400">¿dónde se realiza el cómputo?</strong> En la nube, tu texto sale de tu equipo, viaja por Internet y se procesa en el centro de datos de otra empresa. En local, ese mismo proceso se ejecuta en tu propia computadora y nada tiene que salir de ahí.</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Comparación de dos caminos: en la nube, tu prompt sale de la máquina, viaja por internet hasta un centro de datos de terceros y la respuesta vuelve por el mismo camino; en local, el prompt va directamente a tu GPU o CPU dentro de la propia máquina, sin salir de ella y funcionando sin conexión." class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m12-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m12-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m12-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m12-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m12-ahr" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m12-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- rótulos de faixa -->
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="14" font-weight="700" x="24" y="34">☁️ EN LA NUBE — tus datos salen de la máquina</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700" x="24" y="196">🖥️ LOCAL — todo queda dentro de la máquina</text>
+<!-- faixa NUVEM -->
+<g fill="none" opacity="0.75" stroke="#f87171" stroke-width="2">
+<path d="M174,76 L330,76" marker-end="url(#m12-ahr)"></path>
+<path d="M474,76 L700,76" marker-end="url(#m12-ahr)"></path>
+<path d="M810,108 C810,150 150,150 110,108" marker-end="url(#m12-ahr)" stroke-dasharray="6 5"></path>
+</g>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="600" y="142">↩ la respuesta vuelve por el mismo camino</text>
+<g><rect fill="#2a1416" height="50" rx="11" stroke="#f87171" stroke-width="2" width="134" x="40" y="52"></rect><text fill="#fecaca" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="107" y="82">Tu prompt</text></g>
+<g><rect fill="#2a1416" height="50" rx="11" stroke="#f87171" stroke-width="2" width="144" x="330" y="52"></rect><text fill="#fecaca" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="402" y="76">Internet</text><text fill="#fca5a5" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="402" y="92">(datos en tránsito)</text></g>
+<g><rect fill="#2a1416" height="66" rx="13" stroke="#f87171" stroke-width="2.5" width="220" x="700" y="44"></rect><text fill="#fecaca" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="810" y="72">Centro de datos</text><text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="810" y="91">de otra empresa</text></g>
+<!-- faixa LOCAL -->
+<g><rect fill="none" height="78" rx="16" stroke="url(#m12-grad)" stroke-dasharray="7 5" stroke-width="2" width="470" x="40" y="206"></rect></g>
+<text fill="#9fe6c8" font-family="Inter,sans-serif" font-size="11" x="60" y="276">tu máquina · sin conexión · nada sale de aquí</text>
+<g fill="none" opacity="0.85" stroke="#34d399" stroke-width="2.5"><path d="M214,238 L300,238" marker-end="url(#m12-ah)"></path></g>
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="44" rx="11" stroke="url(#m12-grad)" stroke-width="2" width="150" x="64" y="216"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="139" y="243">Tu prompt</text>
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="56" rx="12" stroke="url(#m12-grad)" stroke-width="2.5" width="190" x="300" y="210"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="395" y="234">Tu GPU / CPU</text>
+<text fill="#9fe6c8" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="395" y="252">hace el cálculo aquí</text>
+<g fill="none" stroke="#34d399" stroke-width="2.5"><path d="M490,238 C560,238 560,238 620,238" marker-end="url(#m12-ah)"></path></g>
+<g filter="url(#m12-glow)"><rect fill="#0e2018" height="48" rx="11" stroke="url(#m12-grad)" stroke-width="2" width="300" x="620" y="214"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="770" y="243">Respuesta: sin red, sin terceros</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Lee el diagrama en dos franjas. Arriba (rojo), el camino de <strong class="text-neutral-200">nube</strong>: tu texto cruza internet hasta un servidor que no es tuyo y vuelve. Abajo (en verde), el recorrido <strong class="text-neutral-200">local</strong>: prompt → tu GPU/CPU → respuesta, todo dentro del recuadro punteado — funciona incluso sin internet.</p>
+<div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🔑</span> La idea central</h3>
+<p class="text-neutral-300 mb-4">Cambia el <em>dónde</em> y tú cambias <em>todo lo que se deriva de él</em>:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Local = sin tránsito:</strong> el prompt nunca atraviesa Internet, así que no hay copias en servidores ajenos.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Local = sin dueño externo:</strong> nadie entre tú y el modelo para cobrar, registrar o bloquear.</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400 mt-1">•</span><span><strong>Local = funciona sin conexión:</strong> si se cae internet, la inteligencia sigue funcionando.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Nube</div><div class="text-xs text-neutral-400">la cuenta sale de casa</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Local</div><div class="text-xs text-neutral-400">la cuenta se queda en casa</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Tránsito</div><div class="text-xs text-neutral-400">solo en la nube</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin conexión</div><div class="text-xs text-neutral-400">solo lo local</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📦 Qué es un LLM, en concreto</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t2-p1">Antes de “ejecutar en local”, conviene desmitificar qué es eso que se ejecuta. Un LLM no es magia ni un cerebro: en la práctica, es <strong class="text-emerald-400">un archivo grande de números + un programa que lee texto y predice el siguiente fragmento</strong>. Saber esto elimina el miedo y explica por qué cabe (o no) en tu máquina.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm mb-2"><strong>"LLM"</strong> (Large Language Model) es el modelo de IA que funciona detrás de ChatGPT y similares. Lo forman dos partes:</p>
+<ul class="space-y-1.5 text-neutral-300 text-sm">
+<li><strong class="text-primary">Pesos:</strong> un archivo enorme de números (los «parámetros») que guardan lo que aprendió el modelo. Eso es lo que descargas.</li>
+<li><strong class="text-primary">Inferencia:</strong> el acto de <em>usar</em> los pesos para generar una respuesta: la «cuenta» que hace tu GPU/CPU por cada palabra. (Entrenar es otra cosa, mucho más cara; tú solo haces inferencia.)</li>
+<li><strong class="text-primary">Token:</strong> el fragmento de texto que el modelo manipula; suele ser ~una sílaba o un fragmento de palabra. El modelo lee tokens y predice el siguiente, uno a la vez.</li>
+</ul>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed">En esencia, generar texto es repetir un único paso, token a token:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Lee lo que ya existe</h4>
+<p class="text-neutral-300 text-sm">El modelo recibe tu prompt dividido en tokens y "mira" todos a la vez.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Predice el siguiente token</h4>
+<p class="text-neutral-300 text-sm">Con los pesos, calcula qué token tiene más probabilidades de aparecer a continuación. Esto es la inferencia: la parte que más exige a tu máquina.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Repite hasta terminar</h4>
+<p class="text-neutral-300 text-sm">Agrega el token generado y vuelve a empezar. Token tras token, nace la respuesta. Por eso el texto "se va escribiendo" en la pantalla.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-base font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">✂️</span> Cómo el texto se convierte en tokens</h3>
+<p class="text-neutral-400 text-sm mb-3">La frase de abajo, dividida en tokens (cada <span class="text-emerald-400">|</span> es una frontera aproximada):</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto">
+<div class="text-neutral-500"># texto original</div>
+<div>La IA local es soberanía.</div>
+<div class="text-neutral-500 mt-2"># en tokens (aprox.)</div>
+<div>IA<span class="text-emerald-400">|</span> local<span class="text-emerald-400">|</span> é<span class="text-emerald-400">|</span> sobrio<span class="text-emerald-400">|</span>ania<span class="text-emerald-400">|</span>.</div>
+</div>
+<p class="text-neutral-400 text-sm mt-3">Regla práctica: <strong class="text-neutral-200">~0,75 palabra por token</strong> en portugués. Recuérdalo — la "ventana de contexto" y el costo de memoria se miden en tokens (tema del módulo 1.4).</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Pesos</div><div class="text-xs text-neutral-400">el archivo aprendido</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Inferencia</div><div class="text-xs text-neutral-400">usar los pesos</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Token</div><div class="text-xs text-neutral-400">fragmento de texto</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Bucle</div><div class="text-xs text-neutral-400">predecir y repetir</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔒 Privacidad real</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t3-p1">La primera de las tres ventajas del entorno local es la más concreta: <strong class="text-emerald-400">tus prompts y respuestas nunca salen de la máquina</strong>. No hay una copia en un servidor de terceros, no hay registros de conversaciones que no controles ni políticas de uso de datos más allá de las tuyas. Para algunos trabajos, esto deja de ser una comodidad y se vuelve un requisito.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Local</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>El texto queda en el disco y en la memoria de tu máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ningún registro de conversaciones en un servidor ajeno</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Decides qué guardar y qué borrar</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Nada se usa para entrenar el modelo de otra empresa</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Solo nube</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El texto se transmite y es procesado por terceros</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los registros y la retención siguen la política <em>de ellos</em></span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los datos pueden alimentar el entrenamiento, según los términos</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Una filtración del proveedor expone lo que enviaste</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">⚖️</span> Cuándo esto importa de verdad</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Legal:</strong> contratos, piezas, datos de clientes protegidos por secreto profesional.</li>
+<li><strong>Salud:</strong> historias clínicas, exámenes, cualquier dato del paciente.</li>
+<li><strong>Personal y financiero:</strong> diario, contraseñas en texto plano, extractos, secretos comerciales.</li>
+<li><strong>Código propietario:</strong> la base de tu empresa no debería salir a un endpoint que no controlas.</li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">La privacidad no es «todo o nada». El patrón saludable: <strong>lo sensible se ejecuta localmente</strong>, lo trivial puede ir a la nube. La idea de usarlo localmente es que tú <em>poder</em> elegir — en lugar de enviar todo afuera por falta de alternativas.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin tráfico</div><div class="text-xs text-neutral-400">nada sale</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin registros ajenos</div><div class="text-xs text-neutral-400">tú controlas</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin entrenamiento</div><div class="text-xs text-neutral-400">tus datos son tuyos</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Tú eliges</div><div class="text-xs text-neutral-400">caso por caso</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">♾️ Ilimitado: sin peaje por prompt</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t4-p1">La segunda ventaja cambia tu economía. En la nube pagas <strong class="text-emerald-400">por token</strong> — cada llamada tiene un medidor en marcha. Localmente, después del hardware, el costo marginal de un prompt más es básicamente <strong class="text-emerald-400">electricidad</strong>. Esto parece un detalle, pero desbloquea una forma completamente nueva de usar la IA.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Local (costo fijo)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Ejecutarlo todo el día no cambia la factura por llamada</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Procesar 10 mil elementos por lotes es viable</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Experimentar sin miedo a «gastar crédito»</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Los agentes 24/7 se vuelven posibles (Ruta 4)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Nube (costo por uso)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cada token tiene un costo de entrada y salida</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El uso continuo se convierte en una factura que se dispara</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Te autocensuras para no gastar</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los límites de solicitudes interrumpen el batch a mitad de camino</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-emerald-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Prueba: un lote que en la nube te haría pensarlo dos veces</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> resumir 50 líneas de un archivo, una por una, sin mirar ningún medidor. (Funciona después de la Trilha 3, con Ollama instalado.)</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># para cada línea de textos.txt, pide un resumen de 1 frase</div>
+<div>while IFS= read -r linha; do</div>
+<div>  ollama run qwen2.5:7b "Resume en una frase: $linha"</div>
+<div>done &lt; textos.txt</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> procesa las 50 líneas en secuencia. La única "cuenta" que sube es la de tu medidor de electricidad — no se consumió ningún crédito de API. Este es exactamente el patrón que sustenta los agentes de la Ruta 4.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">"Ilimitado" está dentro de los límites de tu hardware: una máquina ejecuta <em>un</em> modelo a cierta velocidad. No pagas por token, pero pagas por <strong>tiempo y energía</strong>. La ventaja es que el costo es predecible y no aumenta con cada llamada.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Costo</div><div class="text-xs text-neutral-400">fijo, no por token</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Lote</div><div class="text-xs text-neutral-400">sin culpa</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">24/7</div><div class="text-xs text-neutral-400">se vuelve viable</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Límite</div><div class="text-xs text-neutral-400">es el hardware</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🛡️ No te lo pueden quitar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t5-p1">La tercera ventaja es la más subestimada: el modelo que está en tu disco <strong class="text-emerald-400">no desaparece</strong>. Una vez descargado, no depende de una suscripción activa, de que el proveedor siga existiendo, de que tu región esté habilitada ni de un precio que podría duplicarse mañana. La inteligencia se convierte en un bien tuyo.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Es tuyo, se queda</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sin suscripción para cortar el acceso</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sin bloqueo por país o región</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Sin que te sorprenda un cambio de precio o de política</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Funciona incluso si el proveedor desaparece del mapa</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Prestado, puede irse</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cuenta suspendida = cero acceso, sin aviso</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El modelo queda "retirado" y te quedas sin él</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El precio sube y el presupuesto no alcanza</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El bloqueo regional te deja fuera</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🤝</span> La parte sincera: el poder trae responsabilidad</h3>
+<p class="text-neutral-300 text-sm mb-3">La soberanía no es solo una ventaja. Cuando la inteligencia es tuya, el mantenimiento también lo es:</p>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Tu uptime:</strong> si tu máquina se apaga, el "servicio" se cae: no hay soporte al que llamar.</li>
+<li><strong>La seguridad es tuya:</strong> mantener seguro el lab (red, acceso) es tu tarea: tema de la Trilha 2.</li>
+<li><strong>La actualización es tuya:</strong> descargar mejores modelos cuando salgan depende de ti.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Resiliente</div><div class="text-xs text-neutral-400">no desaparece</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin región</div><div class="text-xs text-neutral-400">no bloquea</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sin suscripción</div><div class="text-xs text-neutral-400">es tuyo</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Responsable</div><div class="text-xs text-neutral-400">tú te encargas</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-1-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧭 Cuándo NO usar modelos locales</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-2-t6-p1">La honestidad cierra el módulo. El modelo local es potente, pero no es la única respuesta para todo. Hay casos en los que la nube todavía gana, y reconocerlo es lo que distingue la soberanía madura del dogma. Usa este flujo sencillo para decidir en cada caso:</p>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Flujo de decisión: empieza con una tarea; si los datos son sensibles o el uso es intenso y continuo, prefiere el uso local; si necesitas el máximo nivel de inteligencia, no tienes hardware o el uso es ocasional, prefiere la nube." class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m12d-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="m12d-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m12d-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#10b981" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m12d-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#34d399"></path></marker>
+<marker id="m12d-ahr" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#f87171"></path></marker>
+</defs>
+<rect fill="url(#m12d-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- início -->
+<g filter="url(#m12d-glow)"><rect fill="#0e2018" height="60" rx="13" stroke="url(#m12d-grad)" stroke-width="2.5" width="150" x="36" y="100"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="111" y="126">Tu tarea</text>
+<text fill="#9fe6c8" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="111" y="145">¿por dónde empezar?</text>
+<!-- decisão -->
+<g><path d="M430,130 L320,70 L430,130 L320,190 L430,130 L540,70 L430,130 L540,190 Z" fill="none"></path></g>
+<g filter="url(#m12d-glow)"><path d="M430,72 L548,130 L430,188 L312,130 Z" fill="#10221c" stroke="url(#m12d-grad)" stroke-width="2.5"></path></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="430" y="122">Sensible</text>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="430" y="140">¿o intenso?</text>
+<g fill="none" stroke="#34d399" stroke-width="2.5"><path d="M186,130 L308,130" marker-end="url(#m12d-ah)"></path></g>
+<!-- ramo SIM -> local -->
+<g fill="none" stroke="#34d399" stroke-width="2.5"><path d="M500,96 C620,60 700,60 760,60" marker-end="url(#m12d-ah)"></path></g>
+<text fill="#9fe6c8" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="615" y="48">SÍ</text>
+<g filter="url(#m12d-glow)"><rect fill="#0e2018" height="58" rx="13" stroke="url(#m12d-grad)" stroke-width="2.5" width="206" x="760" y="32"></rect></g>
+<text fill="#34d399" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="863" y="58">→ Prefiere LOCAL</text>
+<text fill="#9fe6c8" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="863" y="76">privado · ilimitado · 24/7</text>
+<!-- ramo NÃO -> nuvem -->
+<g fill="none" stroke="#f87171" stroke-width="2.5"><path d="M500,164 C620,200 700,200 760,200" marker-end="url(#m12d-ahr)"></path></g>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="615" y="222">NO · necesitas lo más potente / sin hardware / uso ocasional</text>
+<g><rect fill="#2a1416" height="58" rx="13" stroke="#f87171" stroke-width="2.5" width="206" x="760" y="172"></rect></g>
+<text fill="#fecaca" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="863" y="198">→ Usa la NUBE</text>
+<text fill="#fca5a5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="863" y="216">o un híbrido de ambos</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">El flujo no es "siempre local". Es: <strong class="text-neutral-200">datos sensibles o uso intensivo → local</strong>; <strong class="text-neutral-200">máxima inteligencia, sin hardware o para uso esporádico → nube</strong> (o un híbrido). La soberanía consiste en tener la base local y usar la nube por elección.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">🚩</span> Señales de que la nube es la opción adecuada</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Máximo absoluto:</strong> la tarea exige el modelo más inteligente que existe hoy; no sirve nada menos.</li>
+<li><strong>Sin hardware:</strong> todavía no tienes una máquina para el tamaño de modelo que necesitas.</li>
+<li><strong>Uso poco frecuente:</strong> una pregunta de vez en cuando no justifica montar y mantener un lab.</li>
+</ul>
+</div>
+<!-- EXPERIMENTE (reflexão) -->
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-2 flex items-center"><span class="mr-2">📝</span> Prueba: el test de «¿mandaría esto afuera?»</h3>
+<p class="text-neutral-300 text-sm mb-3"><strong>Objetivo:</strong> sentir, en la práctica, dónde lo local es un requisito para ti. Toma papel (o un archivo) y anota lo que <em>no</em> pegarías en un chat en la nube hoy. Empieza con estas preguntas:</p>
+<ul class="space-y-1.5 text-neutral-300 text-sm mb-3">
+<li class="flex items-start space-x-2"><span class="text-primary mt-0.5">›</span><span>¿Qué documentos de trabajo contienen datos de clientes o información confidencial?</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary mt-0.5">›</span><span>¿Qué código de tu empresa no debería salir a un endpoint externo?</span></li>
+<li class="flex items-start space-x-2"><span class="text-primary mt-0.5">›</span><span>¿Qué aspecto personal (salud, finanzas, diario) te gustaría que quedara solo para ti?</span></li>
+</ul>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> todo lo que entró en esa lista es, en la práctica, tu fila de tareas para la IA local. Guárdala: se convierte en tu «porqué» concreto a lo largo del curso.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-1-2#q1">
+<p class="font-medium mb-4">Autoevaluación (opcional): ¿cuál es la diferencia esencial que define la «IA local»?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) El modelo local siempre es más inteligente que cualquier modelo de la nube</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) La inferencia ocurre en tu propia máquina: el prompt y la respuesta no salen de ella</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Necesitas estar conectado a Internet todo el tiempo para usarlo</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sensible</div><div class="text-xs text-neutral-400">→ local</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Intenso</div><div class="text-xs text-neutral-400">→ local</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Pico/poco frecuente</div><div class="text-xs text-neutral-400">→ nube</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Maduro</div><div class="text-xs text-neutral-400">híbrido por elección</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Local = la cuenta se ejecuta en tu máquina</strong><span class="text-neutral-400"> — el prompt no cruza internet ni pasa por terceros.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Un LLM son pesos + inferencia</strong><span class="text-neutral-400"> — un archivo de números y un programa que predice el siguiente token.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Tres beneficios reales</strong><span class="text-neutral-400"> — privado (nada sale), ilimitado (sin pagar por token) y no removible (es tuyo).</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-emerald-400 mt-1">✓</span><div><strong class="text-neutral-100">Local no es un dogma</strong><span class="text-neutral-400"> — para alcanzar el máximo de inteligencia, sin hardware o con un uso poco frecuente, todavía se necesita la nube.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-emerald-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">1.3 — ¿La IA local es menos capaz o más lenta? El elefante en la habitación</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-1-1.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-500 transition-colors" href="modulo-1-3.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-1-2#q1',{answer:1,explain:{0:'Não. Hoje muitos modelos locais são mais simples que o topo da nuvem — a vantagem do local é controle (privado, ilimitado, não-removível), não pico de inteligência.',1:'Isso. O que define "local" é onde a inferência roda: na sua própria máquina, sem o prompt nem a resposta saírem dela.',2:'Ao contrário — local funciona offline. Quem precisa de internet o tempo todo é o caminho da nuvem.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

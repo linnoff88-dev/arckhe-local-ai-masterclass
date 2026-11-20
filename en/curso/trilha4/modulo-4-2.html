@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>4.2 The always-on paradigm: 24/7 agents | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Advanced &amp; 24/7 Agents</a><span>/</span>
+<span class="text-amber-400">Module 4.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">♾️ The always-on paradigm: 24/7 agents</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">In the cloud, you open the chat, ask a question, and close it. Locally, you unlock another way to work: an agent that <strong class="text-neutral-100">never closes</strong>. Since running it is unlimited and the machine is already on, you can leave the AI working all the time—scanning, monitoring, summarizing—without anyone asking. This module builds the always-on foundation before the practical step-by-step guides.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Concept</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. The paradigm shift</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Why it only works locally</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Anatomy of a worker</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Triggers: cron, watch, queue</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Worker reliability</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. The employee fleet</a></li>
+</ol>
+<div aria-label="Module 4.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-2" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="4-2" data-inema-topic="modulo-4-2#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔄 The paradigm shift</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p1">Almost everyone uses AI in <strong class="text-amber-400">on demand</strong>: you open the chat, ask a question, read the answer, and close it. AI only “exists” while you’re there, typing. Local AI unlocks a second mode, much more powerful and almost unknown to anyone who has only used the cloud: the agent that <strong class="text-amber-400">never closes</strong> — the always-on setup.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t1-p2">The logic is simple. Your machine is already on. The local model doesn't charge per use. So there's no reason for the AI to sit idle waiting for you. It can work in the background all the time: scanning a repository for bugs, monitoring web sources, summarizing what's arrived in your inbox, organizing files. Tasks that run <em>continuously</em>, without anyone asking anything.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Always-on"</strong> (always-on) is AI running continuously in the background, even when you're not looking. <strong>"Worker"</strong> is each process dedicated to a repetitive task — think of an employee who does <em>a</em> thing, nonstop. An always-on agent is usually built as one (or several) workers.</p>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> The central idea</h3>
+<p class="text-neutral-300 mb-4">Local = <strong>unlimited</strong> + <strong>always on</strong>. This combination enables a whole class of uses that the cloud makes too expensive:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Environment usage:</strong> the AI stays in the environment, working in the background instead of only responding when called.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Ongoing, not one-time:</strong> thousands of runs per day stop being a billing problem.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Don’t fear the meter:</strong> you experiment, leave it running, forget about it — only the electricity counts.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Two modes, side by side</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>On demand:</strong> you start, the AI responds, and you end the session. Great for a one-off question.</li>
+<li><strong>Always-on:</strong> a trigger starts the AI on its own; it acts, logs what it did, and goes back to sleep — forever. Great for monitoring, scanning, and keeping something up to date.</li>
+<li>It’s not “one or the other”: always-on is a new layer you get by running locally.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">On demand</div><div class="text-xs text-neutral-400">you call</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Always-on</div><div class="text-xs text-neutral-400">it's called</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Unlimited</div><div class="text-xs text-neutral-400">only power</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Environment</div><div class="text-xs text-neutral-400">works in the background</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">💸 Why it only works locally</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t2-p1">Always-on isn’t a matter of personal preference — it’s <strong class="text-amber-400">savings</strong>. In the cloud, each model call comes with a toll. For one question a day, nobody notices. For an agent that runs every few minutes, day and night, the bill explodes. Locally, the same workload costs only the electricity the machine would use anyway.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🧮</span> The calculation that changes everything</h3>
+<p class="text-neutral-400 text-sm mb-3">A worker that triggers <strong>every 5 minutes</strong> runs:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto">
+<div class="text-neutral-500"># runs per day</div>
+<div>24 h × 60 min ÷ 5 min = <span class="text-amber-400">288 / day</span></div>
+<div class="text-neutral-500 mt-2"># per month</div>
+<div>288 × 30 = <span class="text-amber-400">~8,640 calls / month</span></div>
+</div>
+<p class="text-neutral-400 text-sm mt-3">In the cloud, multiply that by the price per call—and by the number of workers you have. Locally, the number of calls is <strong class="text-amber-400">irrelevant</strong> for the bill: it doesn't exist.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t2-p2">Compare the two cost models side by side:</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Local (always-on)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Marginal cost per call ≈ zero</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Running 24/7 doesn’t change the bill—just the electricity</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>No rate limits: run it as many times as you want</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span>Data stays on the machine — nothing leaks by default</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Cloud (toll per call)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Each call costs money — 24/7 adds up fast</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Multiple workers = the bill adds them all up</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rate limits and quotas hold you back at the worst moment</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Each run sends your data outside</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Power isn't free, but it's low and predictable. A small model (3–8B) on a modest PC uses little power while it's just waiting for the next trigger—the GPU/CPU only "wakes up" at inference time. The real cost of always-on is <strong>idle machine time</strong>, which you’re already paying for anyway.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Cloud</div><div class="text-xs text-neutral-400">charges per call</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Local</div><div class="text-xs text-neutral-400">uses power</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">24/7</div><div class="text-xs text-neutral-400">unfeasible in the cloud</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Scale</div><div class="text-xs text-neutral-400">only local works</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧬 Anatomy of a continuous worker</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t3-p1">Every always-on worker, no matter how sophisticated it seems, has the same four-part anatomy. Once you see the skeleton, building any of them (and following the step-by-step guides in upcoming lessons) becomes a matter of fitting together familiar pieces.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Always-on cycle: a timer triggers the agent, which performs an action, logs it, and the cycle repeats endlessly, 24 hours a day" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m42-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m42-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m42-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m42-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m42-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m42-grid)" height="260" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.7" stroke="#fbbf24" stroke-width="2">
+<path d="M212,76 L266,76" marker-end="url(#m42-ah)"></path>
+<path d="M452,76 L506,76" marker-end="url(#m42-ah)"></path>
+<path d="M692,76 L746,76" marker-end="url(#m42-ah)"></path>
+</g>
+<g fill="none" opacity="0.6" stroke="#38bdf8" stroke-width="2">
+<path d="M840,114 C840,206 120,206 120,114" marker-end="url(#m42-ahc)"></path>
+</g>
+<text fill="#7fd3ff" font-family="Inter,sans-serif" font-size="13" font-weight="600" text-anchor="middle" x="480" y="232">repeat nonstop · 24/7</text>
+<g font-family="Inter,sans-serif">
+<g filter="url(#m42-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m42-grad)" stroke-width="2.5" width="180" x="30" y="40"></rect></g>
+<text fill="#fbbf24" font-size="16" font-weight="700" text-anchor="middle" x="120" y="72">⏱ Timer</text>
+<text fill="#f1c88a" font-size="12" text-anchor="middle" x="120" y="94">the trigger fires</text>
+<g filter="url(#m42-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m42-grad)" stroke-width="2.5" width="180" x="270" y="40"></rect></g>
+<text fill="#fbbf24" font-size="16" font-weight="700" text-anchor="middle" x="360" y="72">🤖 Agent</text>
+<text fill="#f1c88a" font-size="12" text-anchor="middle" x="360" y="94">the local model thinks</text>
+<g filter="url(#m42-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m42-grad)" stroke-width="2.5" width="180" x="510" y="40"></rect></g>
+<text fill="#fbbf24" font-size="16" font-weight="700" text-anchor="middle" x="600" y="72">⚙ Action</text>
+<text fill="#f1c88a" font-size="12" text-anchor="middle" x="600" y="94">executes the task</text>
+<g filter="url(#m42-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m42-grad)" stroke-width="2.5" width="180" x="750" y="40"></rect></g>
+<text fill="#fbbf24" font-size="16" font-weight="700" text-anchor="middle" x="840" y="72">📝 Log</text>
+<text fill="#f1c88a" font-size="12" text-anchor="middle" x="840" y="94">records what it did</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read the cycle clockwise: the <strong class="text-neutral-200">timer</strong> (in amber) triggers the <strong class="text-neutral-200">agent</strong>, which thinks, runs the <strong class="text-neutral-200">action</strong> and records a <strong class="text-neutral-200">log</strong>. The cyan arrow closes the loop: everything goes back to the beginning and repeats nonstop, 24/7.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-2-t3-p2">The four pieces in practice:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Scheduler (the trigger)</h4>
+<p class="text-neutral-300 text-sm">What decides <em>when</em> run: a cron job on a schedule, a loop that sleeps between runs, a "watch" that reacts to a new file. It’s the worker’s alarm clock.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The task</h4>
+<p class="text-neutral-300 text-sm">The concrete, well-defined task: collect data, scan a repo, read a folder. Usually a deterministic part (no AI) that prepares the material.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The local model</h4>
+<p class="text-neutral-300 text-sm">The intelligence: the agent calls the local API (the one from module 3.5) to triage, classify, summarize, or decide. This is where the LLM adds value to what the task collected.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The output</h4>
+<p class="text-neutral-300 text-sm">The result that survives the cycle: a file (<span class="font-mono text-amber-400">relatorio.md</span>), a notification, a line in the log. Without persistent output, the work disappears.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Scheduler</div><div class="text-xs text-neutral-400">when to run</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Task</div><div class="text-xs text-neutral-400">what to collect</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Model</div><div class="text-xs text-neutral-400">the intelligence</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Output</div><div class="text-xs text-neutral-400">what remains</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⏰ Triggers: cron, watch, queue</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t4-p1">The piece that turns an ordinary script into an always-on worker is the <strong class="text-amber-400">trigger</strong>. There are three flavors, and you choose based on what triggers the task: the clock, an event, or a job in the queue.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Cron:</strong> task scheduler <em>by time</em>, built into Linux/macOS. You describe "every X" and the system runs it automatically—even if you're not logged in.</li>
+<li><strong>Watch:</strong> instead of on a schedule, triggers on <em>event</em> — typically “a file appeared/changed in this folder.” It reacts right away.</li>
+<li><strong>Queue:</strong> a list of jobs to do; the worker picks them up one at a time and processes them. Useful when more work comes in than you can handle right away.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-1">⏱ Cron / loop</h4>
+<p class="text-neutral-300 text-sm">Triggered by <strong>time</strong>. "Every 20 min", "every day at 3 a.m." The workhorse of always-on.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-1">👁 Watch</h4>
+<p class="text-neutral-300 text-sm">Triggered by <strong>event</strong>. New file in a folder, change detected. Reactive, without needless checking.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-amber-400 mb-1">📥 Queue</h4>
+<p class="text-neutral-300 text-sm">Triggered by <strong>demand</strong>. Jobs go into a queue; the worker processes them one by one without losing any.</p>
+</div>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: one task every 20 minutes</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> trigger a call to your local model every 20 min. We show two approaches — cron (official) and a bash loop (easier to test now).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Option A — cron: edit with `crontab -e` and paste the line below</div>
+<div class="text-neutral-500"># minute/20 → runs at :00, :20, :40 of every hour</div>
+<div>*/20 * * * * /home/voce/agente/tarefa.sh &gt;&gt; /home/voce/agente/worker.log 2&gt;&amp;1</div>
+<div class="text-neutral-500 mt-3"># Option B — bash loop: runs now, sleeps for 20 min, repeats</div>
+<div>while true; do</div>
+<div>  curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>    -H "Content-Type: application/json" \</div>
+<div>    -d '{"model":"qwen2.5:7b","messages":[{"role":"user","content":"Summarize the new notes in 3 bullets."}]}' \</div>
+<div>    &gt;&gt; worker.log 2&gt;&amp;1</div>
+<div>  echo "[$(date)] ciclo concluído" &gt;&gt; worker.log</div>
+<div>  sleep 1200   # 1200 s = 20 min</div>
+<div>done</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run <span class="font-mono text-amber-400">tail -f worker.log</span> in another terminal—you should see a new model response every 20 min and the line "ciclo concluído". If nothing appears, check whether the local API is responding (<span class="font-mono text-amber-400">curl http://localhost:11434/api/tags</span>).</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">The bash loop disappears when you close the terminal. For a true always-on setup, prefer the <strong>cron</strong> or a service (<span class="font-mono">systemd</span> on Linux, <span class="font-mono">launchd</span> on macOS): they survive logout and restart. Start by testing with the loop, then move to cron once it works.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Time</div><div class="text-xs text-neutral-400">→ cron</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Event</div><div class="text-xs text-neutral-400">→ watch</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Demand</div><div class="text-xs text-neutral-400">→ queue</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Persist</div><div class="text-xs text-neutral-400">cron/systemd</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🛡️ Worker reliability</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t5-p1">An always-on agent runs without anyone watching — which is why it <strong class="text-amber-400">can't give you a headache</strong>. The difference between a useful worker and one that becomes a problem comes down to four habits: log everything, be idempotent, set limits, and know how to recover from a failure.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Idempotency"</strong> is the property of being able to run the same thing multiple times without causing extra harm. A worker that processes the same item twice and is idempotent <em>no</em> duplicates the work or sends two identical alerts—it detects “this has already been done” and moves on. Crucial for something that runs over and over.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
+<h4 class="font-bold text-emerald-400 mb-4">✓ Reliable worker</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Logs:</strong> records what it did, when, and the result—you can audit it later</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Idempotent:</strong> running it again on the same item doesn’t duplicate anything</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Limits:</strong> timeout per run and item cap per cycle</span></li>
+<li class="flex items-start space-x-2"><span class="text-emerald-400">✓</span><span><strong>Resume:</strong> saves where it left off and continues after a crash/restart</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ A worker that causes headaches</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Runs silently — when it fails, you don’t even know</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reprocesses everything and triggers the same alert 50 times</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Gets stuck on a heavy item and holds up the entire queue</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>It crashes and starts over from scratch, losing progress</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">✅</span> Reliability checklist</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">▸</span><span>Each cycle writes a log line with the date/time and what happened.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">▸</span><span>Before acting on an item, check “Have I processed this one already?” (hash, ID, marker).</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">▸</span><span>Per-request model timeout and the maximum number of items per run.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">▸</span><span>State saved to disk (last item viewed) so you can pick up where you left off.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-0.5">▸</span><span>Alert only on what's <em>new</em> — silence when there’s nothing new.</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">The simplest way to get idempotency: save a file with the IDs (or hashes) already processed and check against it at the start of each cycle. Skip what you've already seen, process only the new items, and append the new ID. Simple, on disk, and it solves 90% of duplicates.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Logs</div><div class="text-xs text-neutral-400">what it did</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Idempotency</div><div class="text-xs text-neutral-400">without duplicating</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Limits</div><div class="text-xs text-neutral-400">timeout/cap</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Resume</div><div class="text-xs text-neutral-400">where you left off</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">👥 The employee fleet</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-2-t6-p1">One worker is an employee. Several workers, each on one task, are a <strong class="text-amber-400">fleet</strong> — and this is where the orchestrator from Module 4.1 reappears: it loads the models, routes between machines, and coordinates who does what. You stop having “an AI” and start having a quiet team working for you, for free, nonstop.</p>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🎯</span> Your fleet in the upcoming lessons</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>4.3 — Security scanner:</strong> a worker that scans your codebase for secrets and vulnerabilities, 24/7.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>4.4 — Web watcher:</strong> a worker that monitors sources and extracts ranked opportunities.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>4.5 — Personal buddy:</strong> an always-available assistant with a name, face, and voice.</span></li>
+</ul>
+<p class="text-neutral-400 text-sm mt-4">Notice: all three have the <em>same anatomy</em> of this module — scheduler, task, local model, and output. You already have the skeleton; the next lessons just add the substance.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🧭</span> How to think about the fleet</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>One worker = one well-defined task. Don’t try to make one worker do everything.</li>
+<li>Workers share the same local API and the same tailnet (modules 3.5 and 2.4).</li>
+<li>The orchestrator (4.1) is optional at first: cron + scripts already make up a small fleet.</li>
+</ul>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-2#q1">
+<p class="font-medium mb-4">Self-check (optional): why does running a 24/7 agent usually only make financial sense with local AI?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Because local models are always smarter than cloud models</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Because the cloud charges per call, and thousands of runs per day get expensive; locally, you only pay for the electricity</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Because the cloud doesn’t let you schedule tasks by time</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">4.3</div><div class="text-xs text-neutral-400">scanner</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">4.4</div><div class="text-xs text-neutral-400">web watchdog</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">4.5</div><div class="text-xs text-neutral-400">personal buddy</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Fleet</div><div class="text-xs text-neutral-400">multiple workers</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Always-on is a new mode</strong><span class="text-neutral-400"> — the AI works in the background on its own, instead of only responding when called.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Only works locally</strong><span class="text-neutral-400"> — 24/7 × lots of calls is too expensive in the cloud; locally, only the electricity counts.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Anatomy of four parts</strong><span class="text-neutral-400"> — scheduler, task, local model, and output in a repeating cycle.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Reliability is not optional</strong><span class="text-neutral-400"> — logs, idempotency, limits, and recovery from failures; and cron/systemd for persistence.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.3 — 24/7 security scanner for your codebase</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-1.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-3.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-2#q1',{answer:1,explain:{0:'Nem sempre — muitos modelos locais ainda são mais simples que o topo da nuvem. A vantagem aqui é econômica, não de pico de inteligência.',1:'Isso. O pedágio por chamada torna o 24/7 caríssimo na nuvem; no local o custo marginal é ~zero, só a energia da máquina já ligada.',2:'Não. A nuvem também permite agendar; o que ela não resolve é o custo de milhares de chamadas contínuas.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

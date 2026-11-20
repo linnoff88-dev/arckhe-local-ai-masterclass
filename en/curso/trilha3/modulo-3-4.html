@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>3.4 Parameters and quality | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Installation &amp; Techniques</a><span>/</span>
+<span class="text-purple-400">Module 3.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎛️ Parameters and quality: context, temperature, offload</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">The model is already running — now comes what separates "it works" from "it responds well and quickly." Here you'll learn the settings that matter: <strong class="text-neutral-100">context window, temperature, system prompt, and GPU offload</strong> — and how to diagnose when something is slow or poor quality.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Medium</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Context window in practice</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Temperature, top_p, and top_k</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. System prompt: directing the model</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. GPU/CPU offload and layers</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. KV cache, batch, and performance</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Diagnosis: slow or poor quality?</a></li>
+</ol>
+<div aria-label="Module 3.4 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="3-4" data-inema-topic="modulo-3-4#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📏 Context window in practice</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t1-p1">A <strong class="text-purple-400">context window</strong> is how much the model “reads at once” before responding — your question, the chat history, and any text you paste in. If the window is small, the model “forgets” the start of the conversation. If it’s too large, it uses memory unnecessarily.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Context window"</strong> = the token limit for what goes in at once (e.g., 8192 = ~6,000 words). In Ollama, this is the <span class="font-mono text-purple-400">num_ctx</span>. <strong>"Token"</strong> = part of a word; ~4 characters on average. <strong>"KV cache"</strong> = the working memory the model builds for each context token — it grows along with <span class="font-mono text-purple-400">num_ctx</span> and is what makes long contexts weigh heavily on VRAM.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t1-p2">Choosing the window size is a three-step balancing act:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Start with the default</h4>
+<p class="text-neutral-300 text-sm">Many models come with <span class="font-mono text-purple-400">num_ctx</span> of 2048 or 4096. For chat and short questions, that’s enough — don’t change it just for the sake of changing it.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Increase it when the task calls for it</h4>
+<p class="text-neutral-300 text-sm">Going to paste in a long document, large codebase, or extensive history? Increase it to 8192, 16384, or more — as long as the model supports that limit.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Pay the price in memory</h4>
+<p class="text-neutral-300 text-sm">Doubling the context window ≈ doubling the KV cache. If VRAM runs out, the model offloads layers to the CPU and slows down — or simply <em>out of memory</em>.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Don’t turn on 128k context “just in case.” If you usually ask short questions, a 4k–8k window responds faster and frees up VRAM for <em>layers</em> of the model — which matters most for quality.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">num_ctx</div><div class="text-xs text-neutral-400">window size</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">KV cache</div><div class="text-xs text-neutral-400">grows with the window</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Short</div><div class="text-xs text-neutral-400">fast, lightweight</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Long</div><div class="text-xs text-neutral-400">heavy, slower</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🌡️ Temperature, top_p, and top_k</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t2-p1">For each token, the model has several candidate words. <strong class="text-purple-400">Temperature</strong>, <strong class="text-purple-400">top_p</strong> e <strong class="text-purple-400">top_k</strong> determine how much risk it takes when choosing. These three controls manage the <em>precise ⟷ creative</em>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Temperature</strong> — how “creative/random” the model is. Low (0–0.3) = deterministic and repeatable; high (0.8–1.2) = diverse and surprising.</li>
+<li><strong>top_p</strong> (nucleus) — cuts off the tail: considers only the words that add up to, for example, 90% of the probability (<span class="font-mono text-purple-400">top_p 0.9</span>).</li>
+<li><strong>top_k</strong> — limits the choice to <em>k</em> most likely words (<span class="font-mono text-purple-400">top_k 40</span>). Adjust temperature first; top_p/top_k are fine-tuning.</li>
+</ul>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">📋</span> Recipes by task</h3>
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700 text-neutral-300">
+<tr>
+<th class="px-4 py-3 font-semibold">Task</th>
+<th class="px-4 py-3 font-semibold">temperature</th>
+<th class="px-4 py-3 font-semibold">top_p</th>
+<th class="px-4 py-3 font-semibold">Why</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Code / SQL</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.1–0.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
+<td class="px-4 py-3 text-neutral-400">accuracy and reproducible answers</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Extraction / JSON</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.0–0.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.8</td>
+<td class="px-4 py-3 text-neutral-400">rigid format, with no invented fields</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Chat / explanation</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.5–0.7</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
+<td class="px-4 py-3 text-neutral-400">natural, but still focused</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Brainstorming / creative</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.9–1.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.95</td>
+<td class="px-4 py-3 text-neutral-400">diversity, unexpected ideas</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Low temperature works for</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Generate code that needs to compile</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Extract data in a fixed format</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Answers that should always be the same</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Classification and routing</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ High temperature works for</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Generate many variations of an idea</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Marketing copy and headlines</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Break repetition and stiff-sounding responses</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Fiction and scripts</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎭 System prompt: directing the model</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t3-p1">Before asking any questions, the <strong class="text-purple-400">system prompt</strong> tells the model <em>who it is</em> e <em>how it should respond</em>. It’s the cheapest quality lever there is: when written well, it fixes verbosity, format, and tone without making you switch models.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> is a fixed instruction, separate from your message, that applies to the entire conversation. Think of it as the employee’s “job and rules”: it defines <strong>paper</strong> (what it is), <strong>format</strong> (as delivery) and <strong>constraints</strong> (what it cannot do).</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🧱</span> The three building blocks of a good system prompt</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Role:</strong> "You are a concise technical assistant for developers."</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Format:</strong> "Answer in no more than 5 lines. Use bullets when listing steps."</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Restrictions:</strong> "If you don't know, say so. Don't make up commands."</span></li>
+</ul>
+</div>
+<!-- COPY-RUN: system prompt reutilizável -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: a "concise technical assistant"</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> a reusable system prompt that you can paste into any model (Ollama, Open WebUI, API) for short, direct answers. Save it as <span class="font-mono text-purple-400">system.txt</span> or use it in the Modelfile.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># system prompt — concise technical assistant</div>
+<div>You are a concise technical assistant for</div>
+<div>developers. Rules:</div>
+<div>- Answer directly, without an introduction or preamble.</div>
+<div>- Maximum of 5 lines, unless I ask for more.</div>
+<div>- For steps, use a short numbered list.</div>
+<div>- Show commands in a code block.</div>
+<div>- If you’re not sure, say “I don’t know”—don’t make it up.</div>
+<div>- Always respond in Brazilian Portuguese.</div>
+</div>
+<p class="text-neutral-400 text-sm mb-3"><strong>How to use it in Ollama (Modelfile):</strong></p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># file: Modelfile</div>
+<div>FROM qwen2.5:7b</div>
+<div>SYSTEM "You are a concise technical assistant... (paste above)"</div>
+<div class="text-neutral-500 mt-2"># create and run</div>
+<div>ollama create tecnico -f Modelfile</div>
+<div>ollama run tecnico</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> ask the same question in the base model and in the <span class="font-mono text-purple-400">technical</span>. The second one should respond much more briefly and directly, without the “Sure! Here’s...”</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🧩 GPU/CPU offloading and layers</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p1">A model is a stack of <strong class="text-purple-400">layers</strong>. Ideally, they all fit in the GPU, where they run fast. When they don’t fit, the runtime <em>overflows</em> the ones left for the CPU — and those run much slower. The parameter that controls this is the <span class="font-mono text-purple-400">num_gpu</span>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Offload"</strong> = push part of the GPU’s work to the CPU. <strong>"num_gpu"</strong> (in Ollama) = how many model layers are placed on the GPU; the rest goes to the CPU/RAM. More layers on the GPU = faster, <em>since</em> fit in VRAM. If you force too many layers and VRAM runs out, it becomes <em>out of memory</em>.</p>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="The model layers are split: most run on the fast GPU, and the rest spill over to the slow CPU — controlled by the num_gpu parameter" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m34-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m34-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m34-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m34-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- GPU panel -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="190" rx="16" stroke="url(#m34-grad)" stroke-width="2.5" width="380" x="60" y="44"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="250" y="72">GPU · VRAM</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="250" y="90">fast · num_gpu = 7</text>
+<g font-family="Inter,sans-serif" font-size="11" font-weight="600">
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="100"></rect><text fill="#1a1230" x="100" y="112">Layer 1</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="119"></rect><text fill="#1a1230" x="100" y="131">Layer 2</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="138"></rect><text fill="#1a1230" x="100" y="150">Layer 3</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="157"></rect><text fill="#1a1230" x="100" y="169">Layer 4</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="176"></rect><text fill="#1a1230" x="100" y="188">Layer 5</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="195"></rect><text fill="#1a1230" x="100" y="207">Layer 6</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="214"></rect><text fill="#1a1230" x="100" y="226">Layer 7</text></g>
+</g>
+<!-- transbordo -->
+<g fill="none" opacity="0.85" stroke="#38bdf8" stroke-width="2.5">
+<path d="M440,150 C500,150 500,150 560,150" marker-end="url(#m34-ahc)"></path>
+</g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="500" y="138">overflows</text>
+<!-- CPU panel -->
+<rect fill="#0e1b26" height="190" rx="16" stroke="#38bdf8" stroke-width="2" width="380" x="560" y="44"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="750" y="72">CPU · RAM</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="750" y="90">slow · what didn’t fit</text>
+<g font-family="Inter,sans-serif" font-size="11" font-weight="600">
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="120"></rect><text fill="#bfe6ff" x="600" y="132">Layer 8</text></g>
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="143"></rect><text fill="#bfe6ff" x="600" y="155">Layer 9</text></g>
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="166"></rect><text fill="#bfe6ff" x="600" y="178">Layer 10</text></g>
+</g>
+<text fill="#7fb4cc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="750" y="206">each layer here = slower</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from left to right: the <strong class="text-neutral-200">7 first layers</strong> (purple) fit on the GPU and fly; the <strong class="text-neutral-200">3 left over</strong> (cyan) spill over to the CPU and drag down speed. Increasing <span class="font-mono text-neutral-200">num_gpu</span> moves the boundary to the right — until the VRAM fills up.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Balanced offloading</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>All (or almost all) layers fit on the GPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>There’s VRAM left for the context’s KV cache</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Chose a quant (Q4_K_M) that fits comfortably</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>stable and predictable tokens/s</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Poorly tuned offloading</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Half the layers ended up on the CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>num_gpu set too high → out of memory</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Model too large for the available VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Speed drops with every token</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Ollama tries to detect offloading automatically — in most cases, leave it on automatic. Only adjust <span class="font-mono">num_gpu</span> manually if you want to fit a slightly larger model (by deliberately offloading a few layers) or if you’re running two things on the same GPU.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚡ KV cache, batch processing, and performance</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p1">Speed isn't just "a good GPU." Three things affect <strong class="text-purple-400">tokens/s</strong>: how much memory the KV cache uses, the batch size, and where the layers are. Here you bring all the parameters together in one place—via API.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> What speeds things up × what slows them down</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Model fitting entirely in the GPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Context window only as large as needed</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>KV cache quantization (q8/q4) to free up VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Keep the model “hot” (loaded) between calls</span></li>
+</ul>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Layers spilling over to the CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>giant num_ctx “just in case”</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Swapping to disk when RAM fills up</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Reload the model with every request</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Batch"</strong> = how many tokens the model processes at once during the prompt-reading phase; a larger batch speeds up long prompts but uses more memory. <strong>"KV cache quantization"</strong> = store working memory at lower precision (e.g., <span class="font-mono text-purple-400">q8_0</span>) to fit a larger context window in the same VRAM—with minimal loss.</p>
+</div>
+<!-- COPY-RUN: Ollama via API com options -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: parameters via the Ollama API</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> run a controlled generation, passing temperature and context window together in the field <span class="font-mono text-purple-400">options</span>. Paste this into the terminal (Ollama needs to be running).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># deterministic generation with an 8k context</div>
+<div>curl http://localhost:11434/api/generate -d '{</div>
+<div>  "model": "qwen2.5:7b",</div>
+<div>  "prompt": "Explain what num_ctx is in 2 lines.",</div>
+<div>  "stream": false,</div>
+<div>  "options": {"temperature":0.2,"num_ctx":8192}</div>
+<div>}'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run the same command twice. With <span class="font-mono text-purple-400">temperature:0.2</span> the responses come out nearly identical (deterministic). Switch to <span class="font-mono text-purple-400">1.0</span> and repeat: now they vary much more. The field <span class="font-mono text-purple-400">eval_count / eval_duration</span> in the JSON response gives you the tokens/s.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">tokens/s</div><div class="text-xs text-neutral-400">the key metric</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">KV cache</div><div class="text-xs text-neutral-400">uses VRAM</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Batch</div><div class="text-xs text-neutral-400">speeds up the prompt</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Swap</div><div class="text-xs text-neutral-400">the slow villain</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🩺 Diagnosis: why is it slow or bad?</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p1">When the output disappoints, the problem is almost always one of four suspects: a model that's too large, overly aggressive quantization, an oversized context, or disk swap. This checklist separates “it's slow” from “it's bad.”</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Symptom: it's SLOW</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Model too large → layers on the CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>huge num_ctx → KV cache ran out of VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Full RAM → disk swapping</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Model reloading on every call</span></li>
+</ul>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ How to fix SLOW</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Drop down one size (14B → 7B) or one quantization level</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Reduce num_ctx to what the task requires</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Close apps that use up RAM; check with <span class="font-mono">ollama ps</span></span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Keep the model loaded (keep-alive)</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Symptom: it's BAD</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aggressive quant (Q2/Q3) → fragile responses</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>High temperature for a task that calls for precision</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No system prompt → the model goes off the rails</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Short context → it forgets the beginning</span></li>
+</ul>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ How to fix BAD</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Move up to Q4_K_M/Q5_K_M (the sweet spot)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Lower the temperature to 0.1–0.2</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Add a clear system prompt (topic 3)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Increase num_ctx enough for the conversation</span></li>
+</ul>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-4#q1">
+<p class="font-medium mb-4">Self-check (optional): you need to generate SQL that's always the same and correct. Which setting makes the most sense?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) High temperature (0.9) so the model can “think more”</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Low temperature (0.1–0.2) for deterministic, reproducible responses</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Increase num_ctx to 32k—that improves accuracy</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Slow</div><div class="text-xs text-neutral-400">→ memory/offload</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Bad</div><div class="text-xs text-neutral-400">→ quant/temp/prompt</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">ollama ps</div><div class="text-xs text-neutral-400">see what was loaded</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Change 1</div><div class="text-xs text-neutral-400">at a time, and measure</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Context (num_ctx) is a balancing act</strong><span class="text-neutral-400"> — only as much as the task requires; it uses up KV cache.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Temperature controls precise × creative</strong><span class="text-neutral-400"> — lower for code/extraction, higher for brainstorming.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">System prompt is a low-cost lever</strong><span class="text-neutral-400"> — role + format + constraints change quality without switching models.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Offloading and diagnostics</strong><span class="text-neutral-400"> — layers on the GPU = fast; distinguish “slow” (memory) from “bad” (quant/temp/prompt).</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.5 — Serving via a local API</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-3.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-5.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-4#q1',{answer:1,explain:{0:'Não — temperatura alta aumenta a aleatoriedade. SQL ficaria diferente a cada execução e mais propenso a erro.',1:'Isso. Temperatura baixa torna a saída determinística e reproduzível — ideal para código e SQL que precisam ser sempre corretos.',2:'Não. Aumentar a janela de contexto não melhora a precisão por si só; só permite ler mais texto de uma vez (e gasta mais memória).'}});}
+      }
+    });
+  </script>
+</body>
+</html>

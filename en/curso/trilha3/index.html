@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>Track 3 · Installation &amp; Techniques | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+    html:not(.dark) .hover\:border-purple-500\/30:hover { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span><span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<main id="conteudo">
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">PATH 3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚙️ Installation &amp; Techniques</h1>
+<p class="text-lg text-neutral-300 max-w-3xl mb-6">The hands-on heart of the course: install Ollama and run your first model, get a ChatGPT-like interface, learn to choose GGUF and quantization, adjust context and temperature, serve an OpenAI-compatible local API, and build a RAG from your documents.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-8 overflow-hidden max-w-3xl">
+<svg aria-label="Practical pipeline for the learning path: install Ollama, download the model, run it and chat, with a local API serving other apps" class="w-full h-auto" role="img" viewbox="0 0 1000 200">
+<defs>
+<lineargradient id="t3h-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="t3h-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="t3h-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="t3h-arrow" markerheight="9" markerwidth="9" orient="auto" refx="5.5" refy="3"><path d="M0,0 L6,3 L0,6 Z" fill="#a855f7"></path></marker>
+</defs>
+<rect fill="url(#t3h-grid)" height="200" width="1000" x="0" y="0"></rect>
+<path d="M214,71 L266,71 M454,71 L506,71 M694,71 L746,71" fill="none" marker-end="url(#t3h-arrow)" opacity="0.75" stroke="#a855f7" stroke-width="2.2"></path>
+<g font-family="Inter,sans-serif" font-size="14" font-weight="600">
+<g><rect fill="#1a1230" height="42" rx="10" stroke="#c084fc" stroke-width="2" width="184" x="30" y="50"></rect><text fill="#c084fc" text-anchor="middle" x="122" y="76">1 · Install</text></g>
+<g><rect fill="#1a1230" height="42" rx="10" stroke="#c084fc" stroke-width="2" width="184" x="270" y="50"></rect><text fill="#c084fc" text-anchor="middle" x="362" y="76">2 · Download model</text></g>
+<g><rect fill="#1a1230" height="42" rx="10" stroke="#c084fc" stroke-width="2" width="184" x="510" y="50"></rect><text fill="#c084fc" text-anchor="middle" x="602" y="76">3 · Run</text></g>
+<g filter="url(#t3h-glow)"><rect fill="#1a1230" height="42" rx="10" stroke="url(#t3h-grad)" stroke-width="2.5" width="184" x="750" y="50"></rect><text fill="#c084fc" text-anchor="middle" x="842" y="76">4 · Chat</text></g>
+</g>
+<path d="M602,92 L602,138 L842,138 L842,92" fill="none" opacity="0.6" stroke="#38bdf8" stroke-dasharray="7 7" stroke-width="1.8"></path>
+<g font-family="Inter,sans-serif" font-size="12.5" font-weight="600">
+<rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="1.8" width="364" x="540" y="150"></rect>
+<text fill="#bfe6ff" text-anchor="middle" x="722" y="172">Local API · OpenAI-compatible · Open WebUI · RAG</text>
+</g>
+</svg>
+</div>
+<div class="grid grid-cols-4 gap-4 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Modules</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">36</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~4h</div><div class="text-xs text-neutral-400">Duration</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Intermediate</div><div class="text-xs text-neutral-400">Level</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<!-- MAPA DA TRILHA -->
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6">Trail map</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-1">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.1</span><span class="text-xs text-neutral-500">~30 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🚀 First model</h3>
+<p class="text-xs text-neutral-400">Ollama in one command</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-2">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.2</span><span class="text-xs text-neutral-500">~30 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">💬 Graphical interface</h3>
+<p class="text-xs text-neutral-400">Browser chat</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-3">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.3</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">📦 GGUF &amp; quantization</h3>
+<p class="text-xs text-neutral-400">Download the right model</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-4">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.4</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🎛️ Parameters</h3>
+<p class="text-xs text-neutral-400">The response buttons</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-5">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.5</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🔌 Local API</h3>
+<p class="text-xs text-neutral-400">Compatible with OpenAI</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-purple-500/30 p-5 transition-all" href="#modulo-3-6">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold text-sm">3.6</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-purple-400 transition-colors">🧠 Embeddings &amp; RAG</h3>
+<p class="text-xs text-neutral-400">Memory for your docs</p>
+</a>
+</div>
+</section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- MÓDULO 3.1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-1" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.1</span><span class="text-xs text-neutral-500">~30 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🚀 First model running: Ollama</h3>
+<p class="text-neutral-400 text-sm">From zero to your first chat with minimal friction — install, download, and run a local model.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🧰</span><div><span class="font-medium">Why start with Ollama</span><span class="text-neutral-500 text-sm ml-2">- Less friction</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Runtime that downloads, manages, and runs local models with one command; wraps llama.cpp.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the shortest path to your first result.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Runtime, llama.cpp, cross-platform.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">💿</span><div><span class="font-medium">Install</span><span class="text-neutral-500 text-sm ml-2">- A command</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">On macOS/Linux, a single script; on Windows, a graphical installer.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">No build or manual dependency setup.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">curl install, ollama --version.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">💬</span><div><span class="font-medium">Your first chat</span><span class="text-neutral-500 text-sm ml-2">- Immediate result</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The command <code>ollama run</code> downloads the model and opens the prompt so you can chat.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Seeing the model respond proves the lab works.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">ollama run, llama3.2, qwen2.5.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🗂️</span><div><span class="font-medium">Managing models</span><span class="text-neutral-500 text-sm ml-2">- Pull, list, rm</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Commands to download, list, remove, and see what’s running.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Keeps disk and memory under control.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">pull, list, rm, ps.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">📏</span><div><span class="font-medium">The right size for your hardware</span><span class="text-neutral-500 text-sm ml-2">- Start small</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The :2b/:7b/:14b tags connect the model to the memory rule in Track 2.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Choosing wrong causes freezes or forces disk swapping.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Size tags, VRAM/RAM, start small.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🧩</span><div><span class="font-medium">Customization with Modelfile</span><span class="text-neutral-500 text-sm ml-2">- Your assistant</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A Modelfile is the recipe that defines the system prompt, parameters, and base model.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Create an assistant with a personality without programming.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Modelfile, SYSTEM, ollama create.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-1')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-1.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.2 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-2" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.2</span><span class="text-xs text-neutral-500">~30 min</span></div>
+<h3 class="text-2xl font-bold mb-2">💬 ChatGPT-style interface: Open WebUI &amp; LM Studio</h3>
+<p class="text-neutral-400 text-sm">From terminal to browser: chat with history, multiple models, and attachments.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🖥️</span><div><span class="font-medium">Why a graphical interface</span><span class="text-neutral-500 text-sm ml-2">- Ease of use</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Chat with history, model switching, and attachments, outside the terminal.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Brings the local experience closer to ChatGPT.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">History, multiple models, attachments.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">🌐</span><div><span class="font-medium">Open WebUI: what it is</span><span class="text-neutral-500 text-sm ml-2">- Web front end</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A front end that connects to Ollama or any OpenAI-compatible API, running locally.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the local community's default interface.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Front end, OpenAI-compatible, local.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🐳</span><div><span class="font-medium">Bring it up with Docker</span><span class="text-neutral-500 text-sm ml-2">- A container</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A command <code>docker run</code> starts the interface on port 3000.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Installs in isolation, without cluttering the system.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">docker run, port 3000, volume.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🎛️</span><div><span class="font-medium">LM Studio: desktop alternative</span><span class="text-neutral-500 text-sm ml-2">- Desktop app</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">App that downloads GGUF and includes chat + a built-in local server.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">A 100% graphical option for anyone who doesn't want to use the terminal.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">GGUF, built-in server, desktop.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🔗</span><div><span class="font-medium">Connecting the interface ↔ backend</span><span class="text-neutral-500 text-sm ml-2">- Point to Ollama</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Configure the UI to use the Ollama endpoint and switch models.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the link between the polished interface and the engine.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Endpoint, model selection, system prompt in the UI.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🚪</span><div><span class="font-medium">Resources that unlock real-world use</span><span class="text-neutral-500 text-sm ml-2">- Beyond chat</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Multiple chats, document RAG, prompt profiles, and users.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Turns the toy into a daily tool.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Multiple chats, RAG, profiles.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-2')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-2.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.3 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-3" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.3</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="text-2xl font-bold mb-2">📦 Choosing and downloading the right model: GGUF and quantization</h3>
+<p class="text-neutral-400 text-sm">Where to find models, which format to download, and which quantization offers the best cost × quality.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🤗</span><div><span class="font-medium">Hugging Face: the GitHub of models</span><span class="text-neutral-500 text-sm ml-2">- Where to find it</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Central repository of open models, with one model card per model.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">That's where almost everything you'll run comes from.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Repository, model card, open models.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📦</span><div><span class="font-medium">Formats: GGUF, safetensors, GPTQ/AWQ</span><span class="text-neutral-500 text-sm ml-2">- Which one to download</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">GGUF is the packaged format for running via llama.cpp/Ollama on CPU/GPU.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Downloading the wrong format won’t run in your runtime.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">GGUF, safetensors, GPTQ/AWQ.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🔣</span><div><span class="font-medium">Reading the quantizations</span><span class="text-neutral-500 text-sm ml-2">- The sweet spot</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Suffixes like Q4_K_M, Q5, and Q8 indicate how much the weights have been compressed.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Q4_K_M/Q5_K_M are usually the quality × size balance.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Q4_K_M, Q5, Q8, sweet spot.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">⬇️</span><div><span class="font-medium">Downloading: through Ollama vs. directly</span><span class="text-neutral-500 text-sm ml-2">- Two paths</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm"><code>pull</code> using the Ollama tag, or download the GGUF from HF and import it.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Each path serves a runtime and a level of control.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">ollama pull, GGUF from HF, ollama create.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🧮</span><div><span class="font-medium">Combining model × hardware</span><span class="text-neutral-500 text-sm ml-2">- Fit in memory</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Recaps the memory rule for choosing the quantization based on VRAM/RAM.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Prevents choosing a model that won't fit.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Memory rule, decision flow, quantization based on VRAM.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">✅</span><div><span class="font-medium">Checking quality and integrity</span><span class="text-neutral-500 text-sm ml-2">- Isn’t it too heavily quantized?</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Check the checksum and test with a standard prompt, comparing quants.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Too aggressive a quant degrades the response.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Checksum, standard prompt, compare quants.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-3')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-3.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.4 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-4" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.4</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🎛️ Parameters and quality: context, temperature, offload</h3>
+<p class="text-neutral-400 text-sm">The buttons that change the response and speed — and how to diagnose when something gets stuck.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🪟</span><div><span class="font-medium">Context window in practice</span><span class="text-neutral-500 text-sm ml-2">- num_ctx</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">num_ctx defines how much the model reads at once; long context uses memory (KV cache).</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Increasing it without a plan can exhaust your memory.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">num_ctx, KV cache, memory cost.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">🌡️</span><div><span class="font-medium">Temperature, top_p, top_k</span><span class="text-neutral-500 text-sm ml-2">- Creativity × precision</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Temperature measures how random/creative the text is; low = deterministic.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Each task calls for a recipe (code = low, brainstorm = high).</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">temperature, top_p, top_k.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🎯</span><div><span class="font-medium">System prompt: steering the model</span><span class="text-neutral-500 text-sm ml-2">- Role and format</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Defines the role, format, and constraints for the response.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the cheapest quality lever.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Role, format, constraints.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🧱</span><div><span class="font-medium">GPU/CPU offload and layers</span><span class="text-neutral-500 text-sm ml-2">- num_gpu</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">num_gpu determines how many layers fit on the GPU; the rest go to the CPU, which is slower.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Balancing offload is what makes it fit and run faster.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">num_gpu, layers, GPU vs. CPU.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">⚡</span><div><span class="font-medium">KV cache, batch, and performance</span><span class="text-neutral-500 text-sm ml-2">- What speeds things up</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">What speeds up or slows down generation, including KV cache quantization.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Small adjustments can double tokens/s.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">KV cache, batch, tokens/s.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🩺</span><div><span class="font-medium">Diagnosis: slow or bad?</span><span class="text-neutral-500 text-sm ml-2">- Checklist</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Cause checklist: model too large, aggressive quantization, huge context, swapping.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Solve it yourself without guessing in the dark.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">OOM, quantization, context, swapping.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-4')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-4.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.5 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-5" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.5</span><span class="text-xs text-neutral-500">~40 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🔌 Serving through an OpenAI-compatible local API</h3>
+<p class="text-neutral-400 text-sm">Turn your local model into an endpoint that your apps, scripts, and agents can consume like OpenAI.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🔌</span><div><span class="font-medium">Why an API</span><span class="text-neutral-500 text-sm ml-2">- Plug everything in</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Expose the local model as if it were OpenAI for apps and scripts.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's what connects the model to the agents in Track 4.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Endpoint, integration, reuse.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📍</span><div><span class="font-medium">The Ollama endpoint</span><span class="text-neutral-500 text-sm ml-2">- localhost:11434</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Ollama serves on localhost:11434, with native routes and OpenAI-compatible /v1 routes.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Knowing the right route prevents half the errors.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">localhost:11434, /v1, routes.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">📨</span><div><span class="font-medium">First call</span><span class="text-neutral-500 text-sm ml-2">- curl</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">One curl to stop <code>/v1/chat/completions</code> returns the response in JSON.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Confirm that the API responds before writing code.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">curl, chat/completions, JSON.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🐍</span><div><span class="font-medium">From code (Python, OpenAI SDK)</span><span class="text-neutral-500 text-sm ml-2">- local base_url</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">The same OpenAI SDK, pointed at the local base_url.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Reuses the entire existing ecosystem.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">OpenAI SDK, base_url, dummy api_key.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🔁</span><div><span class="font-medium">Streaming, embeddings, and multiple models</span><span class="text-neutral-500 text-sm ml-2">- More routes</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm"><code>stream:true</code> for real-time responses, an embeddings route, and model routing.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Cover real use cases beyond simple chat.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">stream, embeddings, routing.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🛡️</span><div><span class="font-medium">Exposing it securely on the tailnet</span><span class="text-neutral-500 text-sm ml-2">- Never expose it to the internet</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">OLLAMA_HOST=0.0.0.0 + Tailscale to access it from another machine, without opening it to the public internet.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Remote access without leaving a security hole.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">OLLAMA_HOST, tailnet, no public port.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-5')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-5.html">View Full</a>
+</div>
+</div>
+<!-- MÓDULO 3.6 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 mb-6" id="modulo-3-6" style="scroll-margin-top:5rem">
+<div class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-purple-400 font-bold">3.6</span><span class="text-xs text-neutral-500">~45 min</span></div>
+<h3 class="text-2xl font-bold mb-2">🧠 Embeddings, memory &amp; basic RAG</h3>
+<p class="text-neutral-400 text-sm">Give the model memory: retrieve relevant passages from your documents and answer based on them.</p>
+</div>
+<div class="divide-y divide-dark-600">
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span><span class="text-lg">🧲</span><div><span class="font-medium">What embeddings are</span><span class="text-neutral-500 text-sm ml-2">- Meaning in vectors</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Vectors that represent the meaning of text; similar ones are close together in space.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's the foundation of every similarity search.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Vector, similarity, semantic space.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span><span class="text-lg">📚</span><div><span class="font-medium">Why RAG</span><span class="text-neutral-500 text-sm ml-2">- Answer questions about your docs</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">RAG (Retrieval-Augmented Generation) searches for relevant passages and gives them to the model as context.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Answers questions about YOUR documents without retraining.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">RAG, retrieval, context.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span><span class="text-lg">🧬</span><div><span class="font-medium">Anatomy of RAG</span><span class="text-neutral-500 text-sm ml-2">- Ingestion + query</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Ingestion (chunk → embed → store) and query (embed the question → find neighbors → assemble the prompt).</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Understanding the flow is what lets you debug it.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Chunk, embed, neighbors.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span><span class="text-lg">🔡</span><div><span class="font-medium">Running embeddings locally</span><span class="text-neutral-500 text-sm ml-2">- nomic-embed-text</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Download a small embedding model and call the embeddings endpoint via API.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Embedding models even run on budget hardware.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">nomic-embed-text, embeddings endpoint, lightweight.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span><span class="text-lg">🗃️</span><div><span class="font-medium">Simple vector database</span><span class="text-neutral-500 text-sm ml-2">- Vector store</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">A vector store (Chroma/FAISS/sqlite-vec) stores vectors for similarity search.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">It's where RAG memory lives.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Chroma, FAISS, sqlite-vec.</p></div></div></div></div>
+<div class="topic-item"><button aria-expanded="false" class="w-full px-6 py-4 flex items-center space-x-3 hover:bg-dark-700/50 transition-colors text-left" onclick="toggleTopic(this)"><span class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span><span class="text-lg">🔄</span><div><span class="font-medium">A minimal end-to-end RAG</span><span class="text-neutral-500 text-sm ml-2">- From .txt to answer</span></div></button><div class="topic-explanation px-6 pb-4"><div class="bg-dark-700/50 rounded-lg p-4 space-y-3 ml-9"><div><span class="text-purple-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm">Ingest a .txt, create embeddings, search, and respond with the local model.</p></div><div><span class="text-purple-400 font-semibold">Why learn:</span><p class="text-neutral-300 text-sm">Close out the track by proving the complete cycle.</p></div><div><span class="text-purple-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm">Ingestion, search, verifiable answer.</p></div></div></div></div>
+</div>
+<div class="p-4 bg-dark-700/30 flex justify-start space-x-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-500 rounded-lg transition-colors" onclick="openModal('modal-3-6')">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-purple-600 hover:bg-purple-500 text-white rounded-lg transition-colors" href="modulo-3-6.html">View Full</a>
+</div>
+</div>
+<!-- NAVEGAÇÃO ENTRE TRILHAS -->
+<div class="flex flex-col sm:flex-row gap-4 mt-10">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="../trilha2/index.html">← Track 2: Hardware &amp; Lab</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../trilha4/index.html">Track 4: Advanced &amp; 24/7 Agents →</a>
+</div>
+</div>
+</main>
+<!-- MODAIS -->
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-1" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.1</span><span class="font-semibold">First model running: Ollama</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-1.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-2" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.2</span><span class="font-semibold">ChatGPT-style interface</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-2.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-3" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.3</span><span class="font-semibold">GGUF and quantization</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-3.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-4" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.4</span><span class="font-semibold">Parameters and quality</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-4.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-5" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.5</span><span class="font-semibold">OpenAI-compatible local API</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-5.html"></iframe>
+</div>
+</div>
+<div class="modal hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-3-6" onclick="if(event.target===this)closeModal()">
+<div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600">
+<div class="p-4 border-b border-dark-600 flex justify-between items-center flex-shrink-0"><div class="flex items-center space-x-3"><span class="text-purple-400 font-bold">3.6</span><span class="font-semibold">Embeddings, memory &amp; RAG</span></div><button class="text-neutral-400 hover:text-white text-2xl leading-none" onclick="closeModal()">×</button></div>
+<iframe class="flex-1 w-full rounded-b-xl" src="modulo-3-6.html"></iframe>
+</div>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){if(window.INEMA&&typeof INEMA.init==='function')INEMA.init();});</script>
+</body>
+</html>

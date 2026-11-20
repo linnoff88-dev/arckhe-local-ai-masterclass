@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>2.3 Operating system, drivers, and foundation | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37,99,235,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Hardware &amp; Lab</a><span>/</span>
+<span class="text-blue-400">Module 2.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛠️ Operating system, drivers, and foundation</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Before downloading the first model, the machine needs to be ready. This module prepares the <strong class="text-neutral-100">terrain</strong> on each system—macOS, Linux+NVIDIA, Windows—installs the right drivers and teaches the hygiene practices that prevent 90% of problems later.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Basic</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. Preparing the ground</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. macOS (Apple Silicon)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Linux + NVIDIA (CUDA)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Windows (+ WSL2)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. AMD (ROCm) and Apple (MLX)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Lab hygiene</a></li>
+</ol>
+<div aria-label="Module 2.3 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="2-3" data-inema-topic="modulo-2-3#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🧰 Preparing the groundwork</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t1-p1">A local AI lab doesn’t need anything exotic — it needs three things <strong class="text-blue-400">in order</strong>: an updated operating system, free disk space, and a terminal at hand. This is the foundation everything in the next tracks will run on. Skipping this part is the number one cause of “I installed it and it didn’t work.”</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Driver"</strong> is the program that lets the system communicate with a piece of hardware — in our case, the graphics card (GPU). Without the right driver, the GPU is in the machine, but the AI software can’t use it. <strong>"Terminal"</strong> is the text window where you type commands (Terminal on macOS, PowerShell on Windows, any shell on Linux) — almost all setup happens there.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed">It's worth having the mental model of <strong class="text-blue-400">stack</strong> that makes local AI possible. Each layer builds on the one below: the model runs only if the runtime exists; the runtime uses the GPU only if the driver is installed; and all of it runs on the hardware.</p>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="The local AI stack: the hardware at the base supports the driver, which supports the runtime, which loads the model at the top" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m23-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m23-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m23-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m23-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m23-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m23-grid)" height="300" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.7" stroke="#60a5fa" stroke-width="2">
+<path d="M380,231 L380,217" marker-end="url(#m23-ah)"></path>
+<path d="M380,163 L380,149" marker-end="url(#m23-ah)"></path>
+<path d="M380,95 L380,81" marker-end="url(#m23-ah)"></path>
+</g>
+<g filter="url(#m23-glow)">
+<rect fill="#0e1622" height="50" rx="12" stroke="url(#m23-grad)" stroke-width="2.5" width="400" x="180" y="28"></rect>
+<rect fill="#0e1622" height="50" rx="12" stroke="url(#m23-grad)" stroke-width="2.5" width="400" x="180" y="96"></rect>
+<rect fill="#0e1622" height="50" rx="12" stroke="url(#m23-grad)" stroke-width="2.5" width="400" x="180" y="164"></rect>
+<rect fill="#0e1622" height="50" rx="12" stroke="url(#m23-grad)" stroke-width="2.5" width="400" x="180" y="232"></rect>
+</g>
+<g font-family="Inter,sans-serif" text-anchor="middle">
+<text fill="#93c5fd" font-size="12" x="380" y="50">LAYER 4</text><text fill="#60a5fa" font-size="16" font-weight="700" x="380" y="68">Model (LLM) — the weights</text>
+<text fill="#93c5fd" font-size="12" x="380" y="118">LAYER 3</text><text fill="#60a5fa" font-size="16" font-weight="700" x="380" y="136">Runtime — Ollama / llama.cpp</text>
+<text fill="#93c5fd" font-size="12" x="380" y="186">LAYER 2</text><text fill="#60a5fa" font-size="16" font-weight="700" x="380" y="204">Driver — CUDA / Metal / ROCm</text>
+<text fill="#93c5fd" font-size="12" x="380" y="254">LAYER 1</text><text fill="#60a5fa" font-size="16" font-weight="700" x="380" y="272">Hardware — GPU · CPU · RAM</text>
+</g>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="248" x="640" y="36"></rect><text fill="#bfe6ff" text-anchor="middle" x="764" y="58">what you discuss</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="248" x="640" y="104"></rect><text fill="#bfe6ff" text-anchor="middle" x="764" y="126">loads and serves the model</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="248" x="640" y="172"></rect><text fill="#bfe6ff" text-anchor="middle" x="764" y="194">talks to the GPU</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="248" x="640" y="240"></rect><text fill="#bfe6ff" text-anchor="middle" x="764" y="262">the physical base</text></g>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read the stack from bottom to top: the <strong class="text-neutral-200">hardware</strong> supports the <strong class="text-neutral-200">driver</strong>, which frees up the GPU for the <strong class="text-neutral-200">runtime</strong>, which finally loads the <strong class="text-neutral-200">model</strong>. This module covers layers 1 and 2—the rest comes in Track 3.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Ready ground</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Operating system in the current version</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>30–50 GB of free disk space for the models</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>GPU driver installed and detecting the card</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Terminal open, and you’re comfortable pasting commands</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Makeshift setup</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>OS stuck on an old version without updates</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Disk nearly full — model doesn’t even finish downloading</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPU present, but no driver (runs everything on the CPU, slowly)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fear of the terminal — gets stuck on the first command</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">OS</div><div class="text-xs text-neutral-400">updated</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Disk</div><div class="text-xs text-neutral-400">free space</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Driver</div><div class="text-xs text-neutral-400">from the GPU</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Terminal</div><div class="text-xs text-neutral-400">by hand</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🍎 macOS (Apple Silicon)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t2-p1">If you have a Mac with an M-series chip (M1, M2, M3, M4), good news: the foundation is already almost ready. The GPU is integrated, and Apple exposes it via <strong class="text-blue-400">Metal</strong> — <strong>there's no separate driver to install</strong>. There's just one piece left: a package manager for installing command-line tools. That's <strong class="text-blue-400">Homebrew</strong>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-1.5 text-neutral-300 text-sm">
+<li><strong>Metal</strong> = Apple’s graphics API; it’s what runtimes like Ollama use to run the model on a Mac’s GPU. It comes with the system.</li>
+<li><strong>MLX</strong> = Apple’s machine learning framework, built for Apple Silicon’s unified memory (more in topic 5).</li>
+<li><strong>Homebrew</strong> = the most popular package manager for Mac; installs terminal programs with a single command.</li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: install Homebrew</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> to get your Mac ready to install Ollama, Python, and whatever else Track 3 requires. Paste this into Terminal and follow the on-screen instructions.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Installs Homebrew (asks for your Mac password)</div>
+<div>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> close and reopen Terminal, then run <span class="font-mono text-blue-400">brew --version</span>. You should see something like <span class="font-mono text-neutral-300">Homebrew 4.x</span>. If the command isn’t found, the installer prints two lines at the end <span class="font-mono text-neutral-300">eval ...</span> — paste them in to add the <span class="font-mono text-neutral-300">brew</span> to PATH.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">On a Mac, you <strong>no</strong> it messes with the GPU driver — Metal is already there. The advantage of Apple Silicon is the <strong>unified memory</strong>: RAM and VRAM are the same pool, so a Mac with 32 GB+ can run models that would stall on a GPU with little VRAM (revisit Track 2.1). The tradeoff is lower bandwidth: it runs large models, but not as fast.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Metal</div><div class="text-xs text-neutral-400">already included</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">No driver</div><div class="text-xs text-neutral-400">nothing to install</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Homebrew</div><div class="text-xs text-neutral-400">brings the tools</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Unified</div><div class="text-xs text-neutral-400">fits a large model</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🐧 Linux + NVIDIA (CUDA)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t3-p1">The most common pairing in AI workstations is <strong class="text-blue-400">Linux + NVIDIA GPU</strong>. This is where the part most people forget comes in: the NVIDIA driver and the <strong class="text-blue-400">CUDA</strong>. Without them, your R$ 10 mil graphics card sits idle and the model runs slowly on the CPU.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"CUDA"</strong> is NVIDIA's software layer that lets programs use the GPU to <em>calculation</em> — not just for graphics. It’s exactly what makes AI run fast on the GPU. CUDA comes with/depends on the NVIDIA driver, so installing the right driver takes care of most of it.</p>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: can the machine see the GPU?</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> confirm that the driver is active and see how much VRAM you have — the number that determines the model size. Paste this into the terminal.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Check the driver, GPU, and VRAM</div>
+<div>nvidia-smi</div>
+<div class="text-neutral-500 mt-2"># List the recommended driver (Ubuntu/derivatives)</div>
+<div>ubuntu-drivers devices</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> <span class="font-mono text-blue-400">nvidia-smi</span> should show a table with the GPU name, driver version, and memory (e.g., <span class="font-mono text-neutral-300">24576MiB</span>). If you get <span class="font-mono text-neutral-300">command not found</span>, the driver still isn’t installed—follow the steps below using what <span class="font-mono text-blue-400">ubuntu-drivers devices</span> mark as <span class="font-mono text-neutral-300">recommended</span>.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed">Installing the driver on Ubuntu is a short sequence:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Update the system</h4>
+<p class="text-neutral-300 text-sm">Run <span class="font-mono text-blue-400">sudo apt update &amp;&amp; sudo apt upgrade</span> to start from a clean base before installing the driver.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Find the right driver</h4>
+<p class="text-neutral-300 text-sm"><span class="font-mono text-blue-400">ubuntu-drivers devices</span> lists compatible drivers and marks the <strong>recommended</strong>. Trust it the first time.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Install</h4>
+<p class="text-neutral-300 text-sm"><span class="font-mono text-blue-400">sudo ubuntu-drivers autoinstall</span> installs the recommended version. To pin a version: <span class="font-mono text-blue-400">sudo apt install nvidia-driver-550</span>.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Restart and check</h4>
+<p class="text-neutral-300 text-sm">Restart and run <span class="font-mono text-blue-400">nvidia-smi</span> again. Now the table with the GPU and VRAM should appear. Done: CUDA is available.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CUDA</div><div class="text-xs text-neutral-400">GPU does the computation</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">nvidia-smi</div><div class="text-xs text-neutral-400">tests the driver</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">recommended</div><div class="text-xs text-neutral-400">trust it</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Restart</div><div class="text-xs text-neutral-400">don't skip</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🪟 Windows (+ optional WSL2)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t4-p1">Windows runs local AI very well, especially on PCs with gaming NVIDIA GPUs. The simplest route: install the driver <strong>GeForce</strong> (or Studio) normally and use Ollama or LM Studio directly on Windows. If you want a Linux environment without switching machines, there’s <strong class="text-blue-400">WSL2</strong>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"WSL2"</strong> (Windows Subsystem for Linux 2) is a Linux <em>for real</em> running inside Windows, with access to the GPU. You get the Linux command ecosystem — many AI tutorials assume Linux — without needing dual boot or another machine.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">🪟 Native Windows</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Simpler: install the GeForce driver and the app (Ollama/LM Studio)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Great if you just want to run and chat with the model</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Fewer steps, fewer things to break</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">🐧 With WSL2</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Linux environment for following tutorials and scripts exactly</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>Good for Docker, Open WebUI, and dev workflows (Tracks 3 and 4)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">•</span><span>The NVIDIA GPU appears inside WSL with the current Windows driver</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: enable WSL2</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> have Ubuntu inside Windows. Open <strong>PowerShell as administrator</strong>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Installs WSL2 + Ubuntu all at once</div>
+<div>wsl --install</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> restart, open the app <strong>Ubuntu</strong> from the Start menu and create a username/password. If you have an NVIDIA GPU with an up-to-date driver on Windows, <span class="font-mono text-blue-400">nvidia-smi</span> run <em>inside</em> Ubuntu's should already detect the card — you don't need to install a driver inside WSL.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Driver</div><div class="text-xs text-neutral-400">Standard GeForce</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Native</div><div class="text-xs text-neutral-400">just run</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">WSL2</div><div class="text-xs text-neutral-400">Linux inside</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">GPU</div><div class="text-xs text-neutral-400">goes to WSL</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🔀 AMD (ROCm) and Apple (MLX) — the overview</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t5-p1">Not everyone has NVIDIA—and that's okay. It's worth knowing the landscape of CUDA alternatives, because it determines what works <strong class="text-blue-400">today, hassle-free</strong>, and what still takes patience.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-1.5 text-neutral-300 text-sm">
+<li><strong>ROCm</strong> = AMD’s answer to CUDA: the layer that lets AMD GPUs run AI computations. Newer and less universally supported than CUDA, but evolving quickly.</li>
+<li><strong>MLX</strong> = Apple’s framework for Apple Silicon; specialized libraries (e.g., <span class="font-mono text-neutral-300">mlx-lm</span>) take advantage of the chip's unified memory.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-blue-500/30">
+<h4 class="font-bold text-blue-400 mb-2">NVIDIA · CUDA</h4>
+<p class="text-neutral-300 text-sm mb-2"><strong>Mature.</strong> The most common and best-supported approach.</p>
+<p class="text-neutral-400 text-xs">Linux or Windows. Works on practically all local AI hardware.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-blue-500/30">
+<h4 class="font-bold text-blue-400 mb-2">AMD · ROCm</h4>
+<p class="text-neutral-300 text-sm mb-2"><strong>Evolving.</strong> Works, but check your card's compatibility first.</p>
+<p class="text-neutral-400 text-xs">Linux is the most solid ground. Ollama already runs on several AMD GPUs.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-blue-500/30">
+<h4 class="font-bold text-blue-400 mb-2">Apple · Metal/MLX</h4>
+<p class="text-neutral-300 text-sm mb-2"><strong>Native.</strong> On a Mac with an M chip, it just works.</p>
+<p class="text-neutral-400 text-xs">No driver. MLX for those who want to go beyond Ollama on Mac.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ The path with the least friction today</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>NVIDIA + CUDA on Linux or Windows</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Apple Silicon + Metal/MLX on Mac</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ollama abstracts all three—you switch machines and the command stays the same</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Where it still hurts</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>ROCm requires checking whether your AMD GPU is on the supported list</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Very new or very old GPUs may still lack support</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mixing manufacturers in the same machine makes setup more complicated</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Don’t get stuck on this choice. If you already have a machine, use what it has — Ollama (Track 3) detects the GPU automatically in most cases. If you’re <em>buy</em> for local AI today, NVIDIA on PC or Apple Silicon on Mac are the paths with the fewest surprises.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CUDA</div><div class="text-xs text-neutral-400">mature</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">ROCm</div><div class="text-xs text-neutral-400">evolving</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MLX</div><div class="text-xs text-neutral-400">native on Mac</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ollama</div><div class="text-xs text-neutral-400">abstracts everything</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧹 Lab cleanup</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t6-p1">The foundation is in place, but here’s the part no one tells you: keeping the lab organized and healthy. Three habits prevent most future headaches — <strong class="text-blue-400">organize where the models are stored, version your configs, and monitor temperature/power consumption.</strong></p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alert: heat and power</h3>
+<p class="text-neutral-300 text-sm mb-3">Running a large model pushes the GPU and CPU to 100% for several minutes at a time—that <strong>heats up</strong> and consumes real power. On a laptop, the impact is greater: the machine may spin up its fans, throttle (reduce performance to protect itself), and drain the battery quickly.</p>
+<ul class="space-y-1.5 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Don’t run it on a bed/sofa that blocks the air vents; use a hard, well-ventilated surface.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Before letting an agent <strong>24/7</strong> (Track 4), check the temperature under load and your electricity bill.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>If the machine shuts itself down under load, it’s almost always overheating—clean out the dust and improve ventilation.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Good hygiene</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>A dedicated folder for the models (you know where everything is)</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Configs and Modelfiles versioned in git</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Keep an eye on <span class="font-mono">nvidia-smi</span> / Activity Monitor under load</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Close what you're not using before loading a large model</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Carelessness</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Models scattered across Downloads, Desktop, and half a dozen folders</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Configs only in your head—you format the drive and lose everything</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore the temperature until the machine freezes</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dozens of things competing for the GPU at the same time</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: environment summary</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> a quick snapshot of your system — OS, RAM, and GPU — so you know what you're working with before choosing models.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500">#!/usr/bin/env bash</div>
+<div class="text-neutral-500"># resumo-do-ambiente.sh — prints OS, RAM, and GPU</div>
+<div class="mt-2">echo "== Sistema =="</div>
+<div>uname -srm</div>
+<div class="mt-2">echo "== RAM =="</div>
+<div>if command -v free &gt;/dev/null; then</div>
+<div>  free -h | awk 'NR==1 || NR==2'</div>
+<div>else</div>
+<div>  echo "RAM: $(( $(sysctl -n hw.memsize) / 1073741824 )) GB"</div>
+<div>fi</div>
+<div class="mt-2">echo "== GPU =="</div>
+<div>if command -v nvidia-smi &gt;/dev/null; then</div>
+<div>  nvidia-smi --query-gpu=name,memory.total --format=csv,noheader</div>
+<div>elif [ "$(uname)" = "Darwin" ]; then</div>
+<div>  system_profiler SPDisplaysDataType | grep -E "Chipset|VRAM|Metal"</div>
+<div>else</div>
+<div>  echo "Sem GPU NVIDIA detectada (CPU-only ou outra GPU)."</div>
+<div>fi</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> save as <span class="font-mono text-blue-400">resumo-do-ambiente.sh</span> and run <span class="font-mono text-blue-400">bash resumo-do-ambiente.sh</span>. You should see three blocks — <strong>System</strong>, <strong>RAM</strong> e <strong>GPU</strong>. Save this output: it's the starting point for deciding on the model size (Track 2.2) and opening a ticket if something goes wrong.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-3#q1">
+<p class="font-medium mb-4">Self-check (optional): what is the <strong>CUDA</strong> and why does it matter in a Linux + NVIDIA lab?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) A small AI model that runs directly on the CPU</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) NVIDIA’s software layer that lets the GPU perform AI calculations — without it, the GPU sits idle and everything runs slowly on the CPU</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) A package manager, like Mac’s Homebrew</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Organize</div><div class="text-xs text-neutral-400">models folder</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Version control</div><div class="text-xs text-neutral-400">configs in git</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Monitor</div><div class="text-xs text-neutral-400">heat and power</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Summary</div><div class="text-xs text-neutral-400">of the environment</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">The foundation is a stack</strong><span class="text-neutral-400"> — hardware → driver → runtime → model; each layer depends on the one below it.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Each OS has its own path</strong><span class="text-neutral-400"> — macOS only needs Homebrew; Linux+NVIDIA needs the driver/CUDA; Windows runs natively or through WSL2.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">CUDA is mature; ROCm/MLX are options</strong><span class="text-neutral-400"> — and Ollama abstracts all three for you.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Hygiene matters</strong><span class="text-neutral-400"> — organize models, version configs, and monitor heat and power, especially for 24/7 use.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">2.4 — Private network with Tailscale</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-2.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-4.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-3#q1',{answer:1,explain:{0:'Não. Isso descreve um modelo pequeno rodando na CPU — o CUDA não é um modelo, é a camada que destrava a GPU.',1:'Isso. CUDA é a camada da NVIDIA que deixa a GPU fazer o cálculo de IA; sem ela, a placa fica ociosa e tudo cai na CPU, lento.',2:'Não. Gerenciador de pacotes é o Homebrew (macOS) ou o apt (Linux). CUDA é a camada GPU↔software.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

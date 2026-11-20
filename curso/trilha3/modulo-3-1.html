@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>3.1 Primeiro modelo rodando: Ollama | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-3-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha3/modulo-3-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha3/modulo-3-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
+<button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Instalação &amp; Técnicas</a><span>/</span>
+<span class="text-purple-400">Módulo 3.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🦙 Primeiro modelo rodando: Ollama</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Chega de teoria — aqui você liga o motor. Em poucos comandos você instala o <strong class="text-neutral-100">Ollama</strong>, baixa um modelo e conversa com uma IA que roda 100% na sua máquina. Este é o seu <strong class="text-neutral-100">primeiro resultado</strong>: copiou, colou, funcionou.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~30</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Por que Ollama pra começar</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Instalar em 1 comando</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Seu primeiro chat</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Gerenciando modelos</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. O tamanho certo pro seu hardware</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Customizar com Modelfile</a></li>
+</ol>
+<div aria-label="Progresso do módulo 3.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-1" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="3-1" data-inema-topic="modulo-3-1#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🚀 Por que Ollama pra começar</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t1-p1">Rodar um LLM "na mão" envolve baixar pesos, compilar bibliotecas e ajustar mil flags. O <strong class="text-purple-400">Ollama</strong> resolve isso: é um <strong>runtime</strong> que baixa, gerencia e roda modelos locais com um único comando. Você digita <span class="font-mono text-purple-400">ollama run</span> e, em segundos, está conversando. É a menor fricção possível até o seu primeiro resultado.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm mb-2"><strong>"Runtime"</strong> é o programa que carrega o modelo na memória e gera o texto (a "inferência"). Sem ele, os pesos são só um arquivo parado no disco.</p>
+<p class="text-neutral-300 text-sm"><strong>"Ollama"</strong> é um desses runtimes — feito para ser fácil. Por baixo ele usa o <span class="font-mono text-purple-400">llama.cpp</span> (o motor que faz o modelo rodar em CPU e GPU), mas esconde toda a complexidade atrás de comandos simples, em macOS, Linux e Windows.</p>
+</div>
+<!-- SVG PIPELINE install -> pull -> run -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Pipeline do Ollama: instalar uma vez, baixar o modelo com pull, rodar com run e conversar — tudo na sua máquina" class="w-full h-auto" role="img" viewbox="0 0 1000 210">
+<defs>
+<lineargradient id="m31-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m31-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m31-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m31-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+</defs>
+<rect fill="url(#m31-grid)" height="210" width="1000" x="0" y="0"></rect>
+<!-- conexões -->
+<g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2.5">
+<path d="M222,90 L262,90" marker-end="url(#m31-ah)"></path>
+<path d="M474,90 L514,90" marker-end="url(#m31-ah)"></path>
+<path d="M726,90 L766,90" marker-end="url(#m31-ah)"></path>
+</g>
+<!-- caixas -->
+<g font-family="Inter,sans-serif">
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="68" rx="13" stroke="url(#m31-grad)" stroke-width="2.5" width="180" x="42" y="56"></rect></g>
+<text fill="#c084fc" font-size="16" font-weight="700" text-anchor="middle" x="132" y="86">1 · Instalar</text>
+<text fill="#d8b4fe" font-size="11.5" text-anchor="middle" x="132" y="106">install.sh (uma vez)</text>
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="68" rx="13" stroke="url(#m31-grad)" stroke-width="2.5" width="180" x="294" y="56"></rect></g>
+<text fill="#c084fc" font-size="16" font-weight="700" text-anchor="middle" x="384" y="86">2 · Baixar</text>
+<text fill="#d8b4fe" font-size="11.5" text-anchor="middle" x="384" y="106">ollama pull</text>
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="68" rx="13" stroke="url(#m31-grad)" stroke-width="2.5" width="180" x="546" y="56"></rect></g>
+<text fill="#c084fc" font-size="16" font-weight="700" text-anchor="middle" x="636" y="86">3 · Rodar</text>
+<text fill="#d8b4fe" font-size="11.5" text-anchor="middle" x="636" y="106">ollama run</text>
+<g filter="url(#m31-glow)"><rect fill="#1a1230" height="68" rx="13" stroke="url(#m31-grad)" stroke-width="2.5" width="180" x="798" y="56"></rect></g>
+<text fill="#c084fc" font-size="16" font-weight="700" text-anchor="middle" x="888" y="86">4 · Conversar</text>
+<text fill="#d8b4fe" font-size="11.5" text-anchor="middle" x="888" y="106">resposta local</text>
+</g>
+<!-- faixa ciano: tudo local -->
+<g>
+<rect fill="#0e1b26" height="34" opacity="0.9" rx="9" stroke="#38bdf8" stroke-width="1.5" width="936" x="42" y="150"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="510" y="172">Tudo isso acontece dentro da sua máquina — nada sai para a nuvem 🔒</text>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Leia da esquerda para a direita: você <strong class="text-neutral-200">instala uma vez</strong>, depois é só <strong class="text-neutral-200">baixar (pull)</strong> e <strong class="text-neutral-200">rodar (run)</strong> quantos modelos quiser. A faixa azul lembra o ponto central: <strong class="text-neutral-200">é tudo local</strong>.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Com Ollama</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Um comando baixa e roda o modelo</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Usa GPU automaticamente quando há</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mesmo fluxo em Mac, Linux e Windows</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Já vem com uma API local pronta</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Compilando na mão</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Baixar pesos e converter formatos você mesmo</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compilar bibliotecas e acertar drivers</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Dezenas de flags antes do primeiro "oi"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ótimo para aprender — péssimo para começar</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Runtime</div><div class="text-xs text-neutral-400">roda o modelo</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">1 comando</div><div class="text-xs text-neutral-400">do zero ao chat</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Multiplataforma</div><div class="text-xs text-neutral-400">Mac/Linux/Win</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">100% local</div><div class="text-xs text-neutral-400">nada na nuvem</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📥 Instalar em 1 comando</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t2-p1">A instalação é a parte mais curta deste módulo. Em <strong class="text-purple-400">macOS e Linux</strong> é um único comando colado no terminal; no <strong class="text-purple-400">Windows</strong> é um instalador clicável. Veja os três passos:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Rodar o instalador</h4>
+<p class="text-neutral-300 text-sm">No Mac/Linux, cole o comando abaixo. No Windows, baixe o app em <span class="font-mono text-purple-400">ollama.com/download</span> e clique em instalar.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Confirmar que entrou</h4>
+<p class="text-neutral-300 text-sm">Rode <span class="font-mono text-purple-400">ollama --version</span>. Se aparecer um número de versão, está pronto.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">O serviço já roda</h4>
+<p class="text-neutral-300 text-sm">O Ollama sobe um serviço de fundo que escuta em <span class="font-mono text-purple-400">localhost:11434</span>. É a API local que vamos usar lá na frente (módulo 3.5).</p>
+</div>
+</div>
+</div>
+<!-- COPY-RUN: instalar -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copie e rode: instalar o Ollama</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> deixar o comando <span class="font-mono">ollama</span> disponível na sua máquina.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># macOS e Linux — cole no terminal</div>
+<div>curl -fsSL https://ollama.com/install.sh | sh</div>
+<div class="text-neutral-500 mt-3"># Windows — baixe e rode o instalador</div>
+<div class="text-neutral-500"># https://ollama.com/download</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> o script termina sem erro e, ao final, sugere rodar um modelo. Se você tem GPU NVIDIA, ele detecta o CUDA sozinho. Passe para o próximo bloco para confirmar a versão.</p>
+</div>
+<!-- COPY-RUN: versão -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copie e rode: confirmar a instalação</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> provar que o Ollama está instalado e respondendo.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>ollama --version</div>
+<div class="text-neutral-500 mt-2"># saída esperada (a versão pode mudar):</div>
+<div class="text-purple-400">ollama version is 0.x.y</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> apareceu uma linha com <span class="font-mono">ollama version is ...</span>? Então o motor está no ar. Se der "comando não encontrado", feche e reabra o terminal (ou, no Windows, reinicie a sessão).</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Aquele <span class="font-mono">| sh</span> no fim do comando significa "execute o script que acabou de baixar". É o padrão oficial do Ollama, mas o bom hábito vale sempre: antes de canalizar um script para o shell, vale abrir a URL no navegador e dar uma olhada no que ele faz.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">💬 Seu primeiro chat</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t3-p1">Hora do momento "uau". Um único comando baixa um modelo (se ainda não estiver no disco) e abre um prompt de conversa direto no terminal. Comece com o <strong class="text-purple-400">llama3.2</strong> — é leve, baixa rápido e roda bem na maioria das máquinas.</p>
+<!-- COPY-RUN: primeiro chat -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copie e rode: abrir o chat</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar um modelo e conversar com ele agora.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># o queridinho para começar (leve e esperto)</div>
+<div>ollama run llama3.2</div>
+<div class="text-neutral-500 mt-3"># alternativas — escolha conforme sua máquina</div>
+<div>ollama run qwen2.5:7b   <span class="text-neutral-500"># mais capaz, pede mais memória</span></div>
+<div>ollama run gemma2:2b    <span class="text-neutral-500"># minúsculo, roda em quase tudo</span></div>
+<div class="text-neutral-500 mt-3"># dentro do chat, é só digitar. para sair:</div>
+<div>/bye</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> na primeira vez ele mostra uma barra de download; depois aparece um prompt <span class="font-mono text-purple-400">&gt;&gt;&gt;</span>. Digite, por exemplo, <em>"explique o que é IA local em 2 frases"</em> e leia a resposta saindo da sua própria máquina. Para encerrar, digite <span class="font-mono">/bye</span>.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> O que está acontecendo</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Sem internet depois do download:</strong> baixou uma vez, roda offline para sempre.</li>
+<li><strong>A primeira resposta pode demorar um pouco</strong> — é o modelo subindo para a memória. As próximas vêm mais rápido.</li>
+<li><strong>Nada é enviado para fora:</strong> seu prompt e a resposta ficam só no seu computador.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 font-bold mb-1">llama3.2</div>
+<p class="text-xs text-neutral-400">Equilíbrio ótimo. Comece por aqui se está na dúvida.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 font-bold mb-1">qwen2.5:7b</div>
+<p class="text-xs text-neutral-400">Mais "inteligente", bom em código e raciocínio. Pede mais RAM/VRAM.</p>
+</div>
+<div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
+<div class="text-purple-400 font-bold mb-1">gemma2:2b</div>
+<p class="text-xs text-neutral-400">Minúsculo e rápido. Salva o dia em máquinas modestas.</p>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Travou ou ficou lento demais? Saia com <span class="font-mono">/bye</span> e tente um modelo menor (o <span class="font-mono">gemma2:2b</span> quase sempre roda). Tamanho de modelo vs. memória é o assunto do tópico 5 — e ali você aprende a escolher sem chutar.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🗂️ Gerenciando modelos</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t4-p1">Com o tempo você vai colecionar alguns modelos. Quatro comandos dão conta de quase tudo: <strong class="text-purple-400">pull</strong> baixa, <strong class="text-purple-400">list</strong> mostra o que você tem, <strong class="text-purple-400">ps</strong> mostra o que está rodando agora e <strong class="text-purple-400">rm</strong> apaga para liberar disco.</p>
+<!-- COPY-RUN: gerenciar -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copie e rode: os 4 comandos do dia a dia</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar, listar, inspecionar e remover modelos.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># baixar sem abrir o chat (útil para deixar pronto)</div>
+<div>ollama pull &lt;nome-do-modelo&gt;</div>
+<div class="text-neutral-500 mt-3"># listar os modelos que já estão no disco</div>
+<div>ollama list</div>
+<div class="text-neutral-500 mt-3"># ver o que está carregado na memória agora</div>
+<div>ollama ps</div>
+<div class="text-neutral-500 mt-3"># apagar um modelo para liberar espaço</div>
+<div>ollama rm &lt;nome-do-modelo&gt;</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode <span class="font-mono">ollama list</span> e veja a tabela com nome, tamanho e data. Depois de um <span class="font-mono">ollama rm</span>, rode <span class="font-mono">list</span> de novo — o modelo sumiu e o espaço voltou.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">pull</div><div class="text-xs text-neutral-400">baixa o modelo</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">list</div><div class="text-xs text-neutral-400">o que você tem</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">ps</div><div class="text-xs text-neutral-400">o que roda agora</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">rm</div><div class="text-xs text-neutral-400">apaga e libera</div></div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📁</span> Onde ficam os arquivos</h3>
+<p class="text-neutral-300 text-sm mb-2">Os pesos baixados ficam guardados localmente, em uma pasta do Ollama:</p>
+<div class="font-mono text-xs bg-dark-900 rounded-lg p-3 border border-dark-600 text-neutral-300 overflow-x-auto">
+<div>macOS / Linux:  ~/.ollama/models</div>
+<div>Windows:        C:\Users\&lt;você&gt;\.ollama\models</div>
+</div>
+<p class="text-neutral-300 text-sm mt-2">É por isso que um modelo de vários GB só baixa uma vez: nas próximas, o Ollama lê do disco. Fique de olho no espaço — modelos grandes somam rápido.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📐 O tamanho certo pro seu hardware</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t5-p1">Aquele número na tag — <span class="font-mono text-purple-400">:2b</span>, <span class="font-mono text-purple-400">:7b</span>, <span class="font-mono text-purple-400">:14b</span> — é o tamanho do modelo em <strong class="text-purple-400">bilhões de parâmetros</strong>. Mais parâmetros = mais "inteligência", mais memória e mais lentidão. A regra de ouro do iniciante: <strong>comece pequeno e suba só quando precisar</strong>.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Começar pequeno</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Baixa rápido e roda na primeira tentativa</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Você sente a velocidade real da sua máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Sobe de tamanho com confiança, sabendo o limite</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pegar o maior de cara</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Download enorme antes de qualquer resultado</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pode não caber na memória (erro de "out of memory")</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Roda arrastado e te faz achar que "local é ruim"</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">📊</span> Guia rápido por memória (regra de bolso)</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-3"><span class="font-mono text-purple-400 w-20 shrink-0">:2b–:3b</span><span class="text-neutral-300 text-sm">≈ 8 GB de RAM. Roda em quase qualquer laptop. Ex.: <span class="font-mono">gemma2:2b</span>.</span></div>
+<div class="flex items-center gap-3"><span class="font-mono text-purple-400 w-20 shrink-0">:7b–:8b</span><span class="text-neutral-300 text-sm">≈ 16 GB de RAM (ou 8 GB de VRAM). O ponto doce do dia a dia. Ex.: <span class="font-mono">llama3.2</span>, <span class="font-mono">qwen2.5:7b</span>.</span></div>
+<div class="flex items-center gap-3"><span class="font-mono text-purple-400 w-20 shrink-0">:13b–:14b</span><span class="text-neutral-300 text-sm">≈ 32 GB de RAM (ou 16 GB de VRAM). Mais capaz, já pede uma máquina parruda.</span></div>
+<div class="flex items-center gap-3"><span class="font-mono text-purple-400 w-20 shrink-0">:32b+</span><span class="text-neutral-300 text-sm">Pede bastante VRAM ou memória unificada alta. Terreno da Trilha 2.</span></div>
+</div>
+<p class="text-neutral-500 text-xs mt-4">Valores aproximados, contando que o Ollama baixa por padrão uma versão "quantizada" (comprimida) — a fundo no módulo 3.3. Para o cálculo certo de memória, veja a Trilha 2.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Não sabe quanta memória você tem? Volte um instante à Trilha 2: no Linux, <span class="font-mono">free -h</span>; com GPU NVIDIA, <span class="font-mono">nvidia-smi</span> mostra a VRAM. Esse número é exatamente o teto que decide qual tag <span class="font-mono">:Nb</span> cabe.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🛠️ Customizar com Modelfile</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-1-t6-p1">Até aqui você usou os modelos "de fábrica". Mas dá para criar a sua própria versão — com personalidade, regras e tom fixos — sem treinar nada. O segredo é o <strong class="text-purple-400">Modelfile</strong>: uma receitinha de texto que o Ollama transforma num modelo pronto e nomeado por você.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Modelfile"</strong> é um arquivo de texto (parecido com um <span class="font-mono">Dockerfile</span>, se você conhece) que define a receita do seu modelo: de qual modelo base partir (<span class="font-mono">FROM</span>), qual instrução fixa dar (<span class="font-mono">SYSTEM</span>) e quais parâmetros usar. O Ollama "assa" essa receita num modelo novo que você chama pelo nome.</p>
+</div>
+<!-- COPY-RUN: Modelfile -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copie e rode: criar "meu-assistente"</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> nascer um assistente com personalidade fixa, a partir de um modelo que você já baixou.</p>
+<p class="text-neutral-400 text-sm mb-2">1) Crie um arquivo chamado <span class="font-mono text-purple-400">Modelfile</span> (sem extensão) com este conteúdo:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div><span class="text-purple-400">FROM</span> llama3.2</div>
+<div class="mt-2"><span class="text-neutral-500"># instrução fixa que define o "papel"</span></div>
+<div><span class="text-purple-400">SYSTEM</span> "Você é um assistente técnico de &lt;sua área aqui&gt;.</div>
+<div>Responda em português, direto ao ponto, em no máximo 3 frases."</div>
+<div class="mt-2"><span class="text-neutral-500"># parâmetro opcional: menos criatividade, mais foco</span></div>
+<div><span class="text-purple-400">PARAMETER</span> temperature 0.4</div>
+</div>
+<p class="text-neutral-400 text-sm mb-2">2) Na mesma pasta, transforme a receita num modelo:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>ollama create meu-assistente -f Modelfile</div>
+<div class="text-neutral-500 mt-2"># agora é só conversar com a SUA versão:</div>
+<div>ollama run meu-assistente</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode <span class="font-mono">ollama list</span> e veja <span class="font-mono text-purple-400">meu-assistente</span> na lista. Ao conversar, ele já obedece ao tom que você definiu — sem precisar repetir o system prompt toda vez. Troque os trechos em <span class="font-mono">&lt;...&gt;</span> pelo que fizer sentido para você.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-1#q1">
+<p class="font-medium mb-4">Auto-checagem (opcional): qual comando você usa para <em>baixar</em> um modelo sem abrir o chat?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) <span class="font-mono">ollama run &lt;modelo&gt;</span></button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) <span class="font-mono">ollama pull &lt;modelo&gt;</span></button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) <span class="font-mono">ollama create &lt;modelo&gt;</span></button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">FROM</div><div class="text-xs text-neutral-400">modelo base</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">SYSTEM</div><div class="text-xs text-neutral-400">a personalidade</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">PARAMETER</div><div class="text-xs text-neutral-400">ajuste fino</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1 font-mono">create</div><div class="text-xs text-neutral-400">assa o modelo</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Ollama = menor fricção</strong><span class="text-neutral-400"> — um runtime que baixa, gerencia e roda modelos com um comando, em qualquer SO.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Instalar e conversar</strong><span class="text-neutral-400"> — <span class="font-mono">install.sh</span> → <span class="font-mono">ollama --version</span> → <span class="font-mono">ollama run llama3.2</span>.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quatro comandos bastam</strong><span class="text-neutral-400"> — <span class="font-mono">pull</span>, <span class="font-mono">list</span>, <span class="font-mono">ps</span>, <span class="font-mono">rm</span> cuidam dos seus modelos.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Comece pequeno e personalize</strong><span class="text-neutral-400"> — escolha a tag <span class="font-mono">:Nb</span> que cabe na memória e crie o seu modelo com um Modelfile.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">3.2 — Interface tipo ChatGPT: Open WebUI &amp; LM Studio</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-2.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-1#q1',{answer:1,explain:{0:'Quase — o run também baixa, mas ele abre o chat junto. Para só baixar e deixar pronto, use o pull.',1:'Isso. O ollama pull baixa o modelo para o disco sem abrir a conversa.',2:'Não. O create monta um modelo novo a partir de um Modelfile; ele não baixa um modelo da biblioteca.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

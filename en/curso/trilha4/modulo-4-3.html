@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>4.3 Step-by-step #1: 24/7 security scanner | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Advanced &amp; 24/7 Agents</a><span>/</span>
+<span class="text-amber-400">Module 4.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🛡️ Step-by-step #1: 24/7 security scanner</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Time to build the first worker in your fleet: a worker that <strong class="text-neutral-100">scans your code all the time</strong> for leaked secrets and vulnerable dependencies — deterministic tools do the heavy lifting, the local model triages what’s serious, and cron keeps everything running. Nothing leaves the machine.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. The scanner’s goal</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Solution design</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Step 1 · deterministic scan</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Step 2 · the agent reviews</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Step 3 · schedule 24/7</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Hardening the worker</a></li>
+</ol>
+<div aria-label="Module 4.3 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="4-3" data-inema-topic="modulo-4-3#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 The scanner's goal</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p1">Security audits are often rare events: someone runs a few tools before an important deploy and forgets about them the rest of the time. With local AI <strong class="text-amber-400">unlimited and always on</strong>, you can reverse this—a worker scans your repository <strong class="text-amber-400">continuously</strong>, looking for leaked secrets, vulnerable dependencies, and unsafe patterns without costing you anything beyond electricity.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Secret"</strong> is any credential that accidentally leaks into code: an API key, token, database password. <strong>"Security scanner"</strong> is a program that scans code for these secrets and other known risks. Here it becomes a <strong>24/7 worker</strong>: a process that runs on its own, in a loop, without you having to press a button.</p>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> What this employee searches for</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Leaked secrets:</strong> API keys and passwords that accidentally made it into a commit.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Vulnerable dependencies:</strong> libraries with known CVEs (npm, pip).</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Unsafe patterns:</strong> suspicious things that deserve a reviewer’s attention.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>What’s new:</strong> alert only when something appears that wasn’t there yesterday.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Why this only makes sense locally</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>Continuous scanning = many model calls. In the cloud, each call has a toll; 24/7 gets expensive fast.</li>
+<li>Your source code is sensitive — sending it to a third-party server just to “analyze” it is exactly what you want to avoid.</li>
+<li>Local solves both at once: unlimited <em>e</em> private. The code never leaves the machine.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Secrets</div><div class="text-xs text-neutral-400">leaked keys</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Deps</div><div class="text-xs text-neutral-400">Known CVEs</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">24/7</div><div class="text-xs text-neutral-400">always watching</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Local</div><div class="text-xs text-neutral-400">nothing leaks</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🗺️ Solution design</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">Before the code, the design. The secret to a good scanner isn’t throwing everything at the LLM—it’s a <strong class="text-amber-400">conveyor belt</strong>: inexpensive, precise tools detect; the local model just <strong class="text-amber-400">screens and explains</strong>, and cron runs it again. Each part does what it does best.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Scanning pipeline: the repository passes through deterministic tools, then the local model that performs triage and generates a dated report; a cron loop repeats the cycle 24/7" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m43-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m43-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m43-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m43-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m43-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m43-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- fluxo principal (âmbar) -->
+<g fill="none" opacity="0.85" stroke="#fbbf24" stroke-width="2.5">
+<path d="M180,120 H293" marker-end="url(#m43-ah)"></path>
+<path d="M443,120 H556" marker-end="url(#m43-ah)"></path>
+<path d="M706,120 H819" marker-end="url(#m43-ah)"></path>
+</g>
+<!-- laço de cron (ciano) -->
+<path d="M894,156 C894,206 105,206 105,156" fill="none" marker-end="url(#m43-ahc)" opacity="0.6" stroke="#38bdf8" stroke-dasharray="6 5" stroke-width="2"></path>
+<text fill="#8fd0f5" font-family="Inter,sans-serif" font-size="12.5" font-weight="600" text-anchor="middle" x="500" y="199">step 3 · cron repeats the cycle 24/7 — alert only on what's new</text>
+<!-- rótulos de passo -->
+<g fill="#f59e0b" font-family="Inter,sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+<text x="368" y="74">step 1 · detect</text>
+<text x="631" y="74">step 2 · triage</text>
+</g>
+<!-- Box A: Repo (âmbar) -->
+<g filter="url(#m43-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m43-grad)" stroke-width="2.5" width="150" x="30" y="84"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="19" font-weight="700" text-anchor="middle" x="105" y="116">Repo</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="105" y="136">your local code</text>
+<!-- Box B: Ferramentas (ciano) -->
+<rect fill="#0e1b26" height="72" rx="14" stroke="#38bdf8" stroke-width="2" width="150" x="293" y="84"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="368" y="114">Tools</text>
+<text fill="#8fd0f5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="368" y="134">gitleaks · audit</text>
+<!-- Box C: LLM local (ciano) -->
+<rect fill="#0e1b26" height="72" rx="14" stroke="#38bdf8" stroke-width="2" width="150" x="556" y="84"></rect>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="631" y="114">Local LLM</text>
+<text fill="#8fd0f5" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="631" y="134">risk screening</text>
+<!-- Box D: Relatório (âmbar) -->
+<g filter="url(#m43-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m43-grad)" stroke-width="2.5" width="151" x="819" y="84"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="894" y="114">Report</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="894" y="134">dated + alert</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from left to right: the <strong class="text-neutral-200">repository</strong> feeds the <strong class="text-neutral-200">deterministic tools</strong> (step 1), the findings go to the <strong class="text-neutral-200">local model</strong> that screens the risk (step 2), and returns a <strong class="text-neutral-200">dated report</strong>. The cyan arrow below is the <strong class="text-neutral-200">cron</strong> (step 3), closing the 24/7 loop.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t2-p2">These three steps are exactly the next three sections. In summary:</p>
+<!-- TIMELINE DOS PASSOS -->
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Deterministic scanning first</h4>
+<p class="text-neutral-300 text-sm">Tools like <span class="font-mono text-amber-400">gitleaks</span> e <span class="font-mono text-amber-400">npm audit</span> find secrets and CVEs accurately — fast, inexpensive, and without hallucinations. They do the raw detection.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The local model triages the findings</h4>
+<p class="text-neutral-300 text-sm">The LLM steps in <em>then</em>: reads the list of findings, classifies the risk (high/medium/low), and suggests a fix in clear language. It explains; it doesn’t make things up.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Cron schedules and keeps it running 24/7</h4>
+<p class="text-neutral-300 text-sm">A scheduler runs the script every few hours, saves <span class="font-mono text-amber-400">relatorio-AAAA-MM-DD.md</span> and only lets you know when something appears <strong>new</strong>. No noise.</p>
+</div>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔍 Step 1 · deterministic scan</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">The temptation is to ask the LLM to "find the security issues". <strong class="text-amber-400">Don’t do this first.</strong> A model might miss an obvious secret or invent one that doesn’t exist. Deterministic tools — which always give the same answer for the same input — detect them with surgical precision. Run them first. The LLM comes in only at step 2.</p>
+<!-- COPY-RUN: ferramentas determinísticas -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: the detection tools</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> find leaked secrets and vulnerable dependencies without touching the model. Run it from your project root.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># 1) secrets in code and in git history</div>
+<div>gitleaks detect --source . --no-banner</div>
+<div class="text-neutral-500 mt-3"># 2) vulnerable dependencies — Node</div>
+<div>npm audit --audit-level=high</div>
+<div class="text-neutral-500 mt-3"># 2) vulnerable dependencies — Python</div>
+<div>pip-audit</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> if there’s a secret, the <span class="font-mono text-amber-400">gitleaks</span> exits with a nonzero code and lists the file + line. The <span class="font-mono text-amber-400">npm audit</span> / <span class="font-mono text-amber-400">pip-audit</span> print CVEs by severity. Clean repo = empty output and exit 0.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Intentionally combine the two worlds: the deterministic tool is <strong>needed but dumb</strong> (spots the pattern, doesn't understand the context); the LLM is <strong>flexible but fallible</strong> (understands, but can be wrong). Let each do what it's good at — the tool detects, the model explains. Never the other way around.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">gitleaks</div><div class="text-xs text-neutral-400">secrets</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">npm audit</div><div class="text-xs text-neutral-400">Node dependencies</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">pip-audit</div><div class="text-xs text-neutral-400">Python dependencies</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Deterministic</div><div class="text-xs text-neutral-400">without hallucinating</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🤖 Step 2 · the agent reviews</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">Now the local model becomes truly useful. It doesn't search for anything—it receives the <strong class="text-amber-400">list of findings</strong> of the tools and does what a human would do in a review: assigns a risk level to each item and explains the fix in one line. You call the model through the <strong class="text-amber-400">OpenAI-compatible local API</strong> (the one from Ollama, from track 3.5).</p>
+<!-- COPY-RUN: prompt de triagem -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: the local model triages a finding</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> send a finding to the model and receive a risk assessment + fix. Endpoint <span class="font-mono text-amber-400">localhost</span> — nothing leaves the machine.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>  -H "Content-Type: application/json" -d '{</div>
+<div>    "model": "qwen2.5:7b",</div>
+<div>    "temperature": 0.2,</div>
+<div>    "messages": [</div>
+<div>      {"role":"system","content":"You are a reviewer of</div>
+<div>      security. For each finding, give the risk</div>
+<div>      (high/medium/low) and the correction in 1 line.</div>
+<div>      Don’t make up findings that aren’t on the list."},</div>
+<div>      {"role":"user","content":"gitleaks finding:"}</div>
+<div>      AWS_SECRET_KEY exposed in config/prod.env:12"}</div>
+<div>    ]</div>
+<div>  }'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the JSON response contains <span class="font-mono text-amber-400">.choices[0].message.content</span> with something like "Risk: high — revoke the key in AWS, remove it from history, and use an environment variable." A <span class="font-mono text-amber-400">temperature</span> low keeps triage consistent.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t4-p2">The key point is <strong class="text-amber-400">division of labor</strong>: the model is great at prioritizing and explaining, and terrible as a source of truth. See where to trust it and where not to:</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Good model usage</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Prioritize: what’s truly serious versus noise</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Explain the risk in plain English</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Suggest a concrete fix</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Summarize 50 findings in one paragraph</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Model misuse</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Be the only one who “looks for” secrets</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trust it to say everything is clean</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Apply fixes on its own, without you seeing them</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Invent CVEs the tool didn’t find</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⏰ Step 3 · schedule 24/7</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">Detection + triage become a <strong class="text-amber-400">employee</strong> when they run on their own. This is where the <span class="font-mono text-amber-400">cron</span> (the time-based scheduler, from section 4.2) comes in: it runs the script every few hours, records a <strong class="text-amber-400">dated report</strong> and—and the part that keeps you sane—only bothers you when there’s something <strong class="text-amber-400">new</strong> since the last round.</p>
+<!-- COPY-RUN PRINCIPAL: o script completo -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run main: the pipeline script</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> put it all together — gitleaks detects, the local API triages, and out comes <span class="font-mono text-amber-400">relatorio-AAAA-MM-DD.md</span>. Save it as <span class="font-mono text-amber-400">scan.sh</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500">#!/usr/bin/env bash</div>
+<div class="text-neutral-500"># scan.sh — local 24/7 scan, nothing leaves the machine</div>
+<div>set -euo pipefail</div>
+<div>DATA=$(date +%F)             # 2026-06-29</div>
+<div>REL="relatorios/relatorio-$DATA.md"; mkdir -p relatorios</div>
+<div class="text-neutral-500 mt-3"># 1) deterministic: detects secrets</div>
+<div>gitleaks detect --source . --no-banner \</div>
+<div>  --report-format json --report-path /tmp/leaks.json || true</div>
+<div class="text-neutral-500 mt-3"># 2) triage with the LOCAL model (Ollama API)</div>
+<div>BODY=$(jq -n --rawfile L /tmp/leaks.json '{</div>
+<div>  model:"qwen2.5:7b", temperature:0.2, messages:[</div>
+<div>  {role:"system",content:"Security reviewer. Give</div>
+<div>  risk and fix in 1 line per finding."},</div>
+<div>  {role:"user",content:("Findings:\n"+$L)}]}')</div>
+<div>RESP=$(curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>  -H "Content-Type: application/json" -d "$BODY" \</div>
+<div>  | jq -r '.choices[0].message.content')</div>
+<div class="text-neutral-500 mt-3"># 3) save the dated report</div>
+<div>printf '# Security — %s\n\n%s\n' "$DATA" "$RESP" &gt; "$REL"</div>
+<div>echo "ok: $REL"</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run <span class="font-mono text-amber-400">bash scan.sh</span> once. It should appear <span class="font-mono text-amber-400">ok: relatorios/relatorio-2026-06-29.md</span> and the file contains the model’s triage. All via <span class="font-mono text-amber-400">localhost</span>.</p>
+</div>
+<!-- COPY-RUN: agendar com cron -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⏱️</span> Copy-run: keep it running 24/7</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> run every 6 hours, automatically. Open <span class="font-mono text-amber-400">crontab -e</span> and add:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># min hour day month weekday command</div>
+<div>0 */6 * * * cd ~/meu-projeto &amp;&amp; bash scan.sh &gt;&gt; ~/scan.log 2&gt;&amp;1</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> after a few hours, check <span class="font-mono text-amber-400">~/scan.log</span> and the folder <span class="font-mono text-amber-400">relatorios/</span> getting dated files. To “alert only on new items,” compare today’s report with yesterday’s (<span class="font-mono text-amber-400">diff</span>) and notify only if there’s a difference.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">The enemy of a 24/7 worker is <strong>alert fatigue</strong>: if it alerts you every round, you’ll stop reading. That’s why “alert only on what’s new” isn’t a minor detail—it determines whether you’ll trust the employee or silence it in the first week.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔒 Hardening the worker</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">It works — now make it reliable. A scanner that screams false positive all day, or slips out of scope, becomes just more noise to ignore. And there's a line that <strong class="text-amber-400">doesn't overlap</strong>: the code doesn’t go anywhere. These practices separate a toy from an employee you can trust.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Do this</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Keep the model 100% local (endpoint <span class="font-mono">localhost</span>)</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Define the scope: folders and file types that matter</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Maintain an allowlist of known false positives</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Treat the report as a suggestion—you decide and make corrections</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Avoid</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sending snippets of code to a cloud API "just to help"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Letting the agent apply fixes without human review</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Scan everything without scope (slow and noisy)</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trust that “no alert” = “100% safe”</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alert box: the golden rule</h3>
+<p class="text-neutral-300 text-sm mb-3">The whole point of this worker is to scan code <strong>without exposing code</strong>. If at any point you send the findings — or worse, the snippets — to a third-party service, you’ve lost the game: you’ve created a new leak while hunting for leaks.</p>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Everything local:</strong> tools and the model run on your machine; traffic doesn't leave <span class="font-mono">localhost</span> (or your private tailnet).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Human review:</strong> the scanner prioritizes and suggests; you’re the one who revokes a key and opens a PR.</span></li>
+</ul>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-3#q1">
+<p class="font-medium mb-4">Self-check (optional): why run <em>gitleaks / npm audit</em> BEFORE calling the local model?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Because the LLM can’t read code at all</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) The tools are deterministic and precise in detection; the LLM only steps in to triage and explain what they found</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) So the code is sent to the cloud before analysis</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Scope</div><div class="text-xs text-neutral-400">less noise</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Allowlist</div><div class="text-xs text-neutral-400">false positive +</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Local</div><div class="text-xs text-neutral-400">nothing leaks</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Human</div><div class="text-xs text-neutral-400">decides and corrects</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">The goal</strong><span class="text-neutral-400"> — a worker that scans the codebase 24/7 for secrets and vulnerable dependencies, unlimited and private because it’s local.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Step 1: detect</strong><span class="text-neutral-400"> — deterministic tools (gitleaks, npm audit, pip-audit) provide precise detection.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Step 2: triage</strong><span class="text-neutral-400"> — the local model classifies risk and suggests a fix via an OpenAI-compatible API.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Step 3: schedule</strong><span class="text-neutral-400"> — cron runs the script, saves a dated report, and alerts only on what’s new. Everything stays local, with human review.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.4 — Web watcher hunting for opportunities</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-2.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-4.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-3#q1',{answer:1,explain:{0:'Não — o LLM lê código sim. O motivo é outro: ele não é a melhor ferramenta de detecção bruta.',1:'Isso. Ferramenta determinística detecta com precisão (sem alucinar); o modelo local entra depois só pra triar risco e explicar a correção.',2:'O oposto do objetivo. O código nunca deve sair da máquina — todo o ganho é varrer sem expor.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

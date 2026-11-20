@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>4.6 Performance, scale &amp; troubleshooting | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Advanced &amp; 24/7 Agents</a><span>/</span>
+<span class="text-amber-400">Module 4.6</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.6</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">⚡ Performance, scaling &amp; troubleshooting</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">The course’s closing module: how <strong class="text-neutral-100">measure</strong> your lab, such as <strong class="text-neutral-100">scale</strong> for multiple machines, when local <strong class="text-neutral-100">no</strong> is worth it, and what to do when something breaks. You’ll leave here with a pocket troubleshooting table and a plan for the coming months.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. Measuring: tokens/s, latency, memory</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Multi-GPU and multi-machine</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. When local is NOT worth it</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Energy and thermal costs</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Common troubleshooting</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Your lab from here on</a></li>
+</ol>
+<div aria-label="Module 4.6 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-6" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="4-6" data-inema-topic="modulo-4-6#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📏 Measuring: tokens/s, latency, and memory</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t1-p1">You can’t improve what you don’t measure. Before buying hardware or blaming the model, capture <strong class="text-amber-400">three numbers</strong>: generation speed (tokens/s), time to the first word (latency), and how much memory is being used—and by what (GPU or CPU).</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>tokens/s</strong> = how many “word pieces” the model generates per second. Above ~15 tok/s, reading flows like a chat; below ~5, it gets annoying.</li>
+<li><strong>latency</strong> = the wait time before the response starts coming out (loading the model + processing your prompt). Longer context increases latency.</li>
+<li><strong>OOM</strong> = <em>out of memory</em>: memory (VRAM/RAM) ran out and the model doesn’t fit. It’s the number one error in the local lab—we’ll return to it in topic 5.</li>
+</ul>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: measure your lab</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> see what's loaded, where it runs (GPU vs. CPU), and its actual generation speed. Paste this into the terminal.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># models currently loaded: size and how much is on the GPU</div>
+<div>ollama ps</div>
+<div class="text-neutral-500 mt-2"># generate with metrics: --verbose prints tokens/s at the end</div>
+<div>ollama run qwen2.5:7b --verbose "write a paragraph about local AI"</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> at the end of generation, check <span class="font-mono text-amber-400">eval rate</span> — is your tokens/s. In <span class="font-mono text-amber-400">ollama ps</span>, the column <strong>PROCESSOR</strong> shows the split: <strong>100% GPU</strong> is ideal; if CPU shows up, part of the model has “spilled over” into RAM and slowed down.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> What “good enough” means</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Interactive chat:</strong> &gt; 15 tok/s and latency &lt; 2 s feel instantaneous to a human reader.</li>
+<li><strong>24/7 agent / batch:</strong> speed barely matters — it works on its own. What matters here is fitting in memory and avoiding OOM.</li>
+<li><strong>Voice / real time:</strong> requires much more — low latency becomes the bottleneck, not average tokens/s.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">tokens/s</div><div class="text-xs text-neutral-400">speed</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">latency</div><div class="text-xs text-neutral-400">the initial wait</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">PROCESSOR</div><div class="text-xs text-neutral-400">GPU x CPU</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">memory</div><div class="text-xs text-neutral-400">fits or OOM</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-6#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🔀 Multi-GPU and multi-machine</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t2-p1">When one machine can't handle it, you don't need a bigger machine—you need <strong class="text-amber-400">more machines communicating</strong>. The recipe combines two pieces you've already set up in the course: the private network from <strong>Tailscale</strong> (2.4) and the orchestrator that routes tasks (4.1).</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Multi-GPU on the same machine</h4>
+<p class="text-neutral-300 text-sm">Two GPUs in the same PC: Ollama automatically splits the model layers between them. The combined VRAM of both cards can fit a larger model — great for 70B on two 24 GB cards.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Routing by machine</h4>
+<p class="text-neutral-300 text-sm">The giant model lives on the unified-memory Mac (slow, but it fits); the fast model runs on the NVIDIA GPU. The orchestrator sends each task to the right endpoint — a recap straight from 4.1.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Tailscale is the glue</h4>
+<p class="text-neutral-300 text-sm">Each machine gets a fixed IP <span class="font-mono text-amber-400">100.x</span> on your tailnet. You can call the model from any device as if it were on the same LAN — without opening a port on the internet (recap 2.4).</p>
+</div>
+</div>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: route to another machine</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> expose the Ollama on the powerful machine to the tailnet and use it from a low-end laptop.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># machine A (the powerful one): serves Ollama to the network</div>
+<div>OLLAMA_HOST=0.0.0.0 ollama serve</div>
+<div class="text-neutral-500 mt-2"># find its IP on the tailnet</div>
+<div>tailscale ip -4</div>
+<div class="text-neutral-500 mt-2"># machine B (the laptop): points the client to machine A's 100.x IP</div>
+<div>OLLAMA_HOST=http://100.101.102.103:11434 ollama run llama3.1:70b "hi"</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the response appears on the laptop, but the <span class="font-mono text-amber-400">ollama ps</span> only shows the model loaded in the <strong>machine A</strong>. The laptop became just a terminal — the remote GPU does the work.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm"><span class="font-mono">0.0.0.0</span> exposes Ollama to <strong>the machine's entire network</strong>. Only do this behind Tailscale — the tailnet is private and encrypted. Never expose this port to the public internet: that would leave your model (and your machine) open to anyone.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-6#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⚖️ When local is NOT worth it</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t3-p1">Honesty wraps up the course better than hype. Local is powerful, but it isn't the answer to everything. Knowing <strong class="text-amber-400">when to use the cloud</strong> is part of being sovereign — you choose strategically, not out of dependency.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Local shines</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Sensitive data that cannot leave the machine</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Heavy, continuous use (24/7 agents, batch)</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Tasks where “good enough” gets the job done</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>You want independence from pricing and lockouts</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Time to consider the cloud</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>You need the <strong>absolute peak</strong> of today’s intelligence</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Rare, occasional use — the hardware isn't worth it</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>You don’t want to maintain uptime, drivers, and security</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>A momentary demand spike your machine can't handle</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔀</span> The mature approach is hybrid</h3>
+<p class="text-neutral-300 mb-4 text-sm">It’s not local <em>or</em> cloud — it's local <strong>as a foundation</strong> and cloud <strong>when it makes sense</strong>:</p>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>Everyday, private, and ongoing tasks run locally.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>The rare case that requires a top-of-the-line model goes to the cloud — without sensitive data.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span>Since the local API is compatible with the OpenAI API (3.5), switching endpoints means changing a URL.</span></li>
+</ul>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-6#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔥 Energy and thermal costs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t4-p1">"Unlimited" doesn’t mean "free": keeping a GPU running 24/7 comes with an electricity bill and heat to deal with. It’s well worth it — but use it responsibly, or you’ll trade your cloud bill for an electricity bill (and equipment that’s cooking itself).</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-3 flex items-center"><span class="mr-2">🧮</span> The electricity bill, on a napkin</h3>
+<p class="text-neutral-300 text-sm mb-3">Rule: <span class="font-mono text-amber-400">power (kW) × hours × rate (R$/kWh)</span>. A powerful GPU draws ~350 W <em>when it's generating</em> (at idle, much less):</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-2">
+<div>0.35 kW × 24 h × 30 days = 252 kWh/month</div>
+<div>252 kWh × R$ 0,80 ≈ <span class="text-amber-400">R$ 200/month</span> (if it stays 100% occupied)</div>
+</div>
+<p class="text-neutral-400 text-sm">In real life, a 24/7 agent spends most of its time idle between tasks—so usage is usually a fraction of that. Even so, measure before you assume.</p>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alert: heat is what kills 24/7 hardware</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">▸</span><span><strong>Ventilation:</strong> an always-on machine needs fresh air coming in and hot air going out — don’t put it in a closed cabinet.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">▸</span><span><strong>Thermal throttling:</strong> An overheated GPU slows itself down to protect itself — your tokens/s plummets with no error at all.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">▸</span><span><strong>Dust:</strong> after months of continuous use, it clogs the fans. Clean it periodically.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">▸</span><span><strong>Monitor:</strong> <span class="font-mono text-amber-400">nvidia-smi</span> shows temperature and watts in real time; above ~83 °C, improve cooling.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Watts</div><div class="text-xs text-neutral-400">only when it generates</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Air</div><div class="text-xs text-neutral-400">goes in and out</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Temperature</div><div class="text-xs text-neutral-400">&lt; 83 °C</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Dust</div><div class="text-xs text-neutral-400">clean the fans</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-6#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🛠️ Common troubleshooting</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t5-p1">Almost every local lab problem falls into five buckets. Instead of memorizing them, use the flow below: start with the <strong class="text-amber-400">symptom</strong>, identify the <strong class="text-amber-400">diagnostic</strong> and apply the <strong class="text-amber-400">action</strong>. The table right after this is your pocket guide.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Troubleshooting flow: from a symptom, you go through four possible diagnoses before reaching a corrective action" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m46-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m46-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m46-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m46-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m46-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m46-grid)" height="240" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.6" stroke="#fbbf24" stroke-width="2">
+<path d="M196,120 C300,120 320,40 452,40" marker-end="url(#m46-ah)"></path>
+<path d="M196,120 C300,120 320,93 452,93" marker-end="url(#m46-ah)"></path>
+<path d="M196,120 C300,120 320,147 452,147" marker-end="url(#m46-ah)"></path>
+<path d="M196,120 C300,120 320,200 452,200" marker-end="url(#m46-ah)"></path>
+</g>
+<g fill="none" opacity="0.55" stroke="#38bdf8" stroke-width="2">
+<path d="M624,40  C720,40 740,120 800,120" marker-end="url(#m46-ahc)"></path>
+<path d="M624,93  C720,93 740,120 800,120" marker-end="url(#m46-ahc)"></path>
+<path d="M624,147 C720,147 740,120 800,120" marker-end="url(#m46-ahc)"></path>
+<path d="M624,200 C720,200 740,120 800,120" marker-end="url(#m46-ahc)"></path>
+</g>
+<g filter="url(#m46-glow)"><rect fill="#1f1604" height="64" rx="14" stroke="url(#m46-grad)" stroke-width="2.5" width="156" x="40" y="88"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="20" font-weight="700" text-anchor="middle" x="118" y="116">Symptom</text>
+<text fill="#fde68a" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="118" y="135">what hurts</text>
+<g font-family="Inter,sans-serif" font-size="12.5" font-weight="600">
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="172" x="452" y="24"></rect><text fill="#bfe6ff" text-anchor="middle" x="538" y="46">Frozen / OOM</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="172" x="452" y="77"></rect><text fill="#bfe6ff" text-anchor="middle" x="538" y="99">Slow generation</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="172" x="452" y="131"></rect><text fill="#bfe6ff" text-anchor="middle" x="538" y="153">Doesn’t connect</text></g>
+<g><rect fill="#0e1b26" height="34" rx="9" stroke="#38bdf8" stroke-width="2" width="172" x="452" y="184"></rect><text fill="#bfe6ff" text-anchor="middle" x="538" y="206">Device disappeared</text></g>
+</g>
+<g filter="url(#m46-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m46-grad)" stroke-width="2.5" width="160" x="800" y="84"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="880" y="116">Action</text>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="15" font-weight="700" text-anchor="middle" x="880" y="136">applies the fix</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from left to right: the <strong class="text-neutral-200">symptom</strong> (amber) opens four <strong class="text-neutral-200">diagnostics</strong> typical (cyan), and each one converges on a <strong class="text-neutral-200">action</strong> for troubleshooting. The table below gives the “cause → fix” for each case.</p>
+<!-- TROUBLESHOOTING TABLE -->
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700 text-amber-400">
+<tr>
+<th class="px-4 py-3 font-semibold">Problem</th>
+<th class="px-4 py-3 font-semibold">Likely cause</th>
+<th class="px-4 py-3 font-semibold">Fix</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800">
+<td class="px-4 py-3 font-semibold text-neutral-100">OOM (out of memory)</td>
+<td class="px-4 py-3 text-neutral-300">The model + context don't fit in VRAM/RAM</td>
+<td class="px-4 py-3 text-neutral-300">Use a lower quantization (Q8→Q4), reduce <span class="font-mono text-amber-400">num_ctx</span>, or run a smaller model</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 font-semibold text-neutral-100">Slow model</td>
+<td class="px-4 py-3 text-neutral-300">Part of the model spilled over to the CPU (offload) or thermal throttling</td>
+<td class="px-4 py-3 text-neutral-300">Check <span class="font-mono text-amber-400">ollama ps</span> (PROCESSOR); adjust <span class="font-mono text-amber-400">num_gpu</span>; cool down the GPU</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 font-semibold text-neutral-100">Broken driver/CUDA</td>
+<td class="px-4 py-3 text-neutral-300">Kernel/driver update desynchronized CUDA</td>
+<td class="px-4 py-3 text-neutral-300"><span class="font-mono text-amber-400">nvidia-smi</span> failure? Reinstall the driver and restart; reinstall the toolkit</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 font-semibold text-neutral-100">Port 11434 is occupied</td>
+<td class="px-4 py-3 text-neutral-300">There’s already an Ollama (or another service) listening on it</td>
+<td class="px-4 py-3 text-neutral-300"><span class="font-mono text-amber-400">lsof -i :11434</span>, kill the process, or change <span class="font-mono text-amber-400">OLLAMA_HOST</span></td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 font-semibold text-neutral-100">Tailscale offline</td>
+<td class="px-4 py-3 text-neutral-300">Session expired, service went down, or key expired</td>
+<td class="px-4 py-3 text-neutral-300"><span class="font-mono text-amber-400">tailscale status</span>; run <span class="font-mono text-amber-400">sudo tailscale up</span> again</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: the 5 diagnostic commands</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> before asking for help online, run this battery of tests — it covers the five problems in the table.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># what's holding port 11434?</div>
+<div>lsof -i :11434      # or: ss -ltnp | grep 11434</div>
+<div class="text-neutral-500 mt-2"># Do the GPU/driver/CUDA respond?</div>
+<div>nvidia-smi</div>
+<div class="text-neutral-500 mt-2"># Is the private network up?</div>
+<div>tailscale status</div>
+<div class="text-neutral-500 mt-2"># free up memory: unload the model now</div>
+<div>ollama stop qwen2.5:7b</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> Each command either responds correctly (green) or points to the culprit. With the symptom and the table row, you can solve 90% of cases on your own—without sending anything outside your machine.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-6#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Your lab from here on</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-6-t6-p1">You’ve reached the end—and now you have a lab of your own. What comes next is continuous improvement, not a destination. See the natural roadmap and the habits that keep everything healthy.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Keep the models up to date</h4>
+<p class="text-neutral-300 text-sm">Open models improve month by month. Revisit <span class="font-mono text-amber-400">ollama pull</span> from the new versions and test them on the <em>your</em> task before adopting.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Add another agent to the team</h4>
+<p class="text-neutral-300 text-sm">You already have the scanner (4.3), the watchdog (4.4), and the buddy (4.5). Every repetitive problem in your routine is a candidate to become a 24/7 worker.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Upgrade your hardware when a bottleneck appears</h4>
+<p class="text-neutral-300 text-sm">Don’t buy ahead of time. Measure (topic 1), find the real limit, and prioritize memory — the resource that matters most.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Habits that keep the lab alive</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Version-control configs (Modelfiles, scripts) in a repo</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Log what agents do and review it</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Measure before buying hardware</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Keep everything on the tailnet, nothing on the public internet</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pitfalls that block you</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Running 24/7 without ventilation or temperature monitoring</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expose the Ollama port directly to the internet</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Chasing the “perfect model” and never shipping anything</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Forget the unmonitored agent with no logs or limits</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">You learn local AI by building things and exchanging ideas. Communities (including the <strong>INEMA.CLUB</strong>), open-model forums, and Hugging Face cards are where you discover the next good model and avoid pitfalls others have already paid dearly for.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-6#q1">
+<p class="font-medium mb-4">Self-check (optional): your model freezes with an error of <strong>OOM</strong> when loading. What’s the most straightforward first adjustment?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Buy a new GPU immediately</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Use a smaller quantization (e.g., Q8→Q4) and/or reduce num_ctx to fit in memory</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Reinstall the operating system</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Measure</div><div class="text-xs text-neutral-400">before spending</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Scale</div><div class="text-xs text-neutral-400">multi-machine</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Solve</div><div class="text-xs text-neutral-400">pocket reference table</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Evolve</div><div class="text-xs text-neutral-400">one more agent</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO / FECHAMENTO DO CURSO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-2 flex items-center"><span class="mr-3">🏁</span> End of course — recap of the 4 tracks</h2>
+<p class="text-neutral-300 mb-6 text-sm">You’ve left the theory behind and arrived at a lab that works for you. Look at the path you’ve traveled:</p>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Track 1 — Fundamentals</strong><span class="text-neutral-400"> — the why: AI sovereignty, myths debunked, and the anatomy of a local LLM.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Track 2 — Hardware &amp; Lab</strong><span class="text-neutral-400"> — the lay of the land: machine categories, what fits yours, drivers, and a private network with Tailscale.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Track 3 — Installation &amp; Techniques</strong><span class="text-neutral-400"> — the hands-on work: Ollama, interface, GGUF/quantization, parameters, local API, and RAG.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Track 4 — Advanced &amp; 24/7 Agents</strong><span class="text-neutral-400"> — the result: an orchestrator, always-on agents, three real step-by-step guides, and this performance wrap-up.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-5 mb-8 border border-amber-500/20">
+<h3 class="font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">🤝</span> Stay with us</h3>
+<p class="text-neutral-300 text-sm mb-3">The local AI shift doesn't end here — it accelerates. To keep up, exchange ideas, show off your lab, and discover the next great model alongside others building sovereignty.</p>
+<a class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-500 transition-colors" href="https://inema.club" target="_blank">Enter the <span class="font-bold">INEMA.CLUB</span> →</a>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-5.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="../../index.html">Back to the beginning of the course →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-6#q1',{answer:1,explain:{0:'Hardware novo é o último recurso, não o primeiro. Quase sempre dá pra caber ajustando o modelo.',1:'Isso. OOM é falta de memória: quant menor e/ou contexto menor fazem o modelo caber sem trocar de hardware.',2:'Não. Reinstalar o SO não tem relação com falta de memória do modelo.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

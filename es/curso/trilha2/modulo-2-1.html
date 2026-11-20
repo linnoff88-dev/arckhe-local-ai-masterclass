@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>2.1 Las categorías de hardware | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37,99,235,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha2/modulo-2-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-2-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalación</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avanzado</span></a>
+<button aria-label="Cambiar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Barra de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Hardware y laboratorio</a><span>/</span>
+<span class="text-blue-400">Módulo 2.1</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.1</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗂️ Las categorías de hardware</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Antes de comprar o elegir cualquier cosa, necesitas ver el <strong class="text-neutral-100">mapa</strong> del hardware de IA local. Todo gira en torno a una sola disyuntiva: <strong class="text-neutral-100">cuánta memoria cabe</strong> versus <strong class="text-neutral-100">qué tan rápido</strong> se alimenta. Este módulo divide el mundo en cuatro categorías reales — desde la Mac Studio hasta la RTX 5090 — para que sepas en cuál de ellas está tu máquina.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Básico</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Hardware</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. La disyuntiva principal</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. Categoría Mac</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Workstations de IA</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. GPU potentes</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Presupuesto / todo lo demás</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Sistema operativo</a></li>
+</ol>
+<div aria-label="Progreso del módulo 2.1" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-1" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="2-1" data-inema-topic="modulo-2-1#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">⚖️ El gran equilibrio: memoria × ancho de banda</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t1-p1">Todo hardware de IA local vive la misma tensión. Por un lado, <strong class="text-blue-400">cuánta memoria</strong> la máquina tiene — eso determina el <em>tamaño</em> del modelo que cabe. Por otro lado, la <strong class="text-blue-400">bandwidth</strong> de esa memoria — eso determina la <em>velocidad</em> con el que sale el texto. Las cuatro categorías de este módulo son solo puntos distintos en esa misma balanza.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Memoria unificada:</strong> La RAM y la VRAM se convierten en un solo depósito, compartido entre CPU y GPU (al estilo de Apple). Cabe un modelo grande, pero el ancho de banda suele ser modesto.</li>
+<li><strong>VRAM:</strong> la memoria <em>dedicada</em> que está dentro de la tarjeta de video. Generalmente es más pequeña, pero tiene un ancho de banda altísimo.</li>
+<li><strong>Ancho de banda (de memoria):</strong> cuántos GB/s entrega la memoria al chip. Es el cuello de botella n.º 1 de la velocidad de generación: más ancho de banda, más tokens por segundo.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🔑</span> La idea central</h3>
+<p class="text-neutral-300 mb-4">Piensa en dos ejes independientes:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Capacidad (memoria):</strong> el modelo <em>cabe</em> o no cabe. Sin suficiente memoria, ni siquiera se carga.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Ancho de banda:</strong> una vez cargado, el ancho de banda determina si la respuesta sale de golpe o poco a poco.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Nadie tiene ambos al máximo y a bajo costo:</strong> Apple apuesta por la capacidad; la GPU, por el ancho de banda. Elegir hardware es elegir dónde ceder.</span></li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Comparación del trade-off de hardware: la memoria unificada de Apple ofrece mucha capacidad, hasta 512 GB, pero con poco bandwidth, así que ejecuta modelos enormes lentamente; la VRAM dedicada de una GPU NVIDIA tiene menos capacidad, cerca de 32 GB, pero un bandwidth altísimo, y ejecuta modelos rápido hasta donde cabe la VRAM." class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m21-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m21-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m21-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m21-ah" markerheight="11" markerunits="userSpaceOnUse" markerwidth="11" orient="auto" refx="7" refy="5"><path d="M0,0 L10,5 L0,10 L3,5 Z" fill="#60a5fa"></path></marker>
+<marker id="m21-ahc" markerheight="11" markerunits="userSpaceOnUse" markerwidth="11" orient="auto" refx="7" refy="5"><path d="M0,0 L10,5 L0,10 L3,5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m21-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- esquerda: memoria unificada -->
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="250" y="36">Memoria unificada · Apple</text>
+<g filter="url(#m21-glow)"><rect fill="#0e1622" height="150" rx="14" stroke="url(#m21-grad)" stroke-width="2.5" width="200" x="150" y="62"></rect></g>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="26" font-weight="700" text-anchor="middle" x="250" y="126">≈ 512 GB</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="250" y="152">mucha capacidad</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="250" y="172">caben modelos enormes</text>
+<line marker-end="url(#m21-ahc)" opacity="0.9" stroke="#38bdf8" stroke-width="4" x1="150" x2="338" y1="256" y2="256"></line>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="246" y="284">bandwidth bajo → lento</text>
+<!-- divisor -->
+<line opacity="0.5" stroke="#3b82f6" stroke-dasharray="4 6" stroke-width="1.5" x1="500" x2="500" y1="52" y2="248"></line>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="14" font-weight="700" text-anchor="middle" x="500" y="146">trade-off</text>
+<!-- direita: VRAM dedicada -->
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="18" font-weight="700" text-anchor="middle" x="750" y="36">VRAM dedicada · GPU</text>
+<g filter="url(#m21-glow)"><rect fill="#0e1622" height="94" rx="14" stroke="url(#m21-grad)" stroke-width="2.5" width="200" x="650" y="118"></rect></g>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="26" font-weight="700" text-anchor="middle" x="750" y="158">≈ 32 GB</text>
+<text fill="#93c5fd" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="750" y="184">menos capacidad</text>
+<line marker-end="url(#m21-ahc)" opacity="0.9" stroke="#38bdf8" stroke-width="18" x1="650" x2="836" y1="252" y2="252"></line>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="13" text-anchor="middle" x="744" y="288">bandwidth muy alto → rápido</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Lee comparando las dos columnas: la <strong class="text-neutral-200">izquierda</strong>, una caja de memoria mucho más grande (hasta 512 GB), pero alimentada por un tubo estrecho: mucha capacidad, poca velocidad. A <strong class="text-neutral-200">derecha</strong>, una caja más pequeña (≈ 32 GB) con un tubo ancho: poca capacidad, mucha velocidad. El grosor de la flecha <em>é</em> el bandwidth.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6 overflow-x-auto">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Las 4 categorías de un vistazo</h3>
+<table class="w-full text-sm font-mono text-neutral-300 min-w-[560px]">
+<thead>
+<tr class="text-left text-neutral-400 border-b border-dark-600">
+<th class="py-2 pr-4">Categoría</th><th class="py-2 pr-4">Memoria</th><th class="py-2 pr-4">Ancho de banda</th><th class="py-2">Bueno para</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="py-2 pr-4 text-blue-400">Mac (unificada)</td><td class="py-2 pr-4">alta (hasta 512 GB)</td><td class="py-2 pr-4">baja</td><td class="py-2">modelos enormes, lentos</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">Workstation de IA</td><td class="py-2 pr-4">media (~128 GB)</td><td class="py-2 pr-4">media</td><td class="py-2">equilibrio, desarrollo local</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">GPU potente</td><td class="py-2 pr-4">baja-media (32–96 GB)</td><td class="py-2 pr-4">altísima</td><td class="py-2">velocidad, hasta que quepa en la VRAM</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">Presupuesto</td><td class="py-2 pr-4">baja (8–24 GB)</td><td class="py-2 pr-4">baja-media</td><td class="py-2">modelos pequeños, embeddings</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Memoria</div><div class="text-xs text-neutral-400">decide el tamaño</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ancho de banda</div><div class="text-xs text-neutral-400">decide la velocidad</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Unificada</div><div class="text-xs text-neutral-400">capacidad &gt; ancho de banda</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">VRAM</div><div class="text-xs text-neutral-400">ancho de banda &gt; capacidad</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🍎 Categoría Mac: memoria unificada alta, ancho de banda bajo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t2-p1">O <strong class="text-blue-400">Apple Silicon</strong> (los chips M-series en Mac Studio, Mac Pro y MacBook) cambiaron las reglas del juego de la IA local con un truco: la <strong class="text-blue-400">memoria unificada</strong>. La GPU ve toda la RAM del sistema como si fuera VRAM. Un Mac Studio con 512 GB unificados puede <em>cargar</em> un modelo de 200 GB+ que ninguna GPU de consumo puede manejar. El precio que pagas es el ancho de banda: es adecuado para un chip integrado, pero está muy por debajo de una GPU dedicada; así que el modelo gigante se ejecuta, pero <em>despacio</em>.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Dónde destaca la Mac</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ejecuta modelos <strong>enormes</strong> que no caben en ninguna GPU de consumo</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Silencioso, frío y eficiente en energía para su tamaño</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>macOS listo: MLX/Metal sin instalar ningún controlador</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Una sola caja, sin armar una PC ni una fuente de 1000 W</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dónde cede</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Menos ancho de banda → <strong>tokens/s más bajos</strong> que una GPU dedicada</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Las configuraciones con mucha RAM unificada son costosas</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sin CUDA: algunos proyectos dan por sentado que usas NVIDIA y requieren adaptación</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Memoria soldada: no se puede ampliar después</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">Si tu objetivo es <strong>ejecutar el modelo más grande posible</strong> en un solo dispositivo silencioso —y toleras respuestas que salen a ritmo de lectura, no a toda velocidad—, es difícil superar una Mac con mucha memoria unificada. Si el objetivo es <strong>velocidad máxima</strong> para un modelo que cabe en 24–32 GB, conviene más usar la siguiente opción (GPU).</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Unificada</div><div class="text-xs text-neutral-400">RAM = VRAM</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Hasta 512 GB</div><div class="text-xs text-neutral-400">cabe un modelo gigante</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ancho de banda</div><div class="text-xs text-neutral-400">modesta = lento</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MLX</div><div class="text-xs text-neutral-400">sin controlador</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🏗️ Workstations de IA: memoria media, ancho de banda medio</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t3-p1">En medio del mapa nació una nueva categoría: <strong class="text-blue-400">workstations de IA</strong> — máquinas diseñadas de fábrica para ejecutar modelos, con bastante memoria unificada/compartida y más ancho de banda que una Mac común, sin el precio (ni el calor) de un rack de GPU. Es el equilibrio para quien quiere un modelo grande <em>e</em> velocidad decente, normalmente ejecutando Linux.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">NVIDIA DGX Spark (~128 GB)</h4>
+<p class="text-neutral-300 text-sm">Una «supercomputadora de IA de escritorio» de NVIDIA con memoria coherente de unos 128 GB. Incluye el stack CUDA en un formato compacto: ideal para prototipar modelos medianos/grandes sin pasar a la nube.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">AMD Ryzen AI Max "Strix Halo"</h4>
+<p class="text-neutral-300 text-sm">APU de AMD que asigna una gran parte de la RAM del sistema como memoria de GPU — la respuesta de AMD a la idea de memoria unificada, en mini PC y laptops potentes. Equilibrio parecido, ecosistema ROCm.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">SO típico: Linux</h4>
+<p class="text-neutral-300 text-sm">Estas cajas casi siempre ejecutan Linux, donde los drivers (CUDA/ROCm) y los runtimes de IA están más consolidados. Es la categoría que más familiaridad con la terminal requiere —tema del módulo 2.3.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🧭</span> Cómo posicionar</h3>
+<p class="text-neutral-300 text-sm">La workstation se ubica exactamente entre la Mac (mucha memoria, poco ancho de banda) y la GPU (poca memoria, mucho ancho de banda): memoria <strong>media</strong> y banda <strong>media</strong>. Es la elección de quien no quiere ningún extremo: quiere un modelo razonablemente grande que funcione a una velocidad razonablemente buena, sin montar un servidor.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">DGX Spark</div><div class="text-xs text-neutral-400">~128 GB · CUDA</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Strix Halo</div><div class="text-xs text-neutral-400">AMD · ROCm</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Equilibrio</div><div class="text-xs text-neutral-400">centro del mapa</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">SO</div><div class="text-xs text-neutral-400">Linux en la mayoría</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🚀 GPU potentes: menos VRAM, ancho de banda altísimo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t4-p1">Aquí reside la <strong class="text-blue-400">velocidad pura</strong>. Una GPU NVIDIA dedicada tiene menos memoria que una Mac de gama alta, pero el ancho de banda de la VRAM es varias veces mayor — entonces, <em>mientras el modelo quepa en la VRAM</em>, genera tokens a un ritmo que ninguna otra categoría alcanza. La regla de oro cambia: aquí el límite no es "qué modelo cabe en la máquina", sino "qué modelo cabe en la <strong>placa</strong>".</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6 overflow-x-auto">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🖥️</span> Dos referencias de GPU</h3>
+<table class="w-full text-sm font-mono text-neutral-300 min-w-[520px]">
+<thead>
+<tr class="text-left text-neutral-400 border-b border-dark-600">
+<th class="py-2 pr-4">GPU</th><th class="py-2 pr-4">VRAM</th><th class="py-2 pr-4">Ancho de banda</th><th class="py-2">Perfil</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="py-2 pr-4 text-blue-400">RTX 5090</td><td class="py-2 pr-4">~32 GB</td><td class="py-2 pr-4">altísima</td><td class="py-2">consumidor de gama alta, muy rápido</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">RTX 6000 (Pro)</td><td class="py-2 pr-4">~96 GB</td><td class="py-2 pr-4">altísima</td><td class="py-2">profesional, cabe más, caro</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ A favor</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Tokens/s en la parte superior: sensación de "tiempo real"</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>CUDA es el camino con más soporte en todo el ecosistema</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ideal para ofrecer una API rápida y agentes que responden al instante</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ En contra</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El modelo que no cabe en la VRAM "se desborda" a la CPU y pierde velocidad drásticamente</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Alto consumo de energía y calor; fuente y gabinete robustos</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La VRAM de gran capacidad (96 GB) es cara: territorio profesional</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">Con GPU, el juego es <strong>mantener todo dentro de la VRAM</strong>. Un modelo cuantizado que ocupa 28 GB vuela en una 5090 de 32 GB; el mismo modelo con mayor precisión se pasa del límite, usa la RAM y la velocidad cae en picada. En el módulo 2.2 aprenderás a estimar si cabe antes de descargar nada.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">RTX 5090</div><div class="text-xs text-neutral-400">~32 GB, rápida</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">RTX 6000</div><div class="text-xs text-neutral-400">~96 GB, pro</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ancho de banda</div><div class="text-xs text-neutral-400">altísima</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Límite</div><div class="text-xs text-neutral-400">caber en la VRAM</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💵 Presupuesto: "todo lo demás" sigue teniendo mucho valor</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t5-p1">La cuarta categoría es la más grande de todas: <strong class="text-blue-400">Mac mini, laptops y PC comunes</strong> — cualquier cosa por debajo del rango premium. Menos memoria (8–24 GB), ancho de banda modesto. Pero no confundas «budget» con «inútil»: es exactamente aquí donde <strong class="text-blue-400">la mayoría de las personas empieza</strong>, y al ejecutar modelos pequeños (Gemma, Phi, Qwen en versiones de 2–8B), embeddings y clasificación, ya resuelves una enorme cantidad de tareas reales.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Qué funciona bien</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Modelos pequeños (2–8B) cuantizados para chat y borradores</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Embeddings y búsqueda semántica (base de RAG) — ligeros</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Clasificación, extracción y resumen de textos cortos</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Costo de entrada cero: usa la máquina que ya tienes</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Dónde aprieta</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Los modelos grandes (30B+) no caben o avanzan a paso de tortuga</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Un contexto demasiado largo agota la memoria rápidamente</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sin GPU, la CPU puede con la tarea, pero a pocos tokens/s</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">La mejor categoría para <strong>aprender</strong> es la que ya tienes sobre la mesa. Empieza con el presupuesto y un modelo pequeño y Ollama (Trilha 3), descubre qué haces realmente con la IA local y solo entonces decide si vale la pena subir de categoría. El hardware caro que se compra antes de conocer el caso de uso suele terminar en una estantería.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Mac mini</div><div class="text-xs text-neutral-400">/ laptops</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">8–24 GB</div><div class="text-xs text-neutral-400">modelos pequeños</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Embeddings</div><div class="text-xs text-neutral-400">funcionan sin problemas</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Entrada</div><div class="text-xs text-neutral-400">costo cero</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">💻 Sistema operativo en la práctica</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-1-t6-p1">La categoría de hardware casi siempre viene acompañada de un sistema operativo. No existe un «mejor SO» en abstracto: existe el que se adapta a tu máquina y a tu comodidad. Los tres caminos:</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6 overflow-x-auto">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🧭</span> macOS × Linux × Windows</h3>
+<table class="w-full text-sm font-mono text-neutral-300 min-w-[560px]">
+<thead>
+<tr class="text-left text-neutral-400 border-b border-dark-600">
+<th class="py-2 pr-4">SO</th><th class="py-2 pr-4">Se integra con</th><th class="py-2 pr-4">A favor</th><th class="py-2">En contra</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr><td class="py-2 pr-4 text-blue-400">macOS</td><td class="py-2 pr-4">Apple Silicon</td><td class="py-2 pr-4">usabilidad, MLX, cero drivers</td><td class="py-2">sin CUDA</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">Linux</td><td class="py-2 pr-4">workstations / GPU</td><td class="py-2 pr-4">drivers maduros, más control</td><td class="py-2">curva de terminal</td></tr>
+<tr><td class="py-2 pr-4 text-blue-400">Windows</td><td class="py-2 pr-4">GPU para gaming</td><td class="py-2 pr-4">fácil, WSL2 trae Linux incluido</td><td class="py-2">capas adicionales</td></tr>
+</tbody>
+</table>
+</div>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Ejemplo práctico: descubre tu categoría</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> ver cuánta memoria (y de qué tipo) tienes: el número que determina en cuál de las 4 categorías cae tu máquina. Pega esto en la terminal.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Linux — RAM total</div>
+<div>free -h</div>
+<div class="text-neutral-500 mt-2"># GPU NVIDIA — VRAM dedicada y ancho de banda</div>
+<div>nvidia-smi</div>
+<div class="text-neutral-500 mt-2"># macOS — memoria unificada</div>
+<div>system_profiler SPHardwareDataType | grep "Memory"</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> si el número grande viene de <span class="font-mono text-blue-400">free -h</span> en una Mac, es unificada (categoría 2). Si hay una <span class="font-mono text-blue-400">VRAM</span> separada en el <span class="font-mono text-blue-400">nvidia-smi</span>es GPU (categoría 4). ¿Poca memoria y sin GPU dedicada? Budget (categoría 5), y está bien empezar por ahí.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-1#q1">
+<p class="font-medium mb-4">Autoevaluación (opcional): ¿qué frase resume correctamente el trade-off principal de este módulo?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) La GPU dedicada siempre admite modelos más grandes que la memoria unificada de Apple</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Memoria unificada = mucha capacidad con poco ancho de banda (lento); VRAM dedicada = menos capacidad con muchísimo ancho de banda (rápido)</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) El ancho de banda no afecta la velocidad de generación; solo importa la cantidad de memoria</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">macOS</div><div class="text-xs text-neutral-400">Apple Silicon</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Linux</div><div class="text-xs text-neutral-400">workstation/GPU</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Windows</div><div class="text-xs text-neutral-400">GPU + WSL2</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Regla</div><div class="text-xs text-neutral-400">El SO sigue al HW</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Todo es el mismo trade-off</strong><span class="text-neutral-400"> — memoria (capacidad) frente a ancho de banda (velocidad). El hardware es donde cedes.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Mac unificado</strong><span class="text-neutral-400"> — mucha memoria (hasta 512 GB), poco ancho de banda: cabe un modelo enorme, pero funciona despacio.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Workstations (DGX Spark, Strix Halo)</strong><span class="text-neutral-400"> — centro del mapa, equilibrio, Linux.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">GPU potente (RTX 5090/6000)</strong><span class="text-neutral-400"> — ancho de banda altísimo, rápido hasta que cabe en la VRAM.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Presupuesto</strong><span class="text-neutral-400"> — Mac mini/laptops: los modelos pequeños y los embeddings ya resuelven mucho; el mejor lugar para empezar.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">2.2 — Cómo elegir qué cabe en tu máquina</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">← Volver a la ruta</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-2.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-1#q1',{answer:1,explain:{0:'Nem sempre — um Mac de 512 GB unificados cabe modelos bem maiores que uma GPU de 32 GB. A GPU ganha em velocidade, não em capacidade.',1:'Isso. Unificada troca banda por capacidade; a VRAM dedicada troca capacidade por banda. É o trade-off mestre do módulo.',2:'Ao contrário: o bandwidth é justamente o gargalo nº 1 da velocidade de geração (tokens/s).'}});}
+      }
+    });
+  </script>
+</body>
+</html>

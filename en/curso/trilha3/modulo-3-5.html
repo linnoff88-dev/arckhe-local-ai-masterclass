@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>3.5 Serving via an OpenAI-compatible local API | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Installation &amp; Techniques</a><span>/</span>
+<span class="text-purple-400">Module 3.5</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔌 Serving through an OpenAI-compatible local API</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">So far, you've talked to the model through the terminal and an interface. Now comes the piece that connects the model to the <strong class="text-neutral-100">rest of the world</strong>: an HTTP API that speaks the same language as OpenAI. Learn to call your local model from any app, script, or agent—and, in the end, expose it securely on your tailnet.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Inter.</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Why a local API</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. The Ollama endpoint</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. First call with curl</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. From code: local OpenAI SDK</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Streaming, embeddings &amp; models</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Expose it on the tailnet safely</a></li>
+</ol>
+<div aria-label="Module 3.5 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-5" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="3-5" data-inema-topic="modulo-3-5#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🔌 Why a local API</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t1-p1">A chat interface is great for talking with you. But a <strong class="text-purple-400">program</strong> doesn't communicate through a screen—it needs an address to send text and receive a response. That address is the <strong class="text-purple-400">API</strong>. Ollama’s trick is to speak exactly the same “format” OpenAI uses: that way, any app, script, or agent that already knows how to talk to ChatGPT works with your local model by changing just one line.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"API"</strong> (Application Programming Interface) is an entry point through which one program asks another for something. <strong>"Endpoint"</strong> is the exact address of that port — a URL like <span class="font-mono text-purple-400">http://localhost:11434/v1/chat/completions</span>. <strong>"OpenAI-compatible"</strong> means that the request and response format is identical to OpenAI’s API — same keys <span class="font-mono text-neutral-200">model</span>, <span class="font-mono text-neutral-200">messages</span>, <span class="font-mono text-neutral-200">choices</span> — just served by your machine.</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🔑</span> The central idea</h3>
+<p class="text-neutral-300 mb-4">Compatibility is the lever. With it, you get three things at once:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Reuse:</strong> libraries, SDKs, and tools built for OpenAI work without rewriting anything.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Portability:</strong> switch between cloud and local by changing only the <span class="font-mono text-neutral-200">base_url</span> — the code stays the same.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Automation:</strong> scripts and agents (Track 4) start using the model without you opening any screens.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ No API (chat on screen only)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Every use requires you to type by hand</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No automation or scheduling</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Impossible to plug into other programs</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No 24/7 agents</span></li>
+</ul>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ With a local API</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Any script can call the model over HTTP</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Same OpenAI SDK, model on your machine</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Foundation for automations, RAG, and agents</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Everything offline, with no per-token fees</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">API</div><div class="text-xs text-neutral-400">model port</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Compatible</div><div class="text-xs text-neutral-400">OpenAI format</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Switch</div><div class="text-xs text-neutral-400">just the base_url</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Unblocks</div><div class="text-xs text-neutral-400">scripts &amp; agents</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🌐 The Ollama endpoint</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t2-p1">When you installed Ollama (Module 3.1), it already started an HTTP server listening on <strong class="text-purple-400">http://localhost:11434</strong>. <span class="font-mono text-neutral-200">localhost</span> = the machine itself; <span class="font-mono text-neutral-200">11434</span> = the port. This server offers two sets of routes: the <strong>native</strong> from Ollama and the <strong>OpenAI-compatible</strong> under <span class="font-mono text-neutral-200">/v1</span>. To reuse existing apps and SDKs, always use the ones for <span class="font-mono text-neutral-200">/v1</span>.</p>
+<p class="text-neutral-400 text-sm mb-4">The path of a request, from your program to the model and back:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Your program builds the request</h4>
+<p class="text-neutral-300 text-sm">A JSON with the <span class="font-mono text-neutral-200">model</span> and the list of <span class="font-mono text-neutral-200">messages</span> — exactly the OpenAI format.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The Ollama server receives requests at :11434</h4>
+<p class="text-neutral-300 text-sm">It loads the model into memory (if it isn’t already there) and runs inference locally.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">The response comes back as JSON</h4>
+<p class="text-neutral-300 text-sm">In the same format as OpenAI: the text comes in <span class="font-mono text-neutral-200">choices[0].message.content</span>.</p>
+</div>
+</div>
+</div>
+<!-- MONO: rotas -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🗺️</span> The routes that matter</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> learn the addresses. The ones for <span class="font-mono text-purple-400">/v1</span> are the ones you use with ready-made SDKs.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Native Ollama routes</div>
+<div>POST http://localhost:11434/api/chat</div>
+<div>POST http://localhost:11434/api/generate</div>
+<div class="text-neutral-500 mt-2"># OpenAI-compatible routes (use these with SDKs/apps)</div>
+<div>POST http://localhost:11434/v1/chat/completions</div>
+<div>POST http://localhost:11434/v1/embeddings</div>
+<div>GET  http://localhost:11434/v1/models</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run <span class="font-mono text-purple-400">curl http://localhost:11434/v1/models</span> — should list the models you’ve already downloaded in JSON.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">If the port <strong>11434</strong> doesn't respond, the server isn't running. On Linux/macOS, the Ollama app keeps it running; if you need to start it manually, use <span class="font-mono text-purple-400">ollama serve</span>. "Connection refused" is almost always this: the service isn't running or is on another machine.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⌨️ First call with curl</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t3-p1">The fastest way to prove the API works is the <strong class="text-purple-400">curl</strong> — a terminal tool that makes HTTP requests. No library installation, no code: just the terminal and a JSON object. If this responds, your local API is up.</p>
+<!-- COPY-RUN curl -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: chat via curl</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> send a message to the model and receive the response in JSON. Paste it into the terminal (with Ollama running and the model <span class="font-mono text-purple-400">qwen2.5:7b</span> already downloaded).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>curl http://localhost:11434/v1/chat/completions \</div>
+<div>  -H "Content-Type: application/json" \</div>
+<div>  -d '{</div>
+<div>    "model": "qwen2.5:7b",</div>
+<div>    "messages": [</div>
+<div>      {"role": "system", "content": "Respond in Brazilian Portuguese, concisely."},</div>
+<div>      {"role": "user", "content": "Explain what an API is in 1 sentence."}</div>
+<div>    ]</div>
+<div>  }'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the output is a JSON object with a field <span class="font-mono text-purple-400">choices</span>. The response text is in <span class="font-mono text-purple-400">choices[0].message.content</span>. If it appears, you’ve just served your model through an API.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Anatomy of the response JSON</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><span class="font-mono text-blue-300">model</span> — which model responded.</li>
+<li><span class="font-mono text-blue-300">choices[0].message.content</span> — the generated text (what you want).</li>
+<li><span class="font-mono text-blue-300">choices[0].finish_reason</span> — why it stopped (e.g., <span class="font-mono">stop</span>).</li>
+<li><span class="font-mono text-blue-300">usage</span> — input and output token counts.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">curl</div><div class="text-xs text-neutral-400">no-code test</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">-d</div><div class="text-xs text-neutral-400">the JSON body</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">messages</div><div class="text-xs text-neutral-400">system + user</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">content</div><div class="text-xs text-neutral-400">the answer</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🐍 From code: OpenAI SDK pointed to the local model</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t4-p1">This is where compatibility shines. The <strong class="text-purple-400">Official OpenAI SDK</strong> (the library <span class="font-mono text-neutral-200">openai</span> in Python) works with Ollama—just change the <span class="font-mono text-neutral-200">base_url</span> for your local endpoint and pass a <span class="font-mono text-neutral-200">api_key</span> any (Ollama doesn't validate the key; it's required only because the SDK asks for one).</p>
+<!-- COPY-RUN Python -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🐍</span> Practical example: chat in Python</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> call the local model through the OpenAI SDK. Install with <span class="font-mono text-purple-400">pip install openai</span> and run.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># pip install openai</div>
+<div>from openai import OpenAI</div>
+<div class="mt-2">client = OpenAI(</div>
+<div>    base_url="http://localhost:11434/v1",  <span class="text-neutral-500"># point to local Ollama</span></div>
+<div>    api_key="ollama",               <span class="text-neutral-500"># any string; Ollama ignores it</span></div>
+<div>)</div>
+<div class="mt-2">resp = client.chat.completions.create(</div>
+<div>    model="qwen2.5:7b",</div>
+<div>    messages=[{"role": "user", "content": "Say hi in one sentence."}],</div>
+<div>)</div>
+<div>print(resp.choices[0].message.content)</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the script prints the sentence generated by the model. To switch back to the cloud, change <span class="font-mono text-purple-400">base_url</span> and the key—the rest of the code stays identical. <strong>That's the whole point.</strong></p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">In JavaScript/TypeScript, it’s the same story: the package <span class="font-mono text-neutral-200">openai</span> accepts <span class="font-mono text-neutral-200">baseURL: "http://localhost:11434/v1"</span> e <span class="font-mono text-neutral-200">apiKey: "ollama"</span>. Store the base_url in an environment variable (<span class="font-mono text-neutral-200">OPENAI_BASE_URL</span>) to switch between local and cloud without touching the code.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Do this</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Use the model name shown in <span class="font-mono">ollama list</span></span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Centralize <span class="font-mono">base_url</span> an env var</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Handle timeouts: the first request loads the model (slower)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Avoid</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Forget the <span class="font-mono">/v1</span> at the end of base_url</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Using a model name that hasn’t been downloaded</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Put a real OpenAI key in the local code</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🌊 Streaming, embeddings, and multiple models</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t5-p1">The same API does three more things you'll use a lot: <strong class="text-purple-400">streaming</strong> (the response arrives word by word, like in ChatGPT), <strong class="text-purple-400">embeddings</strong> (turn text into vectors—the foundation of RAG, in the next module) and <strong class="text-purple-400">route by model</strong> (just change the field <span class="font-mono text-neutral-200">model</span>).</p>
+<!-- COPY-RUN streaming -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🌊</span> Streaming: token-by-token responses</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> display the text as it’s generated, without waiting for it to finish. Just <span class="font-mono text-purple-400">stream=True</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>stream = client.chat.completions.create(</div>
+<div>    model="qwen2.5:7b",</div>
+<div>    messages=[{"role": "user", "content": "Count to five."}],</div>
+<div>    stream=True,  <span class="text-neutral-500"># enable streaming mode</span></div>
+<div>)</div>
+<div>for chunk in stream:</div>
+<div>    print(chunk.choices[0].delta.content or "", end="", flush=True)</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the text appears gradually, not all at once. In curl, the equivalent is to add <span class="font-mono text-purple-400">"stream": true</span> in the JSON body.</p>
+</div>
+<!-- COPY-RUN embeddings -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🧮</span> Embeddings: text becomes a vector</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> generate a text’s meaning vector—the building block of RAG (Module 3.6). Use an embedding model such as <span class="font-mono text-purple-400">nomic-embed-text</span> (download with <span class="font-mono text-purple-400">ollama pull nomic-embed-text</span>).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>curl http://localhost:11434/v1/embeddings \</div>
+<div>  -H "Content-Type: application/json" \</div>
+<div>  -d '{</div>
+<div>    "model": "nomic-embed-text",</div>
+<div>    "input": "text that becomes a vector of meaning"</div>
+<div>  }'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the response contains <span class="font-mono text-purple-400">data[0].embedding</span> — a long list of numbers. That’s what a vector database stores to search by similarity.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔀</span> Multiple models, one endpoint</h3>
+<p class="text-neutral-300 text-sm">You don’t launch a server for each model. The same endpoint serves all the models you’ve downloaded—just change the field <span class="font-mono text-blue-300">model</span>: a small, fast model for classification, a larger one for reasoning, and an embedding model for RAG. Ollama loads and unloads them as needed.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">stream</div><div class="text-xs text-neutral-400">token by token</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">embeddings</div><div class="text-xs text-neutral-400">text → vector</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">model</div><div class="text-xs text-neutral-400">routes the request</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">1 endpoint</div><div class="text-xs text-neutral-400">N models</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔒 Safely exposing it on the tailnet</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t6-p1">By default, the API only responds on <span class="font-mono text-neutral-200">localhost</span> — no one outside can reach it. But in Module 2.4, you set up a <strong class="text-purple-400">tailnet</strong> (private network via Tailscale). Put the two pieces together, and you can use your home model from your work laptop or phone—all within your private network, without exposing anything to the internet.</p>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="An app or script calls the local API on port 11434, which runs the model; a cyan branch shows another device accessing the same API through the Tailscale tailnet" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m35-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m35-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m35-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m35-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m35-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m35-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- fluxo principal: app -> API -> modelo -->
+<g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2">
+<path d="M214,72 C320,72 330,108 420,116" marker-end="url(#m35-ah)"></path>
+<path d="M620,120 C690,120 710,120 788,120" marker-end="url(#m35-ah)"></path>
+</g>
+<!-- ramo ciano: outro device via Tailscale -->
+<g fill="none" opacity="0.6" stroke="#38bdf8" stroke-width="2">
+<path d="M214,186 C330,186 330,140 420,128" marker-end="url(#m35-ahc)"></path>
+</g>
+<!-- caixa app/script -->
+<g filter="url(#m35-glow)"><rect fill="#1a1230" height="58" rx="13" stroke="url(#m35-grad)" stroke-width="2.5" width="174" x="40" y="44"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="127" y="69">App / Script</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="127" y="88">OpenAI SDK · curl</text>
+<!-- caixa outro device (ciano) -->
+<g><rect fill="#0e1b26" height="56" rx="13" stroke="#38bdf8" stroke-width="2" width="174" x="40" y="158"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle" x="127" y="182">Another device</text>
+<text fill="#7fc7ef" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="127" y="200">via Tailscale (100.x)</text>
+<!-- caixa API local (hub) -->
+<g filter="url(#m35-glow)"><rect fill="#1a1230" height="72" rx="14" stroke="url(#m35-grad)" stroke-width="2.5" width="200" x="420" y="84"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="520" y="116">Local API</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="520" y="137">Ollama · :11434 · /v1</text>
+<!-- caixa modelo -->
+<g filter="url(#m35-glow)"><rect fill="#1a1230" height="72" rx="14" stroke="url(#m35-grad)" stroke-width="2.5" width="172" x="788" y="84"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="874" y="116">Model</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="874" y="137">qwen2.5 · gemma · …</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from left to right: the <strong class="text-neutral-200">app/script</strong> (purple) calls <strong class="text-neutral-200">Local API</strong> on port 11434, which runs the <strong class="text-neutral-200">model</strong>. The branch at <strong class="text-neutral-200">cyan</strong> shows <strong class="text-neutral-200">another device</strong> reaching the same API over the tailnet — without exposing anything to the public internet.</p>
+<!-- COPY-RUN OLLAMA_HOST -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: open it on the tailnet</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> make Ollama listen on every interface (not just localhost) so other devices on your tailnet can reach it.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># On the MACHINE serving the model: listen on all interfaces</div>
+<div>OLLAMA_HOST=0.0.0.0:11434 ollama serve</div>
+<div class="text-neutral-500 mt-2"># Find its IP on the tailnet (100.x.y.z)</div>
+<div>tailscale ip -4</div>
+<div class="text-neutral-500 mt-2"># From ANOTHER device on the tailnet, call it by this IP</div>
+<div>curl http://100.x.y.z:11434/v1/chat/completions \</div>
+<div>  -H "Content-Type: application/json" \</div>
+<div>  -d '{"model":"qwen2.5:7b","messages":[{"role":"user","content":"hi"}]}'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> from the second device, the curl with the IP <span class="font-mono text-purple-400">100.x</span> should respond in JSON. If it doesn't, check whether both are on the tailnet (<span class="font-mono text-purple-400">tailscale status</span>).</p>
+</div>
+<!-- BOX DE ALERTA -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alert: never expose it to the public internet</h3>
+<p class="text-neutral-300 text-sm mb-3"><span class="font-mono text-red-300">OLLAMA_HOST=0.0.0.0</span> opens the port to any network the machine is connected to. <strong>Within the tailnet</strong> this is safe: only your authenticated devices can see the <span class="font-mono text-neutral-200">100.x</span>. <strong>On the open internet, no.</strong> The Ollama API has no login or password—anyone who can reach the port can use (and abuse) your model.</p>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>NEVER port-forward 11434 on your router.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>NEVER point the port to a public IP.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Access remotely ONLY through the tailnet (IP 100.x) — that’s the secure way.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Tailnet (secure)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Your own authenticated devices only</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>End-to-end encrypted traffic</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>No ports open on the router</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Public internet (dangerous)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Anyone on the web can reach the port</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No login: completely open API</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hijacked model, your electricity bill</span></li>
+</ul>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-5#q1">
+<p class="font-medium mb-4">Self-check (optional): to use the OpenAI SDK with your local model, what do you adjust?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Set the base_url to api.openai.com and use my real key</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Set base_url to http://localhost:11434/v1 and use any api_key (e.g., "ollama"), since Ollama doesn’t validate the key</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) I need to train the model before the API works</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">localhost</div><div class="text-xs text-neutral-400">closed-source</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">0.0.0.0</div><div class="text-xs text-neutral-400">opens in the tailnet</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">100.x</div><div class="text-xs text-neutral-400">Tailscale IP</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Public</div><div class="text-xs text-neutral-400">never</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">The API is the model's door</strong><span class="text-neutral-400"> — without it, you can only chat manually; with it, scripts and agents use the model.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Ollama serves on :11434 with /v1 routes</strong><span class="text-neutral-400"> — identical to the OpenAI format; you only change base_url.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">curl for a test; the SDK automates</strong><span class="text-neutral-400"> — the same OpenAI library with a local base_url and any api_key.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Streaming, embeddings, and N models in one endpoint</strong><span class="text-neutral-400"> — and remote access only through the tailnet, never over the public internet.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.6 — Embeddings, memory &amp; RAG</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-4.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-6.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-5#q1',{answer:1,explain:{0:'Não — apontar pra api.openai.com manda tudo pra nuvem. O objetivo aqui é o contrário: usar o modelo na sua máquina.',1:'Isso. base_url local + uma api_key qualquer (o Ollama ignora a chave). Mesmo SDK, modelo local.',2:'Não. O modelo já está pronto; a API só serve o que o Ollama já roda — nada de treinar.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

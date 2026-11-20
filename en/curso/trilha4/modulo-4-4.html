@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>4.4 Step-by-step #2: web watcher hunting for opportunities | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-4-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha4/modulo-4-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Advanced &amp; 24/7 Agents</a><span>/</span>
+<span class="text-amber-400">Module 4.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MODULE 4.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔭 Step-by-step #2: web watcher hunting for opportunities</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">A local model is unlimited — so it can monitor the web all day without a meter running. Here you build a <strong class="text-neutral-100">worker that reads permitted sources</strong>, have the LLM score each item as a potential business opportunity and give you a list <strong class="text-neutral-100">ranked, with the source for each</strong> — all within the ToS, no “scraping at any cost.”</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~40</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Advanced</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Practical</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. The goal</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Ethics and rules</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Collecting the permitted source</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Analysis with the local model</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Ranking and storing</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Running continuously</a></li>
+</ol>
+<div aria-label="Module 4.4 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="4-4" data-inema-topic="modulo-4-4#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 The goal</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t1-p1">The target is a <strong class="text-amber-400">a watchdog that never sleeps</strong>: a worker that reads forums, communities, and feeds, identifies recurring complaints and wishes—the “pain points”—and gives you a list of what could become a product, <strong class="text-amber-400">ranked by potential and linked to the source</strong>. Instead of scrolling Reddit for hours, the local model does the heavy reading and only alerts you when it finds something real.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm">A <strong>"pain"</strong> is a problem people repeatedly complain about (“I waste time doing X by hand,” “no tool solves Y”). When the same pain point comes up often and no one solves it well, that’s a <strong>sign of opportunity</strong> — the raw material for a product. The watcher exists to capture these signals at scale.</p>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> The central idea</h3>
+<p class="text-neutral-300 mb-4">The watcher has four responsibilities, in this order:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Collect</strong> from permitted sources (RSS, official JSON, APIs) — without violating anyone’s rules.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Score</strong> for each item, ask the LLM: Is this a real pain point? What product would solve it? Rate it from 0 to 10.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Rank and deduplicate</strong>, keeping the source of each signal so you can verify it.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Run on its own</strong> every N minutes and only notify you about what passes the threshold.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Collection</div><div class="text-xs text-neutral-400">permitted source</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Score</div><div class="text-xs text-neutral-400">LLM 0–10</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Ranking</div><div class="text-xs text-neutral-400">with source</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">24/7</div><div class="text-xs text-neutral-400">without a meter</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">⚖️ Ethics and rules (read before collecting)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t2-p1">Before writing any code: <strong class="text-amber-400">watching the web doesn't mean scraping everything at any cost</strong>. Every site has terms of service (ToS) and a file <span class="font-mono text-amber-400">robots.txt</span> that determine what you can access. Respecting them isn't just about "being nice"—it's what keeps your worker sustainable, avoids blocks, and keeps you within the law.</p>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">🚨</span> Alert box: the non-negotiable rules</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span><strong>Use the official API/feed when available.</strong> Reddit, YouTube, Stack Overflow, Hacker News, and many forums provide official JSON/RSS—always prefer that over scraping HTML.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span><strong>Respect the ToS and <span class="font-mono">robots.txt</span>.</strong> If the terms prohibit automated collection, don’t collect. Platforms like X/Twitter impose strict restrictions—don’t try to force it.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span><strong>Apply rate limits.</strong> Space out requests (e.g., 1 every 2–5 s); never hammer the server. Identify yourself with a <span class="font-mono">User-Agent</span> real and contact.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">✗</span><span><strong>No personal data or third-party logins.</strong> Collect only public content and aggregate trends—don’t track individuals.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Responsible data collection</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Official RSS/JSON or API with a key</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Identifiable User-Agent + rate limit</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Local cache so you don’t fetch the same thing again</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Public content only, keeping the source</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Problematic data collection</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Bypass login, paywall, or CAPTCHA</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignore <span class="font-mono">robots.txt</span> / ToS</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Fire off thousands of requests/min</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Collect personal data about individuals</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Start with what is <strong>explicitly offered</strong>: Reddit serves JSON on any page (just add <span class="font-mono text-amber-400">.json</span>) and RSS (<span class="font-mono text-amber-400">.rss</span>); Hacker News has the <span class="font-mono text-amber-400">Firebase API</span>; many blogs and forums have <span class="font-mono text-amber-400">/feed</span>. With official sources, you never have to wonder whether you're doing something wrong.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">📥 Collecting from the permitted source</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t3-p1">First concrete step: pull items from an official source and <strong class="text-amber-400">normalize</strong> everything into a single format — that way, the rest of the pipeline doesn't need to know where it came from. We'll use Reddit's official JSON as an example, writing one line per item (format <span class="font-mono text-amber-400">JSONL</span>).</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: collect and normalize</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> download new posts from a subreddit through the official source and save one clean item per line. Needs <span class="font-mono">curl</span> e <span class="font-mono">jq</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Identify yourself and respect the rate limit (official source: Reddit .json)</div>
+<div>UA="vigia-local/1.0 (contact: voce@exemplo.com)"</div>
+<div class="mt-2 text-neutral-500"># Fetch the 25 newest posts and normalize them to 1 JSON per line</div>
+<div>curl -s -A "$UA" \</div>
+<div>  "https://www.reddit.com/r/SaaS/new.json?limit=25" \</div>
+<div>  | jq -c '.data.children[].data</div>
+<div>      | {fonte:"reddit/r/SaaS", id, titulo:.title,</div>
+<div>         text:.selftext, url:("https://reddit.com"+.permalink)}' \</div>
+<div>  &gt; collected.jsonl</div>
+<div class="mt-2 text-neutral-500"># Be polite: wait before the next source</div>
+<div>sleep 3</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run <span class="font-mono text-amber-400">wc -l coletado.jsonl</span> (should show ~25) and <span class="font-mono text-amber-400">head -1 coletado.jsonl | jq</span> — every line has <span class="font-mono">title</span>, <span class="font-mono">text</span> e <span class="font-mono">url</span> of origin.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Normalization is the key to combining sources without rewriting anything. Tomorrow, you can switch collection to an RSS feed (<span class="font-mono text-amber-400">/feed</span>) or through the Hacker News API, keeping the <strong>same keys</strong> (<span class="font-mono">source, id, title, text, url</span>). The LLM and ranking won't even notice the difference.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🧠 Analysis with the local model</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t4-p1">Now for the heart of it: for each item collected, ask the local model to <strong class="text-amber-400">classify and return structured JSON</strong>. The key is to force JSON output (Ollama accepts <span class="font-mono text-amber-400">format:"json"</span>) and use a low temperature for a consistent response. This turns loose text into data the ranking system understands.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: score an item via the local API</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> send an item to the local API (OpenAI-compatible, from Track 3) and receive <span class="font-mono">{real_pain, pain, product, score}</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># $TXT = title + text of ONE collected item</div>
+<div>TXT="I'm tired of versioning prompts in Notion; I lose the good ones"</div>
+<div class="mt-2 text-neutral-500"># Request STRUCTURED (JSON) classification from the local model</div>
+<div>curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>  -d "$(jq -n --arg t "$TXT" '{</div>
+<div>    model:"qwen2.5:7b-instruct", temperature:0.2, format:"json",</div>
+<div>    messages:[</div>
+<div>      {role:"system",</div>
+<div>       content:"You are an opportunities analyst. Respond ONLY in JSON."},</div>
+<div>      {role:"user", content:("Text: "+$t+</div>
+<div>       "\nFormat: {\"real_pain\":bool,\"pain\":\"\",</div>
+<div>       \"produto\":\"\",\"score\":0-10}")}</div>
+<div>    ]}')" \</div>
+<div>  | jq -r '.choices[0].message.content'</div>
+<div class="mt-2 text-neutral-500"># → {"dor_real":true,"dor":"versionar prompts","produto":"Git p/ prompts","score":8}</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> the output must be valid JSON with <span class="font-mono text-amber-400">score</span> between 0 and 10. If it returns unstructured text, reinforce the prompt with "respond ONLY with JSON" and confirm that it passed <span class="font-mono">format:"json"</span>.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">real_pain</div><div class="text-xs text-neutral-400">true/false</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">pain</div><div class="text-xs text-neutral-400">problem summary</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">product</div><div class="text-xs text-neutral-400">what would solve it</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">score</div><div class="text-xs text-neutral-400">0–10 potential</div></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Also request a field <span class="font-mono text-amber-400">justification</span> short: besides improving the score (the model "thinks" first), it gives you a line to read in the report without reopening the source. And give <strong>examples in the system prompt</strong> of what a score of 2 vs. a score of 9 means — it calibrates the score much more than adjusting the temperature.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📊 Ranking and saving</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t5-p1">With each item scored, the worker becomes a <strong class="text-amber-400">curator</strong>: sorts by score, removes duplicates, cuts anything below the threshold, and saves only what’s worth keeping, <strong class="text-amber-400">always with the source link</strong>. Discipline here is what separates a useful report from a flood of noise.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Sort by score</h4>
+<p class="text-neutral-300 text-sm">Greatest potential at the top. <span class="font-mono text-amber-400">sort_by(-.score)</span> solve it in a single line of jq.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Deduplicate</h4>
+<p class="text-neutral-300 text-sm">The same pain point comes up in several posts. <span class="font-mono text-amber-400">unique_by(.id)</span> and ideally, group items with similar pain points.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Cut below the threshold</h4>
+<p class="text-neutral-300 text-sm">Keep only <span class="font-mono text-amber-400">real_pain == true</span> e <span class="font-mono text-amber-400">score &gt;= 7</span>. The cutoff is your signal-to-noise knob.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">4</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Record with citation</h4>
+<p class="text-neutral-300 text-sm">Each opportunity carries the <span class="font-mono text-amber-400">url</span> of origin — without a source, it’s a guess, not a signal.</p>
+</div>
+</div>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">📄</span> The output file: <span class="font-mono ml-1">oportunidades.md</span></h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> a readable, ranked markdown file that you open in the morning and scan. Each item includes the pain point, product, and source.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Opportunities — 2026-06-29</div>
+<div> </div>
+<div>## (score 9) Versioning prompts is a mess</div>
+<div>- **Pain point:** teams lose good prompts in chats and scattered docs.</div>
+<div>- **Product:** “Git for prompts” with diff and rollback.</div>
+<div>- **Source:** https://reddit.com/r/SaaS/comments/abc123</div>
+<div> </div>
+<div>## (score 8) Customer onboarding is far too manual</div>
+<div>- **Pain point:** founders redo the same steps by hand.</div>
+<div>- **Product:** automated onboarding checklist.</div>
+<div>- **Source:** https://reddit.com/r/Entrepreneur/comments/def456</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> open the <span class="font-mono text-amber-400">oportunidades.md</span> and click a source—it should take you exactly to the post that generated the signal. Without that, you can’t validate or cite it.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Notify</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Above the threshold and new (wasn’t in yesterday’s report)</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Recurring pain across multiple sources</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>There’s a clickable source you can check</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Silence (noise)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Score below the threshold or <span class="font-mono">real_pain:false</span></span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Duplicate of something already reported</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Venting with no viable product behind it</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🔁 Running continuously</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-4-t6-p1">Combine the three steps — collection, scoring, ranking — in one script and schedule it with <span class="font-mono text-amber-400">cron</span> (Track 4.2). The full pipeline flows from left to right: the <strong class="text-neutral-200">sources</strong> feed collection, the <strong class="text-neutral-200">Local LLM</strong> scores, the ranking filters and the <strong class="text-neutral-200">output</strong> is your report for the day.</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Watchdog pipeline: permitted sources feed the collection process, which normalizes items; the local LLM scores them from 0 to 10; the ranking process deduplicates and trims them; the output is the ranked oportunidades.md file" class="w-full h-auto" role="img" viewbox="0 0 1000 220">
+<defs>
+<lineargradient id="m44-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m44-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m44-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m44-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+</defs>
+<rect fill="url(#m44-grid)" height="220" width="1000" x="0" y="0"></rect>
+<g fill="none" opacity="0.7" stroke="#fbbf24" stroke-width="2.5">
+<path d="M164,106 L214,106" marker-end="url(#m44-ah)"></path>
+<path d="M370,106 L420,106" marker-end="url(#m44-ah)"></path>
+<path d="M576,106 L626,106" marker-end="url(#m44-ah)"></path>
+<path d="M782,106 L832,106" marker-end="url(#m44-ah)"></path>
+</g>
+<!-- Fonte (amber, glow) -->
+<g filter="url(#m44-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m44-grad)" stroke-width="2.5" width="152" x="12" y="70"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="88" y="102">Sources</text>
+<text fill="#fcd9a8" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="88" y="122">RSS · Official API</text>
+<!-- Coleta (ciano) -->
+<g><rect fill="#0e1b26" height="72" rx="14" stroke="#38bdf8" stroke-width="2" width="152" x="218" y="70"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="294" y="102">Collection</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" opacity="0.85" text-anchor="middle" x="294" y="122">normalizes</text>
+<!-- LLM (ciano) -->
+<g><rect fill="#0e1b26" height="72" rx="14" stroke="#38bdf8" stroke-width="2" width="152" x="424" y="70"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="500" y="102">Local LLM</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" opacity="0.85" text-anchor="middle" x="500" y="122">score 0–10</text>
+<!-- Ranking (ciano) -->
+<g><rect fill="#0e1b26" height="72" rx="14" stroke="#38bdf8" stroke-width="2" width="152" x="630" y="70"></rect></g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="16" font-weight="700" text-anchor="middle" x="706" y="102">Ranking</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" opacity="0.85" text-anchor="middle" x="706" y="122">dedup + cutoff</text>
+<!-- Saída (amber, glow) -->
+<g filter="url(#m44-glow)"><rect fill="#1f1604" height="72" rx="14" stroke="url(#m44-grad)" stroke-width="2.5" width="152" x="836" y="70"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="912" y="100">opportunities</text>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="middle" x="912" y="116">.md</text>
+<text fill="#fcd9a8" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="912" y="133">ranked</text>
+<!-- timer label -->
+<g font-family="Inter,sans-serif"><text fill="#f59e0b" font-size="12" font-weight="600" text-anchor="middle" x="500" y="186">⟳ cron: repeats every N minutes, with no per-call cost</text></g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from left to right: the flow (in amber) exits the <strong class="text-neutral-200">permitted sources</strong>, goes through three processing stages (in cyan) and ends at the <strong class="text-neutral-200">report for the day</strong>. O <span class="font-mono">cron</span> down below closes the loop — since it’s local, repeating it all day only costs electricity.</p>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run main: <span class="font-mono ml-1">vigia.sh</span></h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> the entire pipeline in one script — collects, scores with the local model, ranks, and saves the dated markdown file.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>#!/usr/bin/env bash</div>
+<div>set -euo pipefail</div>
+<div>UA="vigia-local/1.0 (contact: voce@exemplo.com)"</div>
+<div>HOJE=$(date +%F); SAIDA="oportunidades-$HOJE.md"</div>
+<div class="mt-2 text-neutral-500"># 1) COLLECTION (permitted source)</div>
+<div>curl -s -A "$UA" "https://www.reddit.com/r/SaaS/new.json?limit=25" \</div>
+<div>  | jq -c '.data.children[].data | {id, title:.title,</div>
+<div>    text:.selftext, url:("https://reddit.com"+.permalink)}' &gt; coletado.jsonl</div>
+<div class="mt-2 text-neutral-500"># 2) SCORE each item with the local model (JSON output)</div>
+<div>&gt; scored.jsonl</div>
+<div>while IFS= read -r linha; do</div>
+<div>  txt=$(jq -r '.titulo + " — " + (.texto // "")' &lt;&lt;&lt; "$linha")</div>
+<div>  resp=$(curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>    -d "$(jq -n --arg t "$txt" '{model:"qwen2.5:7b-instruct",</div>
+<div>      temperature:0.2, format:"json", messages:[{role:"user",</div>
+<div>      content:("ONLY JSON {\"real_pain\":bool,\"pain\":\"\",</div>
+<div>      \"produto\":\"\",\"score\":0-10}: "+$t)}]}')" \</div>
+<div>    | jq -r '.choices[0].message.content')</div>
+<div>  jq -c --argjson c "$resp" '. + $c' &lt;&lt;&lt; "$linha" &gt;&gt; pontuado.jsonl</div>
+<div>  sleep 1</div>
+<div>done &lt; coletado.jsonl</div>
+<div class="mt-2 text-neutral-500"># 3) RANK, deduplicate, and cut scores &lt; 7</div>
+<div>jq -s 'unique_by(.id) | map(select(.dor_real and .score &gt;= 7))</div>
+<div>  | sort_by(-.score)' pontuado.jsonl &gt; ranqueado.json</div>
+<div class="mt-2 text-neutral-500"># 4) SAVE markdown with a source citation</div>
+<div>{ echo "# Opportunities — $HOJE"; echo;</div>
+<div>  jq -r '.[] | "## (score \(.score)) \(.dor)\n- **Produto:** \(.produto)\n- **Fonte:** \(.url)\n"' ranqueado.json;</div>
+<div>} &gt; "$SAIDA"</div>
+<div>echo "Gravado: $SAIDA ($(jq length ranqueado.json) itens)"</div>
+<div class="mt-2 text-neutral-500"># 5) SCHEDULE: every 30 min (crontab -e)</div>
+<div>#  */30 * * * * cd ~/vigia &amp;&amp; /bin/bash vigia.sh &gt;&gt; vigia.log 2&gt;&amp;1</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> run <span class="font-mono text-amber-400">bash vigia.sh</span> once manually — it should print "Recorded:" and create the <span class="font-mono">oportunidades-AAAA-MM-DD.md</span>. Only then add the <span class="font-mono">cron</span>. Keep an eye on the <span class="font-mono text-amber-400">vigia.log</span> in the first rounds.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-4#q1">
+<p class="font-medium mb-4">Self-check (optional): why start collecting from an official source (RSS/JSON/API) instead of scraping the HTML at all costs?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Because downloading HTML is technically impossible without a browser</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Following ToS/robots and rate limits keeps you sustainable and within the law — and official data is clean and stable</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Because official APIs are always free and have no usage limits</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Collection</div><div class="text-xs text-neutral-400">curl + jq</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Scores</div><div class="text-xs text-neutral-400">Local JSON API</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Ranks</div><div class="text-xs text-neutral-400">dedup + cutoff</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Schedule</div><div class="text-xs text-neutral-400">cron every N minutes</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">The watcher collects, scores, ranks, and runs on its own</strong><span class="text-neutral-400"> — unstructured text becomes a list of opportunities with sources.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Ethics first</strong><span class="text-neutral-400"> — official APIs/RSS, ToS, robots.txt, and rate limits. No scraping at any cost.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Structured JSON is the glue</strong><span class="text-neutral-400"> — asking for a score from 0–10 in JSON makes ranking trivial.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Local unlocks 24/7</strong><span class="text-neutral-400"> — repeating every N min only uses energy; cron completes the cycle.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">4.5 — Your local buddy with a name, face, and voice</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-3.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-5.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-4#q1',{answer:1,explain:{0:'Não — dá pra baixar HTML com curl. O ponto não é poder técnico, é coletar de forma permitida e estável.',1:'Isso. Fonte oficial respeita ToS/robots e rate limit (sustentável e legal) e ainda entrega dado limpo e estável.',2:'Nem sempre — muitas APIs oficiais têm cota ou cobrança. O motivo é legalidade/estabilidade, não preço.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>2.2 Como escolher: o que cabe na sua máquina | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37,99,235,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
+<button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Hardware &amp; Lab</a><span>/</span>
+<span class="text-blue-400">Módulo 2.2</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MÓDULO 2.2</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧮 Como escolher: o que cabe na sua máquina</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Saber as categorias de hardware é metade do jogo. A outra metade é uma conta simples: <strong class="text-neutral-100">qual modelo cabe na memória que você tem</strong>. Aqui você aprende a regra de bolso, lê a sua máquina com dois comandos e sai com um plano — sem chutar e sem gastar à toa.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Básico</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Prática</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. A pergunta certa</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. Regra de bolso de memória</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. VRAM, RAM ou unificada?</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Velocidade: tokens/s</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Começar com o que você tem</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Plano de upgrade</a></li>
+</ol>
+<div aria-label="Progresso do módulo 2.2" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-2" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="2-2" data-inema-topic="modulo-2-2#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 A pergunta certa: que modelo você quer rodar?</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">A maioria começa pelo lugar errado: olha a máquina e pergunta "o que cabe aqui?". Inverta a ordem. <strong class="text-blue-400">Comece pelo caso de uso</strong> — a tarefa define o tamanho do modelo, o tamanho define a memória, e a memória aponta o hardware. Hardware é a <em>última</em> pergunta, não a primeira.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Caso de uso"</strong> é a tarefa concreta: resumir e-mail, escrever código, classificar texto, conversar. <strong>"Tamanho"</strong> é a quantidade de parâmetros do modelo, medida em bilhões — o <strong>7B</strong>, <strong>13B</strong>, <strong>70B</strong> do nome. Mais parâmetros ≈ mais capaz, porém mais pesado. <strong>"Quantização"</strong> é o quanto cada parâmetro foi comprimido (Q4, Q8, FP16) — veremos no próximo tópico.</p>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🔑</span> Três perguntas antes de qualquer download</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Que tarefa?</strong> Chat e rascunho pedem pouco; código de produção e raciocínio longo pedem modelos maiores.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Que qualidade mínima serve?</strong> "Bom o suficiente" para a maioria das tarefas chega bem antes do topo de linha.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Com que frequência?</strong> Uso esporádico tolera lentidão; um agente 24/7 precisa caber confortável e rodar rápido.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Pelo caso de uso (certo)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>"Quero resumir notas" → modelo 7B basta → cabe em 8 GB</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Você sabe o teto de memória <em>antes</em> de baixar</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Gasta só o necessário — nada de hardware sobrando</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Pelo hardware (errado)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Tenho uma GPU, qual o maior modelo?" → baixa um 70B que mal roda</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Frustração: lento, travando, sem caber direito</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Compra cara para um problema que um 7B resolvia</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tarefa</div><div class="text-xs text-neutral-400">define o tamanho</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Tamanho</div><div class="text-xs text-neutral-400">define a memória</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Memória</div><div class="text-xs text-neutral-400">aponta o hardware</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Hardware</div><div class="text-xs text-neutral-400">é a última pergunta</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📐 A regra de bolso de memória</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">Essa é a conta que decide quase tudo. O tamanho do modelo em disco e em memória sai de uma fórmula simples — você não precisa de mais que multiplicação:</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-blue-500/30 text-neutral-200 overflow-x-auto mb-6">
+<div class="text-blue-400">GB ≈ (parâmetros em bilhões) × (bytes por peso) + overhead de contexto</div>
+<div class="text-neutral-500 mt-2"># bytes por peso, por quantização:</div>
+<div>Q4  ≈ 0.6 GB por bilhão   (4 bits, comprimido)</div>
+<div>Q8  ≈ 1.0 GB por bilhão   (8 bits)</div>
+<div>FP16 ≈ 2.0 GB por bilhão  (16 bits, "cheio")</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Peso"</strong> (ou parâmetro) é um número que o modelo aprendeu. Um 7B tem 7 bilhões deles. <strong>"Bytes por peso"</strong> é quanto cada número ocupa: FP16 guarda cheio (2 bytes), <strong>quantizar</strong> comprime para 8 ou 4 bits (1 ou ~0,5 byte), encolhendo o arquivo. <strong>"Overhead de contexto"</strong> (o KV cache) é a memória extra que cresce conforme a conversa fica longa — reserve de 1 a 3 GB para contextos típicos.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-2-t2-p2">Aplicando a fórmula aos tamanhos mais comuns (só os pesos, antes do contexto):</p>
+<div class="font-mono text-xs sm:text-sm bg-dark-900 rounded-xl border border-dark-600 p-4 overflow-x-auto mb-3">
+<table class="w-full text-left whitespace-nowrap">
+<thead>
+<tr class="text-blue-400 border-b border-dark-600">
+<th class="py-2 pr-4 font-semibold">Modelo</th>
+<th class="py-2 pr-4 font-semibold">Q4 (~0.6 GB/B)</th>
+<th class="py-2 pr-4 font-semibold">Q8 (~1.0 GB/B)</th>
+<th class="py-2 font-semibold">FP16 (~2.0 GB/B)</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">7B</td><td class="py-2 pr-4">~4.5 GB</td><td class="py-2 pr-4">~7.5 GB</td><td class="py-2">~14 GB</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">13B</td><td class="py-2 pr-4">~8 GB</td><td class="py-2 pr-4">~14 GB</td><td class="py-2">~26 GB</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">34B</td><td class="py-2 pr-4">~20 GB</td><td class="py-2 pr-4">~36 GB</td><td class="py-2">~68 GB</td></tr>
+<tr><td class="py-2 pr-4 text-neutral-100">70B</td><td class="py-2 pr-4">~40 GB</td><td class="py-2 pr-4">~70 GB</td><td class="py-2">~140 GB</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Leia a tabela escolhendo a <strong class="text-neutral-200">linha</strong> (o tamanho que a sua tarefa pede) e a <strong class="text-neutral-200">coluna</strong> (a quantização). O número na célula tem que caber na sua memória <em>com folga</em> — some o contexto e deixe respiro para o sistema.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Nunca encha a memória até a borda. Reserve <strong>10–20% de folga</strong> para o sistema operacional, <strong>1–3 GB</strong> para o contexto, e prefira a maior quantização que ainda caiba — <span class="font-mono text-blue-400">Q4_K_M</span> é o ponto doce: encolhe muito e perde pouca qualidade. Regra mental rápida: <strong>tamanho em bilhões ÷ 2 ≈ GB em Q4</strong>.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🧭 VRAM, RAM ou unificada na sua decisão</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">A regra de bolso te diz <em>quantos GB</em>. Falta saber <em>de qual memória</em>. O tipo de memória que o seu perfil de hardware oferece muda a faixa de modelo que vale a pena — e a velocidade que você vai sentir.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>VRAM</strong> é a memória da placa de vídeo (GPU) — pouca, porém rápida; o modelo voa quando cabe inteiro nela. <strong>RAM</strong> é a memória do sistema, usada pela CPU — abundante e barata, mas lenta para inferência. <strong>Memória unificada</strong> (Apple Silicon) é um pool único que CPU e GPU compartilham — cabe modelo grande, com banda intermediária.</p>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Fluxo de decisão: quanto mais memória livre você tem, maior a faixa de modelo que cabe — de 1B a 3B com até 8 GB, passando por 7B e 13B, até 70B com 48 GB ou mais" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m22-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m22-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m22-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m22-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m22-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m22-grid)" height="300" width="1000" x="0" y="0"></rect>
+<text fill="#93b8f5" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="175" y="20">Memória livre</text>
+<text fill="#9bd0f0" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="755" y="20">Faixa de modelo que cabe</text>
+<g font-family="Inter,sans-serif" font-size="14" font-weight="700">
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="40" rx="10" stroke="url(#m22-grad)" stroke-width="2" width="250" x="50" y="36"></rect></g>
+<text fill="#bfdcff" text-anchor="middle" x="175" y="61">≤ 8 GB</text>
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="40" rx="10" stroke="url(#m22-grad)" stroke-width="2" width="250" x="50" y="88"></rect></g>
+<text fill="#bfdcff" text-anchor="middle" x="175" y="113">8 – 16 GB</text>
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="40" rx="10" stroke="url(#m22-grad)" stroke-width="2" width="250" x="50" y="140"></rect></g>
+<text fill="#bfdcff" text-anchor="middle" x="175" y="165">16 – 24 GB</text>
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="40" rx="10" stroke="url(#m22-grad)" stroke-width="2" width="250" x="50" y="192"></rect></g>
+<text fill="#bfdcff" text-anchor="middle" x="175" y="217">24 – 48 GB</text>
+<g filter="url(#m22-glow)"><rect fill="#0e1622" height="40" rx="10" stroke="url(#m22-grad)" stroke-width="2" width="250" x="50" y="244"></rect></g>
+<text fill="#bfdcff" text-anchor="middle" x="175" y="269">48 GB +</text>
+</g>
+<g fill="none" opacity="0.7" stroke="#60a5fa" stroke-width="2.5">
+<path d="M300,56  L526,56" marker-end="url(#m22-ah)"></path>
+<path d="M300,108 L526,108" marker-end="url(#m22-ah)"></path>
+<path d="M300,160 L526,160" marker-end="url(#m22-ah)"></path>
+<path d="M300,212 L526,212" marker-end="url(#m22-ah)"></path>
+<path d="M300,264 L526,264" marker-end="url(#m22-ah)"></path>
+</g>
+<g font-family="Inter,sans-serif" font-size="13" font-weight="600">
+<g><rect fill="#0e1b26" height="40" rx="9" stroke="#38bdf8" stroke-width="2" width="430" x="530" y="36"></rect><text fill="#bfe6ff" x="548" y="61">1B–3B · Q4 — embeddings, classificação</text></g>
+<g><rect fill="#0e1b26" height="40" rx="9" stroke="#38bdf8" stroke-width="2" width="430" x="530" y="88"></rect><text fill="#bfe6ff" x="548" y="113">7B–8B · Q4 — chat do dia a dia</text></g>
+<g><rect fill="#0e1b26" height="40" rx="9" stroke="#38bdf8" stroke-width="2" width="430" x="530" y="140"></rect><text fill="#bfe6ff" x="548" y="165">13B–14B Q4 ou 7B Q8 — mais qualidade</text></g>
+<g><rect fill="#0e1b26" height="40" rx="9" stroke="#38bdf8" stroke-width="2" width="430" x="530" y="192"></rect><text fill="#bfe6ff" x="548" y="217">32B–34B · Q4 — raciocínio forte</text></g>
+<g><rect fill="#0e1b26" height="40" rx="9" stroke="#38bdf8" stroke-width="2" width="430" x="530" y="244"></rect><text fill="#bfe6ff" x="548" y="269">70B · Q4 — topo do que cabe local</text></g>
+</g>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Leia o diagrama da esquerda para a direita: cada faixa de <strong class="text-neutral-200">memória livre</strong> (azul) aponta a <strong class="text-neutral-200">maior faixa de modelo</strong> (em ciano) que cabe com folga em <span class="font-mono text-blue-400">Q4</span>. Em VRAM dedicada, esse modelo voa; na mesma quantidade de RAM ou memória unificada, ele cabe igual — só anda mais devagar.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Onde cada uma brilha</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong>VRAM:</strong> o modelo cabe inteiro na GPU → velocidade máxima</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong>Unificada:</strong> muito GB barato → roda modelos enormes que GPU nenhuma comum aguenta</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span><strong>RAM:</strong> o caminho zero-custo para modelos pequenos na CPU</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Onde cada uma aperta</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>VRAM:</strong> pouca — estourou o limite, despenca para a CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>Unificada:</strong> banda intermediária → 70B cabe, mas anda devagar</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span><strong>RAM:</strong> lenta para inferência; modelo grande vira tartaruga</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⚡ Velocidade aceitável: tokens por segundo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">Caber é uma coisa; ser <em>usável</em> é outra. A métrica que mede isso é <strong class="text-blue-400">tokens/s</strong> — quão rápido o texto sai. E aqui quem manda não é o tamanho da memória, e sim a <strong class="text-blue-400">banda</strong> (quão rápido a memória entrega dados ao processador).</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Token"</strong> é um pedaço de palavra — em média uma palavra tem 1 a 2 tokens. <strong>"Tokens/s"</strong> é quantos desses pedaços o modelo gera por segundo. Para comparar: você lê em voz alta a uns <strong>~5 tokens/s</strong>; acima disso, o texto aparece mais rápido do que você lê.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-2-t4-p2">Use estas faixas como referência para saber se uma combinação modelo+hardware vale a pena:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">&lt; 5 tokens/s — sofrido para chat</h4>
+<p class="text-neutral-300 text-sm">Dá para tarefas em lote que rodam sozinhas (à noite, sem você olhando), mas conversar assim cansa. Sinal típico de modelo grande demais na CPU/RAM.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">10–20 tokens/s — confortável</h4>
+<p class="text-neutral-300 text-sm">A faixa boa para chat do dia a dia: o texto sai na velocidade da leitura. É o alvo realista de um 7B–8B em Q4 numa GPU modesta ou em memória unificada.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">40+ tokens/s — folgado</h4>
+<p class="text-neutral-300 text-sm">Resposta quase instantânea, ótimo para agentes e fluxo intenso. Acontece quando o modelo cabe inteiro na VRAM de uma GPU de banda alta.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Quando o modelo <strong>cabe inteiro</strong> na memória rápida, a velocidade despenca de forma suave com o tamanho. Quando <strong>transborda</strong> (parte na GPU, parte na CPU), a queda é brusca — pode cair de 30 para 3 tokens/s. Por isso a meta é: <strong>caber inteiro na memória mais rápida que você tem</strong>, nem que seja num modelo um número menor.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Banda</div><div class="text-xs text-neutral-400">manda na velocidade</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">~5 tok/s</div><div class="text-xs text-neutral-400">só para lote</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">10–20</div><div class="text-xs text-neutral-400">chat confortável</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Transbordou</div><div class="text-xs text-neutral-400">queda brusca</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">💰 Começar com o que você já tem</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">A melhor primeira máquina é a que está na sua mesa. O caminho de <strong class="text-blue-400">custo zero</strong> é direto: o laptop que você já usa + Ollama + um modelo de 3B a 8B em Q4. Antes de pensar em comprar qualquer coisa, leia o que a sua máquina tem — são dois comandos.</p>
+<!-- COPY-RUN -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: leia a memória da sua máquina</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> descobrir quanta VRAM e RAM você tem — os dois números que decidem o maior modelo viável. Cole no terminal.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># VRAM da GPU NVIDIA (se você tiver uma)</div>
+<div>nvidia-smi --query-gpu=name,memory.total,memory.free --format=csv</div>
+<div class="text-neutral-500 mt-3"># RAM total e livre do sistema (Linux)</div>
+<div>free -h</div>
+<div class="text-neutral-500 mt-3"># RAM no macOS (memória unificada total)</div>
+<div>system_profiler SPHardwareDataType | grep "Memory"</div>
+</div>
+<p class="text-neutral-400 text-sm mb-2"><strong>Como verificar / estimar o maior modelo viável:</strong></p>
+<ul class="space-y-1 text-neutral-300 text-sm list-disc pl-5">
+<li>Anote a <strong>memória livre</strong> mais rápida que você tem (VRAM se houver GPU; senão a RAM).</li>
+<li>Tire <strong>~20% de folga</strong> para o sistema e <strong>2 GB</strong> para o contexto.</li>
+<li>Divida o que sobrou por <strong>0.6</strong> → é o tamanho máximo aproximado em bilhões, em Q4. Ex.: 16 GB → ~11 GB úteis → cabe um <strong>7B–8B</strong> com folga.</li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ O que você tem já basta quando…</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>O caso de uso é chat, resumo, rascunho ou classificação</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Um 7B–8B em Q4 cabe e roda a 10+ tokens/s</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Você ainda está aprendendo e testando o fluxo</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-neutral-100 mb-4">↑ Pense em subir quando…</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">→</span><span>O modelo que a tarefa exige não cabe nem em Q4</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">→</span><span>A velocidade trava o seu trabalho de verdade</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">→</span><span>Você vai deixar um agente rodando 24/7</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🚀 Montando um plano de upgrade</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">Se chegou a hora de investir, gaste na ordem certa. A regra de ouro: <strong class="text-blue-400">memória primeiro, sempre</strong>. Modelo que não cabe não roda — adianta pouco ter banda se falta espaço. Siga esta prioridade:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Mais memória</h4>
+<p class="text-neutral-300 text-sm">É o que destrava modelos maiores. Em RAM costuma ser barato; em VRAM (mais GPU) é o pulo de qualidade que mais rende. Resolva o "cabe?" antes de qualquer outra coisa.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">GPU dedicada (quando a velocidade trava)</h4>
+<p class="text-neutral-300 text-sm">Só depois que cabe. Uma GPU com VRAM suficiente para o modelo inteiro multiplica os tokens/s. Compense banda <em>e</em> capacidade — VRAM pequena e rápida força transbordo para a CPU.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Multi-máquina (mais tarde)</h4>
+<p class="text-neutral-300 text-sm">Modelo grande numa máquina, modelo rápido noutra, tudo conectado pela rede privada. É o tema do módulo 2.4 (Tailscale) — não compre pensando nisso agora.</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🛒</span> Checklist de compra</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>Já defini o <strong>caso de uso</strong> e o <strong>tamanho de modelo</strong> alvo?</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>O alvo <strong>cabe na memória</strong> que vou comprar, em Q4, com folga de SO e contexto?</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>A <strong>banda</strong> entrega os tokens/s que o meu uso exige?</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span>O <strong>sistema operacional</strong> suporta meu hardware sem dor (tema do 2.3)?</span></li>
+</ul>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Não compre para o modelo dos seus sonhos — compre para o modelo que você <strong>realmente</strong> usa hoje, com uma folga de um degrau. O ecossistema fica mais eficiente a cada mês: o hardware que você comprar render mais amanhã do que rende agora.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-2#q1">
+<p class="font-medium mb-4">Auto-checagem (opcional): você tem 16 GB de RAM e nenhuma GPU dedicada. Pela regra de bolso, qual é a escolha mais segura para chat do dia a dia?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Um 70B em FP16 — é o mais inteligente</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Um 7B–8B em Q4 (~5 GB), deixando folga para SO e contexto</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Um 34B em Q8 (~36 GB) — equilíbrio entre tamanho e qualidade</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">1º</div><div class="text-xs text-neutral-400">memória</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">2º</div><div class="text-xs text-neutral-400">GPU / banda</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">3º</div><div class="text-xs text-neutral-400">multi-máquina</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Regra</div><div class="text-xs text-neutral-400">caber &gt; rápido</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Comece pelo caso de uso</strong><span class="text-neutral-400"> — a tarefa define o tamanho, que define a memória, que aponta o hardware.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Regra de bolso</strong><span class="text-neutral-400"> — GB ≈ parâmetros × bytes/peso (Q4 ~0.6, Q8 ~1, FP16 ~2) + contexto.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">VRAM, RAM ou unificada</strong><span class="text-neutral-400"> — a quantidade decide o que cabe; a banda decide a velocidade.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Comece com o que tem e priorize memória</strong><span class="text-neutral-400"> — laptop + 7B Q4 já entrega; upgrade é memória primeiro.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">2.3 — Sistema operacional, drivers e base</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-1.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="modulo-2-3.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-2#q1',{answer:1,explain:{0:'Não cabe nem perto — um 70B em FP16 pede cerca de 140 GB. Em 16 GB isso nem carrega.',1:'Isso. Um 7B–8B em Q4 ocupa ~5 GB, cabe com folga em 16 GB e dá conta do chat do dia a dia.',2:'Um 34B em Q8 pede ~36 GB — mais que o dobro do que você tem. Não cabe.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

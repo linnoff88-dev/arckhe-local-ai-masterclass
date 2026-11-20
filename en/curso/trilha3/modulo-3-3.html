@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>3.3 Choosing and downloading the right model | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Installation &amp; Techniques</a><span>/</span>
+<span class="text-purple-400">Module 3.3</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MODULE 3.3</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🧩 Choosing and downloading the right model</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">This is where theory becomes a file on disk. You'll understand the <strong class="text-neutral-100">Hugging Face</strong>, the format <strong class="text-neutral-100">GGUF</strong> and—the most important point—the <strong class="text-neutral-100">quantization</strong>: the decision that determines whether the model fits and runs well on your machine. By the end, you’ll download the right version with one command.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Practical</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Hands-on</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Hugging Face: the hub</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Formats: GGUF vs. the rest</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Reading quantizations</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Downloading the model</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Model × hardware</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Quality and integrity</a></li>
+</ol>
+<div aria-label="Module 3.3 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="3-3" data-inema-topic="modulo-3-3#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🤗 Hugging Face: the “GitHub of models”</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t1-p1">Before running anything, you need a place to get the models. That place is the <strong class="text-purple-400">Hugging Face</strong>: the central repository where almost every open model lives. Knowing how to read a model page there answers 80% of your “which one should I download?” questions.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>Hugging Face</strong> (the “HF”) is like a GitHub just for AI: a site where labs and the community publish open models, each on its own “model page” (the <strong>model card</strong>). O <strong>model card</strong> is the model’s README — it describes what the model is, how many parameters it has, what license it uses, and lists the files to download.</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🔑</span> What to look for in the model card</h3>
+<p class="text-neutral-300 mb-4">Open the model page and look for four things — they determine everything:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Parameters:</strong> is in the name (7B, 14B, 70B). More parameters ≈ more capable and heavier.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Variant:</strong> prefer the version <em>Instruct</em> / <em>Chat</em> (trained to chat), not the raw “base” model.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>"Files" tab:</strong> the actual files. This is where you can see if there is <code class="font-mono text-purple-400">GGUF</code> and which quantizations.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>License:</strong> Open source ≠ free to use for anything. Check commercial use before relying on it.</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Model-finding shortcut</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li>Look for repositories with <strong>"GGUF"</strong> in the name (e.g., published by <em>bartowski</em> or by the lab itself)—they're already ready for Ollama/LM Studio.</li>
+<li>Sort by <strong>downloads</strong>/<strong>trending</strong>: what the community uses tends to be stable and well tested.</li>
+<li>A good, popular model to start with today: <strong>Qwen2.5</strong>, <strong>Llama 3.1/3.2</strong>, <strong>Gemma 2</strong>, <strong>Mistral</strong>.</li>
+</ul>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">HF</div><div class="text-xs text-neutral-400">model hub</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Model card</div><div class="text-xs text-neutral-400">the README</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Files</div><div class="text-xs text-neutral-400">the actual files</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">License</div><div class="text-xs text-neutral-400">check first</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">📦 Formats: GGUF, safetensors, GPTQ/AWQ</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t2-p1">In the "Files" tab, you'll come across different extensions. They aren't "better" or "worse" versions—they're <strong class="text-purple-400">packaging for different runtimes</strong>. Choosing the wrong one is the #1 cause of "I downloaded it and it won't run.".</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm mb-2"><strong>GGUF</strong> = a single-file format that packages the model ready to run on the CPU and/or GPU via <em>llama.cpp</em> — the engine behind Ollama and LM Studio. It’s the format for “plug-and-play” local AI.</p>
+<p class="text-neutral-300 text-sm mb-2"><strong>safetensors</strong> = a “raw” weights format from the Python/PyTorch ecosystem (Transformers, vLLM). Safe and standard for training and GPU servers — but requires more setup.</p>
+<p class="text-neutral-300 text-sm"><strong>GPTQ / AWQ</strong> = already quantized weights made to run <em>only on GPU</em> via runtimes such as vLLM/AutoGPTQ. Fast on GPU, but not the easiest way to get started.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ GGUF — the course's choice</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Runs on Ollama and LM Studio without any setup</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Runs on CPU, GPU, or both (offload)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>A single file, with quantization built in</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Ideal for Mac, laptop, and PCs without a monster GPU</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ safetensors / GPTQ / AWQ</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Require Python + Transformers/vLLM and dependencies</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPTQ/AWQ generally require a dedicated NVIDIA GPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>They don’t connect directly to Ollama/LM Studio</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>They shine on servers and in training—not in “easy to get started”</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical rule</h3>
+<p class="text-neutral-300 text-sm">For everything in this course (Ollama, LM Studio), the answer is almost always <strong>GGUF</strong>. Only switch to safetensors/GPTQ/AWQ when you’re serving at scale on a dedicated GPU — that’s covered in Track 4. When in doubt: if GGUF is available, download the GGUF.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">GGUF</div><div class="text-xs text-neutral-400">Ollama / LM Studio</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">safetensors</div><div class="text-xs text-neutral-400">Transformers / training</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">GPTQ/AWQ</div><div class="text-xs text-neutral-400">GPU via vLLM</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">When in doubt</div><div class="text-xs text-neutral-400">→ GGUF</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🔢 Reading the quantization levels</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t3-p1">There are lots of variants inside GGUF: <code class="font-mono text-purple-400">Q4_K_M</code>, <code class="font-mono text-purple-400">Q5_K_M</code>, <code class="font-mono text-purple-400">Q8_0</code>... This is the heart of the choice. Deciphering these suffixes is what separates "downloaded the right one" from "downloaded 14 GB that won’t fit".</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm mb-2"><strong>Quantization</strong> = reduce the precision of the model’s weights (from 16 bits to 8, 5, 4...) so the file is much smaller and fits in less memory, with little loss in quality.</p>
+<p class="text-neutral-300 text-sm">Reading <strong>Q4_K_M</strong>: o <strong>Q4</strong> = ~4 bits per weight (the lower the number, the smaller and "more compressed"); the <strong>K</strong> = a modern “k-quant” method (smarter than the old one); the <strong>M</strong> = size <em>Medium</em> of the variant (there are <em>S</em>/small e <em>L</em>/large). FP16 = no quantization, full precision.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t3-p2">Use a model <strong>7B</strong> as a benchmark. See what each quantization does to size and quality — the <strong class="text-purple-400">sweet spot</strong> is where the file is already small but quality has barely dropped:</p>
+<!-- TABELA MONO DE QUANTIZAÇÕES -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 sm:p-6 mb-6 overflow-x-auto">
+<table class="w-full text-left font-mono text-sm border-collapse min-w-[520px]">
+<thead>
+<tr class="text-neutral-400 border-b border-dark-600">
+<th class="py-2 pr-4 font-semibold">Quant</th>
+<th class="py-2 pr-4 font-semibold">Bits/weight</th>
+<th class="py-2 pr-4 font-semibold">Size (7B)</th>
+<th class="py-2 pr-4 font-semibold">Quality</th>
+<th class="py-2 font-semibold">When to use</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">FP16</td><td class="py-2 pr-4">16</td><td class="py-2 pr-4">~14 GB</td><td class="py-2 pr-4">maximum</td><td class="py-2 text-neutral-400">reference / spare VRAM</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q8_0</td><td class="py-2 pr-4">~8</td><td class="py-2 pr-4">~7.7 GB</td><td class="py-2 pr-4">~almost identical</td><td class="py-2 text-neutral-400">wants near-perfect quality</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q6_K</td><td class="py-2 pr-4">~6.5</td><td class="py-2 pr-4">~5.5 GB</td><td class="py-2 pr-4">great</td><td class="py-2 text-neutral-400">upper-middle ground</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q5_K_M</td><td class="py-2 pr-4">~5.5</td><td class="py-2 pr-4">~5.1 GB</td><td class="py-2 pr-4">very good</td><td class="py-2 text-neutral-400">high sweet spot</td></tr>
+<tr class="border-b border-dark-700 bg-purple-500/20"><td class="py-2 pr-4 text-purple-400 font-bold">Q4_K_M ★</td><td class="py-2 pr-4">~4.5</td><td class="py-2 pr-4">~4.4 GB</td><td class="py-2 pr-4">good</td><td class="py-2 text-neutral-300 font-semibold">best balance (default)</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q3_K_M</td><td class="py-2 pr-4">~3.5</td><td class="py-2 pr-4">~3.5 GB</td><td class="py-2 pr-4">starts to drop</td><td class="py-2 text-neutral-400">only if memory runs out</td></tr>
+<tr><td class="py-2 pr-4 text-neutral-100">Q2_K</td><td class="py-2 pr-4">~2.6</td><td class="py-2 pr-4">~2.8 GB</td><td class="py-2 pr-4">degrades quite a bit</td><td class="py-2 text-neutral-400">last resort</td></tr>
+</tbody>
+</table>
+</div>
+<!-- SVG: barra de quantização encolhendo -->
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Bars showing a 7B model shrinking with quantization: FP16 at about 14 GB drops to Q4_K_M at about 4.4 GB while retaining approximately 95 percent of the quality — the sweet spot" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m33-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m33-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m33-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+</defs>
+<rect fill="url(#m33-grid)" height="240" width="1000" x="0" y="0"></rect>
+<text fill="#9aa3b2" font-family="Inter,sans-serif" font-size="12" x="150" y="18">file size · more memory ↑</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="980" y="18">quality →</text>
+<!-- FP16 -->
+<text fill="#e6dcff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="end" x="138" y="49">FP16</text>
+<rect fill="url(#m33-grad)" height="26" opacity="0.5" rx="6" width="616" x="150" y="31"></rect>
+<text fill="#cbd2dd" font-family="Inter,sans-serif" font-size="12" x="774" y="49">~14 GB</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="49">100%</text>
+<!-- Q8 -->
+<text fill="#e6dcff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="end" x="138" y="91">Q8_0</text>
+<rect fill="url(#m33-grad)" height="26" opacity="0.6" rx="6" width="339" x="150" y="73"></rect>
+<text fill="#cbd2dd" font-family="Inter,sans-serif" font-size="12" x="497" y="91">~7.7 GB</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="91">~99%</text>
+<!-- Q5_K_M -->
+<text fill="#e6dcff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="end" x="138" y="133">Q5_K_M</text>
+<rect fill="url(#m33-grad)" height="26" opacity="0.7" rx="6" width="224" x="150" y="115"></rect>
+<text fill="#cbd2dd" font-family="Inter,sans-serif" font-size="12" x="382" y="133">~5.1 GB</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="133">~97%</text>
+<!-- Q4_K_M (highlight) -->
+<g filter="url(#m33-glow)"><rect fill="url(#m33-grad)" height="26" rx="6" stroke="#c084fc" stroke-width="2.5" width="194" x="150" y="157"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="end" x="138" y="175">Q4_K_M</text>
+<text fill="#cbd2dd" font-family="Inter,sans-serif" font-size="12" x="352" y="175">~4.4 GB</text>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="424" y="175">★ sweet spot</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="175">~95%</text>
+<!-- Q2_K -->
+<text fill="#e6dcff" font-family="Inter,sans-serif" font-size="13" font-weight="700" text-anchor="end" x="138" y="217">Q2_K</text>
+<rect fill="url(#m33-grad)" height="26" opacity="0.35" rx="6" width="122" x="150" y="199"></rect>
+<text fill="#cbd2dd" font-family="Inter,sans-serif" font-size="12" x="280" y="217">~2.8 GB</text>
+<text fill="#f0a0a0" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="217">~80% ↓</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Read from top to bottom: the file <strong class="text-neutral-200">shrinks quickly</strong> (from ~14 GB to ~4.4 GB) while quality drops <strong class="text-neutral-200">slowly</strong> — even the <strong class="text-neutral-200">Q4_K_M</strong>, where the curve is still high. Below it (Q3, Q2), quality starts to drop sharply. That’s why the community treats <strong class="text-neutral-200">Q4_K_M / Q5_K_M</strong> as the default balance.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Rule of thumb: start at <strong>Q4_K_M</strong>. If you have memory to spare, move up to <strong>Q5_K_M</strong> or <strong>Q8_0</strong> and gain a little quality. Only drop to Q3/Q2 if the model <em>doesn't fit</em> — and knowing you’ll notice the loss.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q4_K_M</div><div class="text-xs text-neutral-400">the default</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q5/Q8</div><div class="text-xs text-neutral-400">if you have RAM to spare</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q3/Q2</div><div class="text-xs text-neutral-400">only if needed</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">_K_M</div><div class="text-xs text-neutral-400">modern method</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">⬇️ Downloading: via Ollama vs. directly</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t4-p1">There are two paths: let the <strong class="text-purple-400">Ollama</strong> download it for you (the easiest option) or get a <strong class="text-purple-400">GGUF</strong> directly from Hugging Face and register it on your machine. You'll use both — start with the simple one.</p>
+<!-- COPY-RUN 1 -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Option 1 — Ollama downloads it for you</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> download Qwen2.5 7B in the right format and quantization, with one command. The <code class="font-mono text-purple-400">q4_K_M</code> in the tag, choose the sweet-spot quantization.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># download the already-quantized Q4_K_M tag (~4.4 GB)</div>
+<div>ollama pull qwen2.5:7b-instruct-q4_K_M</div>
+<div class="text-neutral-500 mt-2"># check that it arrived and its size on disk</div>
+<div>ollama list</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> o <span class="font-mono text-purple-400">ollama list</span> shows the line <span class="font-mono text-purple-400">qwen2.5:7b-instruct-q4_K_M</span> with ~4.4 GB. Run <span class="font-mono text-purple-400">ollama run qwen2.5:7b-instruct-q4_K_M</span> and ask a question—if it answers, it worked.</p>
+</div>
+<!-- COPY-RUN 2 + timeline -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Option 2 — GGUF directly from Hugging Face</h3>
+<p class="text-neutral-400 text-sm mb-4"><strong>Objective:</strong> use a GGUF that <em>no</em> is in the Ollama catalog (downloaded from the "Files" tab of a model card). Three steps:</p>
+<div class="space-y-4 mb-5">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-900 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Download the .gguf file</h4>
+<p class="text-neutral-300 text-sm">In the model card, the <strong>Files</strong>, download the desired quant (e.g., <span class="font-mono text-purple-400">...Q4_K_M.gguf</span>).</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-900 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Create a Modelfile</h4>
+<p class="text-neutral-300 text-sm">A text file that only points to the GGUF with the line <span class="font-mono text-purple-400">FROM</span>.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-900 rounded-xl p-4 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Log and run</h4>
+<p class="text-neutral-300 text-sm"><span class="font-mono text-purple-400">ollama create</span> turns the GGUF into your own model, with a name.</p>
+</div>
+</div>
+</div>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># 1) Modelfile (in the same folder as the .gguf)</div>
+<div>FROM ./Qwen2.5-7B-Instruct-Q4_K_M.gguf</div>
+<div class="text-neutral-500 mt-2"># 2) create the local model from the GGUF</div>
+<div>ollama create meu-qwen -f Modelfile</div>
+<div class="text-neutral-500 mt-2"># 3) run</div>
+<div>ollama run meu-qwen</div>
+</div>
+<p class="text-neutral-400 text-sm mb-2"><strong>LM Studio (no terminal):</strong> in the search tab, find the model and choose the quantization (e.g., <strong>Q4_K_M</strong>) and click <strong>Download</strong>. It recognizes the GGUF and opens the chat—no commands.</p>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> <span class="font-mono text-purple-400">ollama list</span> shows <span class="font-mono text-purple-400">my-qwen</span> and the chat responds. In LM Studio, the model appears in “My Models” and loads in the chat.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Ollama shortcut</h3>
+<p class="text-neutral-300 text-sm">Ollama also pulls GGUF files directly from Hugging Face, without a Modelfile: <span class="font-mono text-primary">ollama run hf.co/usuario/repo-GGUF:Q4_K_M</span>. Replace it with the repository path and the quantization you saw in the “Files” tab.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">pull</div><div class="text-xs text-neutral-400">Ollama catalog</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">create</div><div class="text-xs text-neutral-400">GGUF from HF</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">hf.co/...</div><div class="text-xs text-neutral-400">direct shortcut</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">LM Studio</div><div class="text-xs text-neutral-400">without a terminal</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🧮 Matching model × hardware</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t5-p1">Quant chosen, one final question remains: <strong class="text-purple-400">Will it fit on my machine?</strong> The rule of thumb from Track 2 completes the loop — the file size needs to fit in memory <em>with room to spare</em> for the context.</p>
+<!-- TABELA MONO recap de memória -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-4 sm:p-6 mb-6 overflow-x-auto">
+<p class="text-neutral-400 text-sm mb-3 font-sans">Approximate size per model × quantization (and how much memory you need to run it well):</p>
+<table class="w-full text-left font-mono text-sm border-collapse min-w-[480px]">
+<thead>
+<tr class="text-neutral-400 border-b border-dark-600">
+<th class="py-2 pr-4 font-semibold">Model</th>
+<th class="py-2 pr-4 font-semibold">Q4_K_M</th>
+<th class="py-2 pr-4 font-semibold">Q8_0</th>
+<th class="py-2 font-semibold">Ideal memory</th>
+</tr>
+</thead>
+<tbody class="text-neutral-300">
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">7B</td><td class="py-2 pr-4">~4.4 GB</td><td class="py-2 pr-4">~7.7 GB</td><td class="py-2 text-neutral-400">8–12 GB</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">13B</td><td class="py-2 pr-4">~7.9 GB</td><td class="py-2 pr-4">~14 GB</td><td class="py-2 text-neutral-400">12–16 GB</td></tr>
+<tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">34B</td><td class="py-2 pr-4">~19 GB</td><td class="py-2 pr-4">~36 GB</td><td class="py-2 text-neutral-400">24–40 GB</td></tr>
+<tr><td class="py-2 pr-4 text-neutral-100">70B</td><td class="py-2 pr-4">~40 GB</td><td class="py-2 pr-4">~75 GB</td><td class="py-2 text-neutral-400">48–80 GB</td></tr>
+</tbody>
+</table>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t5-p2">The difference between "fits" and "doesn't fit" is the difference between fast and unusable. Here are the two scenarios:</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Quant fits in memory</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>The entire model fits in VRAM/RAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Responses are smooth, with many tokens/s</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>There’s room left for the context (KV cache)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>You can run it 24/7 without freezing the machine</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Out of memory</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Part goes to the CPU/disk (swap)—extremely slow</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Low tokens/s, sluggish responses</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>OOM (out of memory) error or freeze</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Answer: download a smaller quantization or a smaller model</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Decision flow</h3>
+<p class="text-neutral-300 text-sm">How much memory do you have? → choose the <strong>largest model</strong> whose <strong>Q4_K_M</strong> fit with 2–4 GB to spare. If it fits with room to spare, increase the quantization (Q5/Q8) <em>before</em> to moving up to a larger model — extra quality is cheaper than doubling the size. 8 GB ≈ 7B Q4; 16 GB ≈ 13B Q4 or 7B Q8; 24 GB+ ≈ 34B Q4.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">8 GB</div><div class="text-xs text-neutral-400">7B Q4</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">16 GB</div><div class="text-xs text-neutral-400">13B Q4 / 7B Q8</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">24 GB</div><div class="text-xs text-neutral-400">34B Q4</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Headroom</div><div class="text-xs text-neutral-400">+2–4 GB for context</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">✅ Checking quality and integrity</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t6-p1">Downloaded — now confirm two things: that the file came <strong class="text-purple-400">entire</strong> (an uncorrupted download) and that the quantization <strong class="text-purple-400">didn't go too far</strong>. Two minutes of testing can save you hours of "why is this model so bad?".</p>
+<!-- COPY-RUN verificação -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: checksum + standard prompt</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> verify the file’s integrity and run a sanity check on the response.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># 1) integrity: HF shows the SHA256 in the "Files" tab; compare</div>
+<div>sha256sum Qwen2.5-7B-Instruct-Q4_K_M.gguf</div>
+<div class="text-neutral-500 mt-2"># Windows (PowerShell): Get-FileHash arquivo.gguf -Algorithm SHA256</div>
+<div class="text-neutral-500 mt-3"># 2) standard sanity prompt (use the SAME one for each quant)</div>
+<div>ollama run qwen2.5:7b-instruct-q4_K_M "Summarize in 3 bullets what quantization is."</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> The SHA256 must match the one on the page. The response should be coherent, in Portuguese, with 3 genuine bullets—without repeating, getting stuck in a loop, or switching languages. If it turns into a mess, the quant may be too aggressive: move up to Q5_K_M or Q8.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Healthy quant</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>SHA256 matches the HF page</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Follows what you requested (format, language)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Coherent text, without strange repetitions</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Similar answers in Q4 and Q5 (minimal loss)</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Too much quantization</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Word salad or meaningless phrases</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ignores the request / switches languages on its own</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Loop: repeats the same sentence endlessly</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Gets simple calculations/facts wrong that Q5 gets right</span></li>
+</ul>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-3#q1">
+<p class="font-medium mb-4">Self-check (optional): You have 8 GB of VRAM and want to run a 7B model with the best balance of quality and size. Which quantization is the “sweet spot” to start with?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) FP16 — maximum quality, always worth it</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Q4_K_M (or Q5_K_M if there’s room) — fits comfortably and retains ~95% of the quality</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Q2_K—the smallest file is always the best choice</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Keep one of your own “standard prompts” (a summary, a calculation, a question about something you know) and run it whenever you test a model or quant. Compare the <em>same</em> a question between versions is the fastest and most honest way to feel the quantization loss.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">SHA256</div><div class="text-xs text-neutral-400">integrity</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Standard prompt</div><div class="text-xs text-neutral-400">sanity check</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Compare</div><div class="text-xs text-neutral-400">Q4 vs Q5</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Salad?</div><div class="text-xs text-neutral-400">→ increase the quantization</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Hugging Face is the hub</strong><span class="text-neutral-400"> — read the model card: parameters, Instruct variant, Files tab, license.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">GGUF for local AI</strong><span class="text-neutral-400"> — is the format used by Ollama/LM Studio; safetensors/GPTQ/AWQ are for other runtimes.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quantization is the key decision</strong><span class="text-neutral-400"> — Q4_K_M is the sweet spot; move up to Q5/Q8 if you have memory to spare.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Fits comfortably, and verify</strong><span class="text-neutral-400"> — check the SHA256 and test with a standard prompt to catch aggressive quantization.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Next module:</h3>
+<p class="text-neutral-300">3.4 — Parameters and quality: context, temperature, offload</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-2.html">← Previous module</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-4.html">Next module →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-3#q1',{answer:1,explain:{0:'FP16 de um 7B são ~14 GB — não cabe em 8 GB de VRAM, e o ganho sobre Q5/Q4 é marginal.',1:'Isso. Q4_K_M (~4.4 GB) cabe com folga e segura ~95% da qualidade — o equilíbrio que a comunidade chama de ponto doce. Suba para Q5_K_M se sobrar memória.',2:'Não. Q2_K encolhe o arquivo, mas a qualidade despenca; é último recurso quando falta memória, não o padrão.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

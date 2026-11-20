@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>2.4 Private network with Tailscale | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37,99,235,0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37,99,235,0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37,99,235,0.25); }
+    html:not(.dark) .hover\:bg-blue-500\/30:hover { background-color: rgba(37,99,235,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Installation</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Advanced</span></a>
+<button aria-label="Toggle theme" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Navigation track" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-blue-400" href="../../index.html">Start</a><span>/</span>
+<a class="hover:text-blue-400" href="index.html">Hardware &amp; Lab</a><span>/</span>
+<span class="text-blue-400">Module 2.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full mb-4">MODULE 2.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🔗 Private network with Tailscale</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Your model runs on a machine at home — but you want to use it from the café, your phone, or work. The answer <strong class="text-neutral-100">no</strong> is opening ports on the router. It's connecting all your devices into one <strong class="text-neutral-100">encrypted private network</strong> with Tailscale, as if they were in the same room. This module builds that network from end to end.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">6</div><div class="text-xs text-neutral-400">Topics</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">~30</div><div class="text-xs text-neutral-400">Minutes</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Practical</div><div class="text-xs text-neutral-400">Level</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-blue-400">Network</div><div class="text-xs text-neutral-400">Type</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. The problem: using it from anywhere</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. What Tailscale is</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Install and log in</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Accessing the model over the network</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. From phone to laptop</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Security and ACLs</a></li>
+</ol>
+<div aria-label="Module 2.4 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="2-4" data-inema-topic="modulo-2-4#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🌐 The problem: using your models from anywhere</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t1-p1">The model is running beautifully — just on your home machine. You leave, and it stays locked behind your router. The wrong instinct is to <strong class="text-blue-400">open a port</strong> on the router (port-forward) and point it at the internet. That exposes your PC to the whole world: any bot scanning the internet can find the open port within minutes.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Port"</strong> is a number that identifies a service on a machine (Ollama listens on <span class="font-mono">11434</span>). <strong>"Port forwarding"</strong> is telling the router to forward that port to the public internet — convenient, but like opening your home’s window to the street. <strong>"VPN"</strong> is an encrypted tunnel that connects machines as if they were on the same local network.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Open a port on the router</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Your PC is exposed to the entire internet</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Bots scan and try to break into the open port</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Depends on a static IP / dynamic DNS and fragile configuration</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>No end-to-end encryption by default</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Private network (Tailscale)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>No ports exposed to the public internet</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Only your logged-in devices can see the model</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Works behind any router, with no fixed IP</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>End-to-end encrypted traffic</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Model</div><div class="text-xs text-neutral-400">stuck at home</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Port forwarding</div><div class="text-xs text-neutral-400">= risk</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Meta</div><div class="text-xs text-neutral-400">access from outside</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Path</div><div class="text-xs text-neutral-400">private network</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🕸️ What is Tailscale</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t2-p1">Tailscale is a <strong class="text-blue-400">Mesh VPN</strong>: instead of everyone going through a central server, each device talks <em>directly</em> with the others, through an encrypted tunnel. You install it, sign in with the same account on each device, and that’s it — they form a private network called <strong class="text-blue-400">tailnet</strong>, as if they were connected to the same switch.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Mesh VPN:</strong> a network where each pair of devices communicates peer-to-peer, without a server in the middle throttling the traffic.</li>
+<li><strong>WireGuard:</strong> the modern, lightweight encrypted tunneling protocol Tailscale uses under the hood — fast and audited.</li>
+<li><strong>tailnet:</strong> the name of your private network—the group of all your devices signed in to the same account.</li>
+</ul>
+</div>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🔑</span> The central idea</h3>
+<p class="text-neutral-300 mb-4">Each device on the tailnet gets a fixed, stable address in the range <span class="font-mono text-blue-400">100.x.y.z</span>. This IP works from anywhere in the world—at home, on 4G, on café Wi-Fi—always pointing to the same device, with encrypted traffic.</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Point-to-point:</strong> the data goes directly between your devices (WireGuard), with no detour.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Zero network configuration:</strong> gets through NAT and firewall on its own; no need to open a port on the router.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>Identity, not a password:</strong> you sign in with your account (Google, GitHub...), and only your devices can access it.</span></li>
+</ul>
+</div>
+<div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Four devices — laptop, phone, server, and PC with a GPU — form an interconnected private mesh (tailnet), and the local model runs on the PC with a GPU, accessible to everyone over the network" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<defs>
+<lineargradient id="m24-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#3b82f6"></stop></lineargradient>
+<filter height="180%" id="m24-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m24-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#3b82f6" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m24-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#60a5fa"></path></marker>
+<marker id="m24-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m24-grid)" height="300" width="1000" x="0" y="0"></rect>
+<!-- malha peer-a-peer entre os 4 dispositivos (perímetro) -->
+<g fill="none" opacity="0.5" stroke="#3b82f6" stroke-dasharray="6 6" stroke-width="2">
+<path d="M240,54 L760,54"></path>
+<path d="M155,82 L155,218"></path>
+<path d="M845,82 L845,218"></path>
+<path d="M760,246 L240,246"></path>
+</g>
+<!-- raios de cada dispositivo até o hub tailnet -->
+<g fill="none" opacity="0.7" stroke="#60a5fa" stroke-width="2.5">
+<path d="M200,82 L440,128" marker-end="url(#m24-ah)"></path>
+<path d="M800,82 L560,128" marker-end="url(#m24-ah)"></path>
+<path d="M800,218 L560,172" marker-end="url(#m24-ah)"></path>
+<path d="M200,218 L440,172" marker-end="url(#m24-ah)"></path>
+</g>
+<!-- dispositivos -->
+<g font-family="Inter,sans-serif">
+<g><rect fill="#0e1622" height="56" rx="11" stroke="#3b82f6" stroke-width="2" width="170" x="70" y="26"></rect><text fill="#93c5fd" font-size="15" font-weight="700" text-anchor="middle" x="155" y="50">Laptop</text><text fill="#bfdbfe" font-size="12" text-anchor="middle" x="155" y="69">100.x.x.11</text></g>
+<g><rect fill="#0e1622" height="56" rx="11" stroke="#3b82f6" stroke-width="2" width="170" x="760" y="26"></rect><text fill="#93c5fd" font-size="15" font-weight="700" text-anchor="middle" x="845" y="50">Cell phone</text><text fill="#bfdbfe" font-size="12" text-anchor="middle" x="845" y="69">100.x.x.12</text></g>
+<g><rect fill="#0e1622" height="56" rx="11" stroke="#3b82f6" stroke-width="2" width="170" x="760" y="218"></rect><text fill="#93c5fd" font-size="15" font-weight="700" text-anchor="middle" x="845" y="242">Server</text><text fill="#bfdbfe" font-size="12" text-anchor="middle" x="845" y="261">100.x.x.13</text></g>
+<g><rect fill="#0e1622" height="56" rx="11" stroke="url(#m24-grad)" stroke-width="2.5" width="170" x="70" y="218"></rect><text fill="#93c5fd" font-size="15" font-weight="700" text-anchor="middle" x="155" y="242">PC + GPU</text><text fill="#bfdbfe" font-size="12" text-anchor="middle" x="155" y="261">100.x.x.14</text></g>
+</g>
+<!-- nó modelo (ciano) ligado ao PC -->
+<g fill="none" opacity="0.65" stroke="#38bdf8" stroke-width="2"><path d="M240,232 L300,196" marker-end="url(#m24-ahc)"></path></g>
+<g font-family="Inter,sans-serif"><rect fill="#0e1b26" height="50" rx="11" stroke="#38bdf8" stroke-width="2" width="160" x="300" y="150"></rect><text fill="#bfe6ff" font-size="14" font-weight="700" text-anchor="middle" x="380" y="172">model · Ollama</text><text fill="#bfe6ff" font-size="11" text-anchor="middle" x="380" y="190">port 11434</text></g>
+<!-- hub tailnet -->
+<g filter="url(#m24-glow)"><rect fill="#0e1622" height="68" rx="16" stroke="url(#m24-grad)" stroke-width="2.5" width="140" x="430" y="116"></rect></g>
+<text fill="#60a5fa" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="500" y="146">tailnet</text>
+<text fill="#bfdbfe" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="500" y="166">private network</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">The four devices (in blue) are connected to the same <strong class="text-neutral-200">tailnet</strong> — dashed lines show that the conversation is direct, peer-to-peer. The <strong class="text-neutral-200">model</strong> (in cyan) runs on the PC with a GPU and, since it's on the network, any logged-in device can reach it via the IP <span class="font-mono">100.x</span>.</p>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">⚙️ Install and log in</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t3-p1">Add a device to the tailnet <strong class="text-blue-400">three steps</strong>: install the client, bring Tailscale up, and authenticate. Do this on every machine you want on the network (PC, server, laptop)—on your phone, use the store app.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Install the client</h4>
+<p class="text-neutral-300 text-sm">One script handles Linux and macOS. On Windows, download the installer at tailscale.com/download.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Bring it up and authenticate</h4>
+<p class="text-neutral-300 text-sm"><span class="font-mono text-blue-400">tailscale up</span> opens a link in the browser; you log in with your account (Google/GitHub/Microsoft), and the device joins the tailnet.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Note down the tailnet IP</h4>
+<p class="text-neutral-300 text-sm">Each machine gets a <span class="font-mono text-blue-400">100.x.y.z</span>. This is the address you'll use to reach it from anywhere.</p>
+</div>
+</div>
+</div>
+<!-- COPY-RUN: instalar -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: install and start Tailscale</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> connect this machine (Linux/macOS) to your private network. Paste into the terminal, one line at a time.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># 1) install the client (Linux and macOS)</div>
+<div>curl -fsSL https://tailscale.com/install.sh | sh</div>
+<div class="text-neutral-500 mt-2"># 2) sign in and authenticate (opens the login in your browser)</div>
+<div>sudo tailscale up</div>
+<div class="text-neutral-500 mt-2"># 3) find this machine's IP on the tailnet</div>
+<div>tailscale ip -4</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> o <span class="font-mono text-blue-400">tailscale ip -4</span> should print an address starting with <span class="font-mono text-blue-400">100.</span> (e.g., <span class="font-mono">100.115.92.14</span>). Run <span class="font-mono text-blue-400">tailscale status</span> to list all your online devices — if they appear, the tailnet is up.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">On a machine that stays on all the time (your server/model PC), use <span class="font-mono">sudo tailscale up --ssh</span> so you can also access it over SSH from anywhere on the tailnet — without opening any ports. And turn on the <strong>non-expiring key</strong> in the admin panel so you don’t have to reauthenticate this host every time.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">📡 Accessing the model over the network</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t4-p1">By default, Ollama only listens on <span class="font-mono text-blue-400">localhost</span> — in other words, only the machine itself can see it. For other devices on the tailnet to call the model, you tell Ollama to listen on <strong class="text-blue-400">all interfaces</strong> with <span class="font-mono text-blue-400">OLLAMA_HOST=0.0.0.0</span>. Then any signed-in device can talk to it using the IP <span class="font-mono">100.x</span> of the host.</p>
+<div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> The workflow, across two machines</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>On the model host (PC + GPU):</strong> starts Ollama listening on the network and discovers the IP <span class="font-mono">100.x</span> of it.</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400 mt-1">•</span><span><strong>On the other device (laptop):</strong> calls the Ollama API at this IP <span class="font-mono">100.x:11434</span> — as if the model were running locally.</span></li>
+</ul>
+</div>
+<!-- COPY-RUN: expor e chamar -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: expose Ollama on the tailnet and call it from another device</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> run the model on one machine and use it from another over the private network.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># --- ON THE MODEL HOST (PC + GPU) ---</div>
+<div class="text-neutral-500"># make Ollama listen on the network, not just on localhost</div>
+<div>export OLLAMA_HOST=0.0.0.0:11434</div>
+<div>ollama serve</div>
+<div class="text-neutral-500 mt-2"># what is this host's IP on the tailnet?</div>
+<div>tailscale ip -4  <span class="text-neutral-500"># e.g.: 100.115.92.14</span></div>
+<div class="text-neutral-500 mt-3"># --- ON THE OTHER DEVICE (laptop, already on the tailnet) ---</div>
+<div class="text-neutral-500"># call the model using the host's 100.x IP</div>
+<div>curl http://100.115.92.14:11434/api/generate \</div>
+<div>  -d '{"model":"llama3.2","prompt":"say hi","stream":false}'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> o <span class="font-mono text-blue-400">curl</span> from the laptop should return a JSON object with the field <span class="font-mono">response</span> filled in. If it hangs, check: (a) the host responded to the <span class="font-mono text-blue-400">tailscale status</span>? (b) does the host firewall allow port <span class="font-mono">11434</span> in the tailnet interface? A quick test: <span class="font-mono text-blue-400">curl http://100.115.92.14:11434/api/tags</span> should list the installed models.</p>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔌</span> The trick</h3>
+<p class="text-neutral-300 text-sm">With this, any tool that talks to the Ollama API (Open WebUI, Python scripts, your Trilha 4 agents) starts pointing to the IP <span class="font-mono">100.x</span> instead of <span class="font-mono">localhost</span> — and works wherever you are. The model becomes a <strong>service on your private network</strong>.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">localhost</div><div class="text-xs text-neutral-400">just the machine</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">0.0.0.0</div><div class="text-xs text-neutral-400">listens to the network</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">IP 100.x</div><div class="text-xs text-neutral-400">host address</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">:11434</div><div class="text-xs text-neutral-400">Ollama port</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">📱 From phone to laptop</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t5-p1">Here’s where the trick becomes concrete: install the app <strong class="text-blue-400">Tailscale</strong> on your phone (App Store / Play Store), sign in with the <strong>same account</strong>, and your phone joins the tailnet. Now, from 4G out on the street, you open a chat interface pointed at the IP <span class="font-mono">100.x</span> at home and chat with your model — running on your GPU, with no cloud and no open port.</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">App on your phone</h4>
+<p class="text-neutral-300 text-sm">Install Tailscale, enable the VPN, and log in to the same account. The phone gets its own IP <span class="font-mono">100.x</span>.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Point it to your home host</h4>
+<p class="text-neutral-300 text-sm">In your phone’s browser (or an LLM chat app), use <span class="font-mono text-blue-400">http://100.x.y.z:11434</span> — your GPU PC’s IP address — or the Open WebUI interface from Track 3 hosted on it.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Use it from anywhere</h4>
+<p class="text-neutral-300 text-sm">Works on café Wi-Fi, 4G, or a friend's house. The tailnet follows you; the model stays at home.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Practical tip</h3>
+<p class="text-neutral-300 text-sm">Enable the <strong>MagicDNS</strong> in the Tailscale dashboard: instead of memorizing <span class="font-mono">100.115.92.14</span>, you access the host through a friendly name, such as <span class="font-mono text-blue-400">http://pc-gpu:11434</span>. Easier to remember, and it doesn't change if the IP changes.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">App</div><div class="text-xs text-neutral-400">same account</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">4G/Wi-Fi</div><div class="text-xs text-neutral-400">whatever</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Model</div><div class="text-xs text-neutral-400">stays home</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">You</div><div class="text-xs text-neutral-400">anywhere</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-2-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🛡️ Security and ACLs</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t6-p1">The tailnet is already private — but you can lock it down further. The principle is <strong class="text-blue-400">least privilege</strong>: each device only reaches what it needs. On a network with just a few of your own devices, this matters little; when you add a colleague’s machine or a shared server, the <strong class="text-blue-400">ACLs</strong> become essential.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>MagicDNS:</strong> a feature that gives your devices names (instead of IPs) within your tailnet — <span class="font-mono">pc-gpu</span> instead of <span class="font-mono">100.x.y.z</span>.</li>
+<li><strong>ACL (Access Control List):</strong> rules that say who can talk to whom on the tailnet — e.g., "the phone can reach port 11434 on PC-GPU, and only that port".</li>
+</ul>
+</div>
+<!-- BOX DE ALERTA DE SEGURANÇA -->
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Security alert</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Don’t expose Ollama to the public internet.</strong> <span class="font-mono">OLLAMA_HOST=0.0.0.0</span> is safe <em>because</em> only the tailnet can reach the machine — never combine this with port forwarding on the router.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>Always use least privilege.</strong> If you share the tailnet with someone else, use an ACL to allow only the model’s port, not the entire device.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-1">•</span><span><strong>The model doesn’t have a login.</strong> The Ollama API doesn't require a password—your only barrier is the network. Keep your tailnet closed to everyone but your own devices.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Good network hygiene</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Access only through the tailnet, no port forwarding on the router</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>ACL allowing only the model’s port</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>MagicDNS for stable, readable names</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Review devices in the dashboard; remove anything you don’t use</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ A recipe for trouble</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Port forwarding port 11434 to the public internet</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Open tailnet with full access between everyone</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Invite people without restricting access by ACL</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Thinking that "0.0.0.0" is enough without understanding what is listening</span></li>
+</ul>
+</div>
+</div>
+<!-- COPY-RUN: ACL mínima -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: a least-privilege ACL</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objective:</strong> to let only your devices reach the port <span class="font-mono">11434</span> of the model host. Edit it in the Tailscale admin panel (Access controls).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div>{</div>
+<div>  "acls": [</div>
+<div>    {</div>
+<div>      "action": "accept",</div>
+<div>      "src": ["autogroup:member"],</div>
+<div>      "dst": ["tag:modelo:11434"]</div>
+<div>    }</div>
+<div>  ]</div>
+<div>}</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>How to check:</strong> tag the model host with <span class="font-mono text-blue-400">model</span> in the dashboard; then, from an authorized device, the <span class="font-mono text-blue-400">curl 100.x:11434/api/tags</span> responds — and from a device outside the rule, the connection is refused. Least privilege in practice.</p>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-4#q1">
+<p class="font-medium mb-4">Self-check (optional): what's the recommended way to access your local model when you're away from home?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Open port 11434 on the router and point it at the public internet</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Join the tailnet through Tailscale and call the host by its 100.x IP — without opening any ports</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Publish your PC’s public IP on a website to access it from outside</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Privilege</div><div class="text-xs text-neutral-400">the smallest possible</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">ACL</div><div class="text-xs text-neutral-400">who talks to whom</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MagicDNS</div><div class="text-xs text-neutral-400">names, not IPs</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Internet</div><div class="text-xs text-neutral-400">never exposed</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-blue-900/40 via-dark-800 to-dark-800 rounded-xl border border-blue-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Module summary</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Don’t open ports on your router</strong><span class="text-neutral-400"> — port forwarding exposes your PC to the world; a private network is the solution.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Tailscale = mesh VPN (WireGuard)</strong><span class="text-neutral-400"> — your devices form the tailnet, each with a stable 100.x IP.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Exposing the model is one line</strong><span class="text-neutral-400"> — OLLAMA_HOST=0.0.0.0 and connect using the 100.x IP from another device.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Security = least privilege</strong><span class="text-neutral-400"> — ACLs and MagicDNS; never exposed to the public internet.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-blue-400 mb-2">Next:</h3>
+<p class="text-neutral-300">Track 3 — Installation &amp; Techniques. You’ve completed Track 2: hardware chosen, foundation ready, and private network up and running. Now it’s time to install your first model and master the techniques.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-2-3.html">← Module 2.3</a>
+<a class="flex-1 text-center px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors" href="../trilha3/index.html">Track 3: Installation &amp; Techniques →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-4#q1',{answer:1,explain:{0:'Não — abrir porta no roteador expõe seu PC à internet inteira; é justamente o que queremos evitar.',1:'Isso. A tailnet liga seus dispositivos numa rede privada criptografada; você chega no host pelo IP 100.x sem abrir nada pra fora.',2:'Não. Publicar o IP público te deixa exposto e ainda depende de IP fixo/DNS dinâmico — frágil e inseguro.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

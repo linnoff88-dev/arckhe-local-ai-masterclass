@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>4.5 Passo a passo #3: seu buddy local com nome, cara e voz | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-amber-400 { color: #92400e; }
+    html:not(.dark) .bg-amber-500\/20 { background-color: rgba(217,119,6,0.12); }
+    html:not(.dark) .bg-amber-500\/10 { background-color: rgba(217,119,6,0.08); }
+    html:not(.dark) .border-amber-500\/30 { border-color: rgba(217,119,6,0.25); }
+    html:not(.dark) .hover\:bg-amber-500\/30:hover { background-color: rgba(217,119,6,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-4-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha4/modulo-4-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha4/modulo-4-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
+<button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
+<a class="hover:text-amber-400" href="index.html">Avançado &amp; Agentes 24/7</a><span>/</span>
+<span class="text-amber-400">Módulo 4.5</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-amber-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-amber-500/20 text-amber-400 text-xs font-semibold rounded-full mb-4">MÓDULO 4.5</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🗣️ Passo a passo #3: seu buddy local com nome, cara e voz</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">Agora a gente junta tudo do curso num só lugar: um <strong class="text-neutral-100">assistente pessoal local</strong> com personalidade própria (system prompt), uma cara (interface), uma voz (TTS) e até ouvidos (STT). Ele roda na sua máquina, lembra de você (RAG) e te acompanha do celular (Tailscale). É o vídeo "dê uma cara, um nome e uma voz ao seu modelo" — virado projeto, passo a passo.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">~40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Avançado</div><div class="text-xs text-neutral-400">Nível</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-amber-400">Prático</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. O objetivo: um buddy de verdade</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Personalidade via system prompt</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Uma cara: interface dedicada</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Dar voz: TTS local (Piper)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Ouvir: STT local (opcional)</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Memória, voz e celular: tudo junto</a></li>
+</ol>
+<div aria-label="Progresso do módulo 4.5" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-5" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="4-5" data-inema-topic="modulo-4-5#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">🎯 O objetivo: um buddy de verdade</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t1-p1">Você já tem as peças espalhadas pelo curso: um modelo rodando (3.1), uma API local (3.5), memória com RAG (3.6) e rede privada com Tailscale (2.4). Este passo a passo costura tudo num <strong class="text-amber-400">companheiro pessoal</strong> — com nome, jeito de falar, uma tela pra conversar e uma voz pra te responder em voz alta. Nada sai da sua máquina.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> é uma instrução fixa que o modelo lê <em>antes</em> de qualquer conversa: define quem ele é, o tom e as regras. É a <strong>personalidade</strong> do buddy. <strong>"TTS"</strong> = text-to-speech (texto → fala) e <strong>"STT"</strong> = speech-to-text (fala → texto): os dois rodam local também, sem mandar seu áudio pra ninguém.</p>
+</div>
+<div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> As quatro peças do buddy</h3>
+<p class="text-neutral-300 mb-4">Um buddy = quatro coisas que você já viu, montadas juntas:</p>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Personalidade:</strong> um system prompt no Modelfile com nome, tom e regras.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Cara:</strong> uma interface — Open WebUI (3.2) ou uma página HTML mínima.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Voz e ouvidos:</strong> Piper (TTS) pra falar e whisper.cpp (STT) pra ouvir.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Memória + alcance:</strong> RAG (3.6) pra lembrar de você e Tailscale (2.4) pra usar do celular.</span></li>
+</ul>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Buddy local</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Personalidade e regras 100% sob seu controle</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Conversa, voz e memória sem sair da máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Uso ilimitado — fala o dia inteiro, só paga energia</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Acessível do celular pela sua rede privada</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Assistente de nuvem</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Personalidade limitada ao que a plataforma deixa</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Seu áudio e suas conversas passam por terceiros</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Voz e uso pesado custam por minuto/token</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Some se cortarem acesso, preço ou região</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Nome</div><div class="text-xs text-neutral-400">system prompt</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Cara</div><div class="text-xs text-neutral-400">interface</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Voz</div><div class="text-xs text-neutral-400">Piper TTS</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Memória</div><div class="text-xs text-neutral-400">RAG + rede</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-4-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🪪 Personalidade via system prompt</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t2-p1">A personalidade não vem de "treinar" nada — vem de uma <strong class="text-amber-400">instrução fixa</strong>. No Ollama você grava essa instrução num <strong>Modelfile</strong> (a receita que você viu no módulo 3.1) e cria um modelo nomeado a partir dela. Mude o texto do <span class="font-mono text-amber-400">SYSTEM</span> e você muda quem o buddy é.</p>
+<!-- COPY-RUN: Modelfile -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: dê nome e tom ao "Hermes"</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> criar um modelo local chamado <span class="font-mono text-amber-400">hermes</span> com personalidade definida. Salve como <span class="font-mono">Modelfile</span> e rode os comandos.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># Modelfile — define o "Hermes", seu buddy local</div>
+<div>FROM qwen2.5:7b-instruct</div>
+<div class="mt-2 text-neutral-500"># o system prompt = a personalidade fixa do buddy</div>
+<div>SYSTEM """</div>
+<div>Você é o Hermes, o assistente pessoal local do Nei.</div>
+<div>Tom: direto, caloroso e com bom humor leve. Trate por "você".</div>
+<div>Regras: respostas curtas por padrão; pergunte antes de assumir;</div>
+<div>nunca invente dados — se não souber, diga. Responda em PT-BR.</div>
+<div>"""</div>
+<div class="mt-2 text-neutral-500"># afina o comportamento</div>
+<div>PARAMETER temperature 0.6</div>
+<div>PARAMETER num_ctx 8192</div>
+</div>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># cria o modelo a partir da receita e conversa</div>
+<div>ollama create hermes -f Modelfile</div>
+<div>ollama run hermes</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> pergunte <em>"quem é você?"</em>. Ele deve se apresentar como Hermes, no tom definido — e respeitar as regras (curto, sem inventar). Não gostou? Edite o <span class="font-mono">SYSTEM</span> e rode <span class="font-mono text-amber-400">ollama create</span> de novo.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
+<p class="text-neutral-300 text-sm">Um bom system prompt tem <strong>quatro partes</strong>: quem ele é (nome/papel), como fala (tom), o que pode/não pode (regras) e o idioma. Evite parágrafos enormes — o modelo segue melhor instruções curtas e específicas do que um manual. Comece simples e vá ajustando conforme ele te responde.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Papel</div><div class="text-xs text-neutral-400">quem ele é</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Tom</div><div class="text-xs text-neutral-400">como fala</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Regras</div><div class="text-xs text-neutral-400">o que vale</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Idioma</div><div class="text-xs text-neutral-400">PT-BR</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-4-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🖥️ Uma cara: interface dedicada</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t3-p1">"Dar uma cara" é só apontar uma interface pro seu modelo. Dois caminhos: o <strong class="text-amber-400">pronto</strong> — reusar o Open WebUI (3.2), que já tem chat com histórico — ou o <strong class="text-amber-400">enxuto</strong>: uma página HTML de 20 linhas que conversa direto com a API local (3.5). Comece pela mais simples pra entender o circuito; depois suba pro Open WebUI quando quiser histórico e anexos.</p>
+<!-- COPY-RUN: HTML mínimo -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: uma "cara" mínima em HTML</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> uma página que manda sua pergunta pro endpoint local e mostra a resposta. Salve como <span class="font-mono">buddy.html</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500">&lt;!-- buddy.html — fala com o modelo local --&gt;</div>
+<div>&lt;!doctype html&gt;&lt;meta charset="utf-8"&gt;</div>
+<div>&lt;h2&gt;🤝 Hermes&lt;/h2&gt;</div>
+<div>&lt;input id="q" style="width:70%" placeholder="pergunte..."&gt;</div>
+<div>&lt;button onclick="send()"&gt;Enviar&lt;/button&gt;</div>
+<div>&lt;pre id="out"&gt;&lt;/pre&gt;</div>
+<div>&lt;script&gt;</div>
+<div>async function send(){</div>
+<div>  const q = document.getElementById('q').value;</div>
+<div>  const r = await fetch(</div>
+<div>    'http://localhost:11434/v1/chat/completions',{</div>
+<div>    method:'POST', headers:{'Content-Type':'application/json'},</div>
+<div>    body: JSON.stringify({ model:'hermes',</div>
+<div>      messages:[{role:'user', content:q}] }) });</div>
+<div>  const j = await r.json();</div>
+<div>  document.getElementById('out').textContent =</div>
+<div>    j.choices[0].message.content;</div>
+<div>}</div>
+<div>&lt;/script&gt;</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> abra o arquivo no navegador, digite uma pergunta e clique em Enviar — a resposta do seu modelo local aparece na tela. É o seu buddy com cara própria.</p>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚠️</span> Atenção: CORS</h3>
+<p class="text-neutral-300 text-sm">Se o navegador bloquear a chamada (erro de CORS ao abrir via <span class="font-mono">file://</span>), libere a origem no Ollama: rode com <span class="font-mono text-amber-400">OLLAMA_ORIGINS=*</span> (ex.: <span class="font-mono">OLLAMA_ORIGINS=* ollama serve</span>). Para o buddy de verdade, prefira o <strong>Open WebUI</strong> em <span class="font-mono">http://localhost:3000</span> — ele já cuida disso e te dá histórico, troca de modelo e RAG de documentos.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Open WebUI (pronto)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Histórico de conversas e múltiplos chats</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Troca de modelo e RAG de documentos embutidos</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Pronto pra usar do celular pela tailnet</span></li>
+</ul>
+</div>
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6">
+<h4 class="font-bold text-neutral-100 mb-4">📄 HTML mínimo (didático)</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">•</span><span>Mostra o circuito inteiro em 20 linhas</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">•</span><span>Fácil de customizar a "cara" do jeito que quiser</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">•</span><span>Sem histórico/anexos — é só o esqueleto</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-4-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🔊 Dar voz: TTS local (Piper)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t4-p1">A voz é o que transforma um chat num <strong class="text-amber-400">buddy</strong>. Em vez de só ler na tela, ele fala. Para isso a gente usa um motor de TTS que roda na sua máquina — o <strong>Piper</strong> — e canaliza a resposta do modelo direto pro alto-falante.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"TTS"</strong> = text-to-speech: transforma <em>texto em fala</em>. O <strong>Piper</strong> é um TTS local, leve e rápido (roda até em CPU), com várias vozes — inclusive em PT-BR. Cada voz é um arquivo <span class="font-mono">.onnx</span>; troque o arquivo e o buddy muda de voz.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed">O caminho da voz é um pipeline curto — texto entra de um lado, som sai do outro:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">A resposta vira texto</h4>
+<p class="text-neutral-300 text-sm">O modelo local responde via API (3.5). Você pega só o texto da resposta.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Piper sintetiza a fala</h4>
+<p class="text-neutral-300 text-sm">O texto entra no Piper com uma voz <span class="font-mono">.onnx</span>; ele gera um arquivo de áudio <span class="font-mono">.wav</span>.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">O sistema toca o áudio</h4>
+<p class="text-neutral-300 text-sm">Um player simples (<span class="font-mono">aplay</span> no Linux, <span class="font-mono">afplay</span> no macOS) reproduz o <span class="font-mono">.wav</span>. O buddy "falou".</p>
+</div>
+</div>
+</div>
+<!-- COPY-RUN: Piper -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: o buddy fala uma frase</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> instalar o Piper e fazer um texto virar som no alto-falante. Cole no terminal.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># instalar o Piper (TTS local)</div>
+<div>pip install piper-tts        # ou baixe o binário do repo</div>
+<div class="text-neutral-500 mt-2"># baixe uma voz PT-BR (.onnx) do repositório do Piper</div>
+<div class="text-neutral-500 mt-2"># texto -&gt; Piper -&gt; arquivo .wav -&gt; alto-falante</div>
+<div>echo "Olá, eu sou o Hermes." \</div>
+<div>  | piper --model pt_BR-faber-medium.onnx \</div>
+<div>      --output_file fala.wav</div>
+<div>aplay fala.wav               # macOS: afplay fala.wav</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> você <em>ouve</em> a frase. Trocou o <span class="font-mono">.onnx</span>? A voz muda. Esse mesmo <span class="font-mono">piper ... | aplay</span> é a peça de voz do loop do tópico 6.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-4-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">🎤 Ouvir: STT local (opcional)</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t5-p1">Dar voz já é meio caminho. O outro meio é dar <strong class="text-amber-400">ouvidos</strong>: poder falar com o buddy em vez de digitar. É opcional — mas com STT local o ciclo fica completo (você fala → ele entende → responde → fala de volta).</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
+<p class="text-neutral-300 text-sm"><strong>"STT"</strong> = speech-to-text: transforma <em>fala em texto</em> (o oposto do TTS). O <strong>whisper.cpp</strong> é uma implementação local e enxuta do modelo Whisper que roda em CPU — grava o microfone, transcreve e devolve texto, sem mandar seu áudio pra nuvem.</p>
+</div>
+<!-- COPY-RUN: whisper.cpp -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: transcreva sua voz localmente</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> gravar 5 segundos do microfone e ver o texto do que você falou. Tudo offline.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># whisper.cpp = STT local (fala -&gt; texto), roda em CPU</div>
+<div>git clone https://github.com/ggerganov/whisper.cpp</div>
+<div>cd whisper.cpp &amp;&amp; make</div>
+<div>./models/download-ggml-model.sh small   # baixa o modelo</div>
+<div class="text-neutral-500 mt-2"># grava 5s do microfone e transcreve em PT-BR</div>
+<div>arecord -d 5 -f S16_LE -r 16000 fala.wav</div>
+<div>./main -m models/ggml-small.bin -l pt -f fala.wav</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> o texto do que você falou aparece no terminal. Esse texto é exatamente o que você passaria como <span class="font-mono">content</span> na chamada da API — fechando o ciclo de voz.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Vale dar ouvidos quando</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Você quer usar de mãos livres (cozinha, dirigindo)</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Falar é mais rápido que digitar pro seu caso</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Quer um assistente de voz 100% privado</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Fique no texto se</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardware é fraco — STT + LLM + TTS juntos pesam</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ambiente barulhento atrapalha a transcrição</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você só quer o buddy de texto por enquanto (comece simples)</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-4-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🧠 Memória, voz e celular: tudo junto</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t6-p1">Falta encaixar as duas últimas peças e ligar o motor. <strong class="text-amber-400">Memória</strong>: com RAG (3.6) o buddy lembra de você — preferências, projetos, conversas antigas — buscando esses trechos e injetando no contexto antes de responder. <strong class="text-amber-400">Alcance</strong>: rodando atrás do Tailscale (2.4), você fala com ele do celular, de qualquer lugar, como se estivesse em casa. Veja como tudo se compõe:</p>
+<div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="A equação do buddy: interface mais cérebro LLM mais voz mais memória somam o seu buddy local" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<defs>
+<lineargradient id="m45-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
+<filter height="180%" id="m45-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m45-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#f59e0b" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m45-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#fbbf24"></path></marker>
+<marker id="m45-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m45-grid)" height="240" width="1000" x="0" y="0"></rect>
+<!-- componentes (ciano) -->
+<g font-family="Inter,sans-serif">
+<g><rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="8" y="80"></rect>
+<text fill="#bfe6ff" font-size="14" font-weight="700" text-anchor="middle" x="78" y="112">🖥️ Cara</text>
+<text fill="#7fb8d8" font-size="11" text-anchor="middle" x="78" y="132">interface</text></g>
+<text fill="#fbbf24" font-size="26" font-weight="800" text-anchor="middle" x="160" y="128">+</text>
+<g><rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="178" y="80"></rect>
+<text fill="#bfe6ff" font-size="14" font-weight="700" text-anchor="middle" x="248" y="112">🧠 Cérebro</text>
+<text fill="#7fb8d8" font-size="11" text-anchor="middle" x="248" y="132">LLM + system</text></g>
+<text fill="#fbbf24" font-size="26" font-weight="800" text-anchor="middle" x="330" y="128">+</text>
+<g><rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="348" y="80"></rect>
+<text fill="#bfe6ff" font-size="14" font-weight="700" text-anchor="middle" x="418" y="112">🔊 Voz</text>
+<text fill="#7fb8d8" font-size="11" text-anchor="middle" x="418" y="132">TTS + STT</text></g>
+<text fill="#fbbf24" font-size="26" font-weight="800" text-anchor="middle" x="500" y="128">+</text>
+<g><rect fill="#0e1b26" height="80" rx="12" stroke="#38bdf8" stroke-width="2" width="140" x="518" y="80"></rect>
+<text fill="#bfe6ff" font-size="14" font-weight="700" text-anchor="middle" x="588" y="112">🧠 Memória</text>
+<text fill="#7fb8d8" font-size="11" text-anchor="middle" x="588" y="132">RAG + rede</text></g>
+</g>
+<!-- igual -->
+<text fill="#fbbf24" font-size="30" font-weight="800" text-anchor="middle" x="678" y="130">=</text>
+<path d="M664,120 L700,120" marker-end="url(#m45-ah)" opacity="0.85" stroke="#fbbf24" stroke-width="2.5"></path>
+<!-- resultado (âmbar) -->
+<g filter="url(#m45-glow)"><rect fill="#1f1604" height="92" rx="16" stroke="url(#m45-grad)" stroke-width="2.5" width="280" x="710" y="74"></rect></g>
+<text fill="#fbbf24" font-family="Inter,sans-serif" font-size="20" font-weight="700" text-anchor="middle" x="850" y="112">🗣️ Seu buddy</text>
+<text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="850" y="138">nome · cara · voz · memória</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Leia como uma <strong class="text-neutral-200">equação</strong>: cara + cérebro + voz + memória (as peças em ciano que você montou no curso) somam um <strong class="text-neutral-200">buddy local completo</strong> (em âmbar). Tire qualquer parcela e ele ainda funciona — só fica menos buddy.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Memória + celular, na prática</h3>
+<p class="text-neutral-300 text-sm"><strong>Memória (RAG, 3.6):</strong> guarde notas suas (preferências, fatos, histórico) num vector store e, a cada pergunta, busque os trechos relevantes e cole no prompt — assim o Hermes "lembra" sem retreinar nada. <strong>Celular (Tailscale, 2.4):</strong> com <span class="font-mono text-amber-400">OLLAMA_HOST=0.0.0.0</span> e o app Tailscale no telefone, troque <span class="font-mono">localhost</span> pelo IP <span class="font-mono">100.x</span> da sua máquina e fale com o buddy de qualquer lugar — sem abrir nada pra internet pública.</p>
+</div>
+<!-- COPY-RUN PRINCIPAL: loop -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run principal: o loop do buddy falante</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> o circuito completo num arquivo — <em>pergunta → API local → resposta → Piper fala</em>. Salve como <span class="font-mono">buddy-voz.sh</span>.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500">#!/usr/bin/env bash</div>
+<div class="text-neutral-500"># buddy-voz.sh — pergunta -&gt; API local -&gt; resposta -&gt; Piper fala</div>
+<div>while true; do</div>
+<div>  read -rp "você: " pergunta</div>
+<div>  [ "$pergunta" = "sair" ] &amp;&amp; break</div>
+<div class="mt-2">  <span class="text-neutral-500"># 1) manda pra API local (Ollama, OpenAI-compatível)</span></div>
+<div>  resposta=$(curl -s http://localhost:11434/v1/chat/completions \</div>
+<div>    -d "{\"model\":\"hermes\",\"messages\":[{\"role\":\"user\",</div>
+<div>    \"content\":\"$pergunta\"}]}" \</div>
+<div>    | jq -r '.choices[0].message.content')</div>
+<div class="mt-2">  echo "hermes: $resposta"</div>
+<div class="mt-2">  <span class="text-neutral-500"># 2) Piper fala a resposta</span></div>
+<div>  echo "$resposta" \</div>
+<div>    | piper --model pt_BR-faber-medium.onnx --output_file r.wav</div>
+<div>  aplay r.wav</div>
+<div>done</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode <span class="font-mono text-amber-400">bash buddy-voz.sh</span>, pergunte algo e <em>ouça</em> a resposta do seu buddy. Digite <span class="font-mono">sair</span> pra encerrar. Requer <span class="font-mono">curl</span>, <span class="font-mono">jq</span>, <span class="font-mono">piper</span> e <span class="font-mono">aplay</span>. Quer ouvido também? Troque o <span class="font-mono">read</span> pela transcrição do whisper.cpp (tópico 5).</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
+<h4 class="font-bold text-amber-400 mb-4">✓ Buddy bem-feito</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>System prompt curto, claro e testado</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Tudo local: voz, memória e dados na sua máquina</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Acesso só pela tailnet, nunca à internet aberta</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Erros comuns</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expor a porta 11434 direto na internet</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>System prompt gigante que o modelo ignora</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Empilhar STT+LLM+TTS em hardware que não aguenta</span></li>
+</ul>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-5#q1">
+<p class="font-medium mb-4">Auto-checagem (opcional): o que dá ao seu buddy local a <em>personalidade</em> — nome, tom e regras?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Treinar o modelo do zero com os seus dados</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) O system prompt (ex.: o SYSTEM do Modelfile), que define papel, tom e regras antes de cada conversa</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) A voz escolhida no Piper</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Nome</div><div class="text-xs text-neutral-400">SYSTEM</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Cara</div><div class="text-xs text-neutral-400">UI / HTML</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Voz</div><div class="text-xs text-neutral-400">Piper / Whisper</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Sempre</div><div class="text-xs text-neutral-400">RAG + tailnet</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-amber-900/40 via-dark-800 to-dark-800 rounded-xl border border-amber-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Personalidade = system prompt</strong><span class="text-neutral-400"> — nome, tom e regras no SYSTEM do Modelfile, criados com ollama create.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Cara = interface</strong><span class="text-neutral-400"> — Open WebUI pronto ou uma página HTML mínima que fala com a API local.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Voz e ouvidos = TTS + STT local</strong><span class="text-neutral-400"> — Piper fala, whisper.cpp ouve, tudo offline.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Memória + alcance</strong><span class="text-neutral-400"> — RAG (3.6) pra lembrar de você e Tailscale (2.4) pra usar do celular.</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
+<p class="text-neutral-300">4.6 — Performance, escala &amp; troubleshooting</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-4-4.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="index.html">Voltar para a trilha</a>
+<a class="flex-1 text-center px-6 py-3 bg-amber-600 text-white rounded-lg font-semibold hover:bg-amber-500 transition-colors" href="modulo-4-6.html">Próximo módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-5#q1',{answer:1,explain:{0:'Não precisa — treinar do zero é caro e desnecessário. A personalidade vem da instrução, não de novo treino.',1:'Isso. O system prompt (ex.: o SYSTEM do Modelfile) define papel, tom e regras que o modelo lê antes de cada conversa.',2:'A voz dá som à fala, mas não define quem ele é. Personalidade = system prompt.'}});}
+      }
+    });
+  </script>
+</body>
+</html>

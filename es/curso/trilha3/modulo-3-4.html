@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="local-ai" name="inema-course"/>
+<title>3.4 Parámetros y calidad | IA Local Masterclass</title>
+<script>
+  (function () {
+    try {
+      var html = document.documentElement;
+      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
+      var p = clone(DEF);
+      try {
+        var raw = localStorage.getItem('inema.prefs');
+        if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+      } catch(e){ p = clone(DEF); }
+      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
+      if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
+      html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
+      html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
+      var s = html.style, scale=(+p.fontScale||100);
+      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
+      var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
+      s.setProperty('--font-body', fam);
+      var ACC = { emerald:[152,76,45], blue:[217,91,60], purple:[258,90,66], amber:[38,92,50], teal:[174,72,41], rose:[350,89,60] };
+      var a = ACC[p.accent]||ACC.emerald; s.setProperty('--accent-h',a[0]+''); s.setProperty('--accent-s',a[1]+'%'); s.setProperty('--accent-l',a[2]+'%'); s.setProperty('--accent','hsl('+a[0]+' '+a[1]+'% '+a[2]+'%)');
+    } catch(err){ try{ document.documentElement.classList.add('dark'); document.documentElement.style.colorScheme='dark'; }catch(e){} }
+  })();
+  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#FACC15', dark: { 900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563' } } } } }
+  </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../../../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+  {
+    "course": "local-ai",
+    "tracks": [
+      { "n": "1", "title": "Fundamentos", "modules": [
+        { "id": "1-1", "title": "A virada: por que agora", "topics": 6, "href": "curso/trilha1/modulo-1-1.html" },
+        { "id": "1-2", "title": "O que é IA local de verdade", "topics": 6, "href": "curso/trilha1/modulo-1-2.html" },
+        { "id": "1-3", "title": "Local é mais burro/lento? O elefante na sala", "topics": 6, "href": "curso/trilha1/modulo-1-3.html" },
+        { "id": "1-4", "title": "Anatomia de um LLM local", "topics": 6, "href": "curso/trilha1/modulo-1-4.html" }
+      ]},
+      { "n": "2", "title": "Hardware & Lab", "modules": [
+        { "id": "2-1", "title": "As categorias de hardware", "topics": 6, "href": "curso/trilha2/modulo-2-1.html" },
+        { "id": "2-2", "title": "Como escolher: o que cabe na sua máquina", "topics": 6, "href": "curso/trilha2/modulo-2-2.html" },
+        { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
+        { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
+      ]},
+      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+        { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
+        { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
+        { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
+        { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
+      ]},
+      { "n": "4", "title": "Avançado & Agentes 24/7", "modules": [
+        { "id": "4-1", "title": "Orquestrador de agentes: seu IT guy", "topics": 6, "href": "curso/trilha4/modulo-4-1.html" },
+        { "id": "4-2", "title": "O paradigma sempre-on: agentes 24/7", "topics": 6, "href": "curso/trilha4/modulo-4-2.html" },
+        { "id": "4-3", "title": "Passo a passo #1: scanner de segurança 24/7 no seu codebase", "topics": 6, "href": "curso/trilha4/modulo-4-3.html" },
+        { "id": "4-4", "title": "Passo a passo #2: vigia da web caçando oportunidades", "topics": 6, "href": "curso/trilha4/modulo-4-4.html" },
+        { "id": "4-5", "title": "Passo a passo #3: seu buddy local com nome, cara e voz", "topics": 6, "href": "curso/trilha4/modulo-4-5.html" },
+        { "id": "4-6", "title": "Performance, escala & troubleshooting", "topics": 6, "href": "curso/trilha4/modulo-4-6.html" }
+      ]}
+    ]
+  }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+    .topic-explanation { display: none; }
+    .topic-explanation.active { display: block; }
+    html:not(.dark) svg[role="img"] { filter: saturate(0.82) brightness(0.96); }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124,58,237,0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124,58,237,0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124,58,237,0.25); }
+    html:not(.dark) .hover\:bg-purple-500\/30:hover { background-color: rgba(124,58,237,0.18); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161,98,7,0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161,98,7,0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255,255,255,0.95); }
+
+    .dark .border-dark-600 { border-color: #374151; }
+    .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
+  </style>
+<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha3/modulo-3-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-3-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
+<nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-14">
+<div class="flex items-center space-x-4">
+<a class="flex items-center space-x-2 text-yellow-400 hover:text-yellow-300" href="../../index.html">
+<span class="text-2xl">🖥️</span>
+<span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
+</a>
+<span class="text-neutral-600">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center space-x-1 sm:space-x-2">
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalación</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avanzado</span></a>
+<button aria-label="Cambiar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<nav aria-label="Barra de navegación" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<div class="flex items-center space-x-2 text-sm text-neutral-400">
+<a class="hover:text-purple-400" href="../../index.html">Inicio</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Instalación y técnicas</a><span>/</span>
+<span class="text-purple-400">Módulo 3.4</span>
+</div>
+</nav>
+<header class="bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-800 py-12 border-b border-dark-600">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.4</span>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4">🎛️ Parámetros y calidad: contexto, temperatura, offload</h1>
+<p class="text-lg text-neutral-300 max-w-3xl">El modelo ya está funcionando — ahora viene lo que separa "funciona" de "responde bien y rápido". Aquí aprendes los controles que importan: <strong class="text-neutral-100">ventana de contexto, temperatura, system prompt y offload de GPU</strong> — y cómo diagnosticar cuando algo va lento o sale mal.</p>
+<div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Temas</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~40</div><div class="text-xs text-neutral-400">Minutos</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Mediano</div><div class="text-xs text-neutral-400">Nivel</div></div>
+<div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">Práctico</div><div class="text-xs text-neutral-400">Tipo</div></div>
+</div>
+</div>
+</header>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
+<!-- TOC -->
+<aside class="hidden lg:block">
+<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-inema-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<ol class="space-y-1 text-sm">
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Ventana de contexto en la práctica</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Temperatura, top_p y top_k</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. System prompt: dirigiendo el modelo</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Offload GPU/CPU y capas</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. KV cache, batch y rendimiento</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Diagnóstico: ¿lento o de mala calidad?</a></li>
+</ol>
+<div aria-label="Progreso del módulo 3.4" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
+<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+</div>
+</nav>
+</aside>
+<main class="inema-prose min-w-0" id="conteudo">
+<h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
+<!-- TÓPICO 1 -->
+<section class="mb-16" data-inema-module="3-4" data-inema-topic="modulo-3-4#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
+<h2 class="text-2xl font-bold">📏 Ventana de contexto en la práctica</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t1-p1">A <strong class="text-purple-400">ventana de contexto</strong> es cuánto contenido «lee de una vez» el modelo antes de responder: tu pregunta, el historial del chat y cualquier texto que pegues. Si la ventana es pequeña, el modelo «olvida» el comienzo de la conversación. Si es demasiado grande, consume memoria sin necesidad.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Ventana de contexto"</strong> = el límite de tokens que entran de una vez (p. ej., 8192 = ~6 mil palabras). En Ollama, este es el parámetro <span class="font-mono text-purple-400">num_ctx</span>. <strong>"Token"</strong> = un fragmento de una palabra; ~4 caracteres en promedio. <strong>"KV cache"</strong> = la memoria de trabajo que el modelo construye para cada token del contexto; crece junto con <span class="font-mono text-purple-400">num_ctx</span> y es lo que hace que un contexto largo pese en la VRAM.</p>
+</div>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-4-t1-p2">Decidir el tamaño de la ventana es un equilibrio en tres pasos:</p>
+<div class="space-y-6 mb-6">
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Empieza por el estándar</h4>
+<p class="text-neutral-300 text-sm">Muchos modelos vienen con <span class="font-mono text-purple-400">num_ctx</span> de 2048 o 4096. Para el chat y las preguntas cortas, eso ya basta: no lo cambies solo por cambiar.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">2</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Aumenta cuando la tarea lo requiera</h4>
+<p class="text-neutral-300 text-sm">¿Vas a pegar un documento largo, mucho código o un historial extenso? Sube a 8192, 16384 o más, siempre que el modelo admita ese límite.</p>
+</div>
+</div>
+<div class="flex items-start space-x-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">3</span></div>
+<div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
+<h4 class="font-semibold text-neutral-100 mb-1">Paga el precio en memoria</h4>
+<p class="text-neutral-300 text-sm">Duplicar la ventana ≈ duplicar la caché KV. Si se agota la VRAM, el modelo descarga capas a la CPU y se vuelve lento, o simplemente da <em>sin memoria</em>.</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">No actives 128k de contexto «por si acaso». Si normalmente haces preguntas cortas, una ventana de 4k–8k responde más rápido y libera VRAM para las <em>capas</em> del modelo — que es lo que más importa para la calidad.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">num_ctx</div><div class="text-xs text-neutral-400">tamaño de la ventana</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Caché KV</div><div class="text-xs text-neutral-400">crece con la ventana</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Corto</div><div class="text-xs text-neutral-400">rápido, ligero</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Largo</div><div class="text-xs text-neutral-400">pesado, más lento</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 2 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
+<h2 class="text-2xl font-bold">🌡️ Temperatura, top_p y top_k</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t2-p1">Con cada token, el modelo tiene varias palabras candidatas. <strong class="text-purple-400">Temperatura</strong>, <strong class="text-purple-400">top_p</strong> e <strong class="text-purple-400">top_k</strong> deciden cuánto se arriesga al elegir. Estos tres botones controlan el eje <em>preciso ⟷ creativo</em>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<ul class="space-y-2 text-neutral-300 text-sm">
+<li><strong>Temperatura</strong> — qué tan «creativo/aleatorio» es el modelo. Un valor bajo (0–0.3) = determinista y repetible; uno alto (0.8–1.2) = diverso y sorprendente.</li>
+<li><strong>top_p</strong> (nucleus) — recorta la cola: solo considera las palabras que suman, por ejemplo, el 90% de la probabilidad (<span class="font-mono text-purple-400">top_p 0.9</span>).</li>
+<li><strong>top_k</strong> — limita la elección a las <em>k</em> palabras más probables (<span class="font-mono text-purple-400">top_k 40</span>). Ajusta primero la temperatura; top_p/top_k son ajustes finos.</li>
+</ul>
+</div>
+<h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">📋</span> Recetas por tarea</h3>
+<div class="overflow-x-auto rounded-xl border border-dark-600 mb-6">
+<table class="w-full text-sm text-left">
+<thead class="bg-dark-700 text-neutral-300">
+<tr>
+<th class="px-4 py-3 font-semibold">Tarea</th>
+<th class="px-4 py-3 font-semibold">temperatura</th>
+<th class="px-4 py-3 font-semibold">top_p</th>
+<th class="px-4 py-3 font-semibold">Por qué</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-dark-600">
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Código / SQL</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.1–0.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
+<td class="px-4 py-3 text-neutral-400">precisión y respuestas reproducibles</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Extracción / JSON</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.0–0.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.8</td>
+<td class="px-4 py-3 text-neutral-400">formato rígido, sin inventar campos</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Chat / explicación</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.5–0.7</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
+<td class="px-4 py-3 text-neutral-400">natural, pero aún enfocado</td>
+</tr>
+<tr class="bg-dark-800">
+<td class="px-4 py-3 text-neutral-100 font-medium">Lluvia de ideas / creativo</td>
+<td class="px-4 py-3 font-mono text-purple-400">0.9–1.2</td>
+<td class="px-4 py-3 font-mono text-neutral-300">0.95</td>
+<td class="px-4 py-3 text-neutral-400">diversidad, ideas inesperadas</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Para qué sirve una temperatura baja</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Generar código que debe compilar</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Extraer datos en un formato fijo</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Respuestas que siempre deben ser iguales</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Clasificación y enrutamiento</span></li>
+</ul>
+</div>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
+<h4 class="font-bold text-blue-400 mb-4">✓ Para qué sirve una temperatura alta</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Generar muchas variaciones de una idea</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Textos de marketing y títulos</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Romper la repetición y las respuestas «rígidas»</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ficción y guiones</span></li>
+</ul>
+</div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 3 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
+<h2 class="text-2xl font-bold">🎭 System prompt: dirigiendo el modelo</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t3-p1">Antes de cualquier pregunta, el <strong class="text-purple-400">system prompt</strong> le dice al modelo <em>quién es</em> e <em>cómo debe responder</em>. Es la herramienta más barata para mejorar la calidad: si está bien escrito, corrige la verbosidad, el formato y el tono sin que tengas que cambiar de modelo.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> es una instrucción fija, separada de tu mensaje, que se aplica a toda la conversación. Piensa en ella como el «cargo y las reglas del empleado»: define <strong>papel</strong> (qué es), <strong>formato</strong> (cómo entrega) y <strong>restricciones</strong> (qué no puede hacer).</p>
+</div>
+<div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🧱</span> Los tres bloques de un buen system prompt</h3>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Rol:</strong> "Eres un asistente técnico conciso para desarrolladores."</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Formato:</strong> "Responde en un máximo de 5 líneas. Usa viñetas al enumerar pasos."</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Restricciones:</strong> "Si no lo sabes, di que no lo sabes. No inventes comandos."</span></li>
+</ul>
+</div>
+<!-- COPY-RUN: system prompt reutilizável -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Ejemplo práctico: un «asistente técnico conciso»</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> un system prompt reutilizable que pegas en cualquier modelo (Ollama, Open WebUI, API) para obtener respuestas cortas y directas. Guárdalo como <span class="font-mono text-purple-400">system.txt</span> o úsalo en el Modelfile.</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># system prompt — asistente técnico conciso</div>
+<div>Eres un asistente técnico conciso para</div>
+<div>desarrolladores. Reglas:</div>
+<div>- Responde directamente, sin introducción ni preámbulo.</div>
+<div>- Máximo de 5 líneas, salvo que te pida más.</div>
+<div>- Para los pasos, usa una lista numerada breve.</div>
+<div>- Muestra los comandos en bloques de código.</div>
+<div>- Si no estás seguro, di "no sé"; no inventes.</div>
+<div>- Responde siempre en portugués de Brasil.</div>
+</div>
+<p class="text-neutral-400 text-sm mb-3"><strong>Cómo usarlo en Ollama (Modelfile):</strong></p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># archivo: Modelfile</div>
+<div>FROM qwen2.5:7b</div>
+<div>SYSTEM "Eres un asistente técnico conciso... (pega arriba)"</div>
+<div class="text-neutral-500 mt-2"># crear y ejecutar</div>
+<div>ollama create tecnico -f Modelfile</div>
+<div>ollama run tecnico</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> haz la misma pregunta al modelo base y al <span class="font-mono text-purple-400">técnico</span>. El segundo debería responder de forma mucho más breve y directa, sin el "¡Claro! Aquí está...".</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 4 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
+<h2 class="text-2xl font-bold">🧩 Offload de GPU/CPU y capas</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p1">Un modelo es una pila de <strong class="text-purple-400">capas</strong>. Lo ideal es que todas quepan en la GPU, donde se ejecutan rápido. Cuando no caben, el runtime <em>se desborda</em> las que quedan para la CPU — y esas son mucho más lentas. El parámetro que controla esto es el <span class="font-mono text-purple-400">num_gpu</span>.</p>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Offload"</strong> = trasladar parte del trabajo de la GPU a la CPU. <strong>"num_gpu"</strong> (en Ollama) = cuántas capas del modelo se colocan en la GPU; el resto va a la CPU/RAM. Más capas en la GPU = más rápido, <em>desde que</em> que quepan en la VRAM. Si fuerzas demasiadas capas y la VRAM se desborda, se convierte en <em>sin memoria</em>.</p>
+</div>
+<div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
+<svg aria-label="Las capas del modelo se dividen: la mayoría se ejecuta en la GPU, rápida, y el resto pasa a la CPU, lenta — controlado por el parámetro num_gpu" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<defs>
+<lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
+<filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="32" id="m34-grid" patternunits="userSpaceOnUse" width="32"><circle cx="1.3" cy="1.3" fill="#a855f7" opacity="0.12" r="1.3"></circle></pattern>
+<marker id="m34-ah" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#c084fc"></path></marker>
+<marker id="m34-ahc" markerheight="9" markerwidth="9" orient="auto" refx="6.5" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#m34-grid)" height="260" width="1000" x="0" y="0"></rect>
+<!-- GPU panel -->
+<g filter="url(#m34-glow)"><rect fill="#1a1230" height="190" rx="16" stroke="url(#m34-grad)" stroke-width="2.5" width="380" x="60" y="44"></rect></g>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="250" y="72">GPU · VRAM</text>
+<text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="250" y="90">rápido · num_gpu = 7</text>
+<g font-family="Inter,sans-serif" font-size="11" font-weight="600">
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="100"></rect><text fill="#1a1230" x="100" y="112">Capa 1</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="119"></rect><text fill="#1a1230" x="100" y="131">Capa 2</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="138"></rect><text fill="#1a1230" x="100" y="150">Capa 3</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="157"></rect><text fill="#1a1230" x="100" y="169">Capa 4</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="176"></rect><text fill="#1a1230" x="100" y="188">Capa 5</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="195"></rect><text fill="#1a1230" x="100" y="207">Capa 6</text></g>
+<g><rect fill="url(#m34-grad)" height="16" rx="4" width="316" x="92" y="214"></rect><text fill="#1a1230" x="100" y="226">Capa 7</text></g>
+</g>
+<!-- transbordo -->
+<g fill="none" opacity="0.85" stroke="#38bdf8" stroke-width="2.5">
+<path d="M440,150 C500,150 500,150 560,150" marker-end="url(#m34-ahc)"></path>
+</g>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="500" y="138">se desborda</text>
+<!-- CPU panel -->
+<rect fill="#0e1b26" height="190" rx="16" stroke="#38bdf8" stroke-width="2" width="380" x="560" y="44"></rect>
+<text fill="#38bdf8" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="750" y="72">CPU · RAM</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="750" y="90">lento · lo que no cupo</text>
+<g font-family="Inter,sans-serif" font-size="11" font-weight="600">
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="120"></rect><text fill="#bfe6ff" x="600" y="132">Capa 8</text></g>
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="143"></rect><text fill="#bfe6ff" x="600" y="155">Capa 9</text></g>
+<g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="166"></rect><text fill="#bfe6ff" x="600" y="178">Capa 10</text></g>
+</g>
+<text fill="#7fb4cc" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="750" y="206">cada capa aquí = más lento</text>
+</svg>
+</div>
+<p class="text-sm text-neutral-400 mb-6">Lee de izquierda a derecha: las <strong class="text-neutral-200">7 primeras capas</strong> (morado) cupieron en la GPU y vuelan; las <strong class="text-neutral-200">3 que sobraron</strong> (cian) se desbordan hacia la CPU y reducen la velocidad. Sube <span class="font-mono text-neutral-200">num_gpu</span> mueve el límite hacia la derecha — hasta que se llene la VRAM.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Offload equilibrado</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Caen todas (o casi todas) las capas en la GPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Queda VRAM para la KV cache del contexto</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Eligió una cuantización (Q4_K_M) que cabe holgadamente</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>tokens/s estable y predecible</span></li>
+</ul>
+</div>
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Offload mal ajustado</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La mitad de las capas terminó en la CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>num_gpu demasiado alto → falta de memoria</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El modelo es demasiado grande para la VRAM disponible</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>La velocidad cae con cada token</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Consejo práctico</h3>
+<p class="text-neutral-300 text-sm">Ollama intenta detectar el offload automáticamente — en la mayoría de los casos, déjalo en automático. Solo ajusta <span class="font-mono">num_gpu</span> manualmente si quieres que quepa un modelo un poco más grande (reduciendo algunas capas a propósito) o si ejecutas dos cosas en la misma GPU.</p>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 5 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
+<h2 class="text-2xl font-bold">⚡ Caché KV, batch y rendimiento</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p1">La velocidad no depende solo de tener una "buena GPU". Tres cosas afectan la <strong class="text-purple-400">tokens/s</strong>: cuánta memoria consume el KV cache, el tamaño del batch y dónde están las capas. Aquí reúnes los parámetros en un solo lugar — mediante API.</p>
+<div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> Qué acelera × qué ralentiza</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Modelo que cabe por completo en la GPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Ventana de contexto del tamaño justo</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Cuantización de la caché KV (q8/q4) para liberar VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mantener el modelo «caliente» (cargado) entre llamadas</span></li>
+</ul>
+<ul class="space-y-2 text-neutral-300">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Capas que se desbordan hacia la CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>num_ctx gigante "por si acaso"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Intercambio en disco cuando se llena la RAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Recargar el modelo en cada solicitud</span></li>
+</ul>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
+<h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
+<p class="text-neutral-300 text-sm"><strong>"Batch"</strong> = cuántos tokens procesa el modelo de una vez durante la fase de lectura del prompt; un batch más grande acelera los prompts largos, pero usa más memoria. <strong>"Cuantización de la caché KV"</strong> = almacenar la memoria de trabajo con menor precisión (p. ej., <span class="font-mono text-purple-400">q8_0</span>) para que quepa más contexto en la misma VRAM, con una pérdida mínima.</p>
+</div>
+<!-- COPY-RUN: Ollama via API com options -->
+<div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Ejemplo práctico: parámetros mediante la API de Ollama</h3>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> ejecutar una generación controlada, pasando la temperatura y la ventana de contexto juntas en el campo <span class="font-mono text-purple-400">options</span>. Pégalo en la terminal (Ollama debe estar en ejecución).</p>
+<div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
+<div class="text-neutral-500"># generación determinista con contexto de 8k</div>
+<div>curl http://localhost:11434/api/generate -d '{</div>
+<div>  "model": "qwen2.5:7b",</div>
+<div>  "prompt": "Explica qué es num_ctx en 2 líneas.",</div>
+<div>  "stream": false,</div>
+<div>  "options": {"temperature":0.2,"num_ctx":8192}</div>
+<div>}'</div>
+</div>
+<p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> ejecuta el mismo comando dos veces. Con <span class="font-mono text-purple-400">temperature:0.2</span> las respuestas salen casi idénticas (determinista). Cámbialo a <span class="font-mono text-purple-400">1.0</span> y repite: ahora varían mucho más. El campo <span class="font-mono text-purple-400">eval_count / eval_duration</span> la respuesta JSON te da los tokens/s.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">tokens/s</div><div class="text-xs text-neutral-400">la métrica clave</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Caché KV</div><div class="text-xs text-neutral-400">consume VRAM</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Lote</div><div class="text-xs text-neutral-400">acelera el prompt</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Swap</div><div class="text-xs text-neutral-400">el villano lento</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- TÓPICO 6 -->
+<section class="mb-16" data-inema-topic="modulo-3-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<div class="flex items-center space-x-4 mb-6">
+<span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
+<h2 class="text-2xl font-bold">🩺 Diagnóstico: ¿por qué está lento o funciona mal?</h2>
+</div>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p1">Cuando el resultado decepciona, el problema casi siempre es uno de estos cuatro sospechosos: un modelo demasiado grande, una cuantización demasiado agresiva, un contexto enorme o el uso de swap en disco. Esta lista de verificación distingue entre «está lento» y «está mal».</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Síntoma: está LENTO</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Modelo demasiado grande → capas en la CPU</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>num_ctx enorme → el KV cache agotó la VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>RAM llena → intercambio a disco</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>El modelo se vuelve a cargar en cada llamada</span></li>
+</ul>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Cómo resolver lo LENTO</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Baja un tamaño (14B → 7B) o un nivel de cuantización</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Reduce num_ctx a lo que exige la tarea</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Cierra las apps que consumen RAM; verifica con <span class="font-mono">ollama ps</span></span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mantén el modelo cargado (keep-alive)</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
+<h4 class="font-bold text-red-400 mb-4">✗ Síntoma: está MAL</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Cuantización agresiva (Q2/Q3) → respuestas frágiles</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Temperatura alta en una tarea que requiere precisión</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sin prompt del sistema → el modelo «se va por las ramas»</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Contexto corto → olvida el inicio</span></li>
+</ul>
+</div>
+<div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
+<h4 class="font-bold text-purple-400 mb-4">✓ Cómo resolver lo MALO</h4>
+<ul class="space-y-3 text-neutral-300 text-sm">
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Pasa a Q4_K_M/Q5_K_M (el punto ideal)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Baja la temperatura a 0.1–0.2</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Agrega un system prompt claro (tema 3)</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Aumenta num_ctx lo suficiente para la conversación</span></li>
+</ul>
+</div>
+</div>
+<!-- CHECAGEM LEVE -->
+<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-4#q1">
+<p class="font-medium mb-4">Autoevaluación (opcional): necesitas generar SQL que siempre sea igual y correcto. ¿Qué ajuste tiene más sentido?</p>
+<div class="inema-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Temperatura alta (0.9) para que el modelo "piense más"</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Temperatura baja (0.1–0.2) para obtener respuestas deterministas y reproducibles</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Aumentar num_ctx a 32k; eso mejora la precisión</button>
+</div>
+<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Lento</div><div class="text-xs text-neutral-400">→ memoria/offload</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Malo</div><div class="text-xs text-neutral-400">→ quant/temp/prompt</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">ollama ps</div><div class="text-xs text-neutral-400">ves qué se cargó</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Cambiar 1</div><div class="text-xs text-neutral-400">por vez, y medir</div></div>
+</div>
+<div class="flex justify-start mt-6">
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
+<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
+<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+</button>
+</div>
+</section>
+<!-- RESUMO -->
+<section class="mb-12">
+<div class="bg-gradient-to-br from-purple-900/40 via-dark-800 to-dark-800 rounded-xl border border-purple-500/30 p-8">
+<h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumen del módulo</h2>
+<div class="space-y-4 mb-8">
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">El contexto (num_ctx) es un equilibrio</strong><span class="text-neutral-400"> — solo la cantidad que requiere la tarea; influye en el KV cache.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">La temperatura determina precisión × creatividad</strong><span class="text-neutral-400"> — baja para código/extracción, alta para lluvia de ideas.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">System prompt es una palanca económica</strong><span class="text-neutral-400"> — el rol + el formato + las restricciones cambian la calidad sin cambiar de modelo.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Offload y diagnóstico</strong><span class="text-neutral-400"> — capas en la GPU = rápido; distingue entre «lento» (memoria) y «malo» (cuantización/temp/prompt).</span></div></div>
+</div>
+<div class="bg-dark-800/50 rounded-lg p-4 mb-8">
+<h3 class="font-semibold text-purple-400 mb-2">Siguiente módulo:</h3>
+<p class="text-neutral-300">3.5 — Sirviendo mediante API local</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="flex-1 text-center px-6 py-3 bg-dark-700 text-neutral-300 rounded-lg font-semibold hover:bg-dark-600 transition-colors" href="modulo-3-3.html">← Módulo anterior</a>
+<a class="flex-1 text-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-500 transition-colors" href="modulo-3-5.html">Siguiente módulo →</a>
+</div>
+</div>
+</section>
+</main>
+</div>
+<footer class="border-t border-dark-600 py-8 mt-8">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+</div>
+</footer>
+<script>
+    function toggleTopic(button){const t=button.closest('.topic-item');const e=t.querySelector('.topic-explanation');const c=button.closest('.bg-dark-800');if(c){c.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==e)x.classList.remove('active')})}e.classList.toggle('active');const ex=e.classList.contains('active');button.setAttribute('aria-expanded',ex?'true':'false')}
+    const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
+    function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
+    syncIcons();
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
+    function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+  </script>
+<script src="../../../assets/learn.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if(window.INEMA&&typeof INEMA.init==='function'){
+        INEMA.init();
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-4#q1',{answer:1,explain:{0:'Não — temperatura alta aumenta a aleatoriedade. SQL ficaria diferente a cada execução e mais propenso a erro.',1:'Isso. Temperatura baixa torna a saída determinística e reproduzível — ideal para código e SQL que precisam ser sempre corretos.',2:'Não. Aumentar a janela de contexto não melhora a precisão por si só; só permite ler mais texto de uma vez (e gasta mais memória).'}});}
+      }
+    });
+  </script>
+</body>
+</html>

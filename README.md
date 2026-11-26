@@ -21,17 +21,17 @@ Inspirado na tese do vêÂ­deo *"The most important concept to learn in AI"* 
 
 PêÂ¡gina êÂºnica, self-contained (HTML + Tailwind CDN + JS inline), com camada de aprendizagem: progresso, marcar-lido, anotaêÂ§êÂµes, "minha jornada", temas e modo leitura. Abre direto no navegador.
 
-Acesse: **https://inematds.github.io/local-ai-masterclass/**
+Acesse: **https://linnoff88-dev.github.io/arckhe-/**
 
-Feito com o padrêÂ£o INEMA.CLUB êÂ· [inema.club](https://inema.club)
+Feito com o padrêÂ£o ARCKHÉ AI êÂ· [ARCKHÉ AI](https://ARCKHÉ AI)
 
-<!-- inema-backlink:v1 -->
-## Mais no INEMA.CLUB
+<!-- ARCKHÉ-backlink:v1 -->
+## Mais no ARCKHÉ AI
 
-- [Ficha completa deste curso](https://www.inema.club/cursos/187-ia-local-masterclass-ia-na-sua-maquina-soberania-privacidade-e-agentes-24-7/)
-- [Guia: como aprender inteligêÂªncia artificial](https://www.inema.club/aprender-inteligencia-artificial/)
-- [Todos os cursos](https://www.inema.club/cursos/)
-<!-- /inema-backlink:v1 -->
+- [Ficha completa deste curso](https://www.ARCKHÉ AI/cursos/187-ia-local-masterclass-ia-na-sua-maquina-soberania-privacidade-e-agentes-24-7/)
+- [Guia: como aprender inteligêÂªncia artificial](https://www.ARCKHÉ AI/aprender-inteligencia-artificial/)
+- [Todos os cursos](https://www.ARCKHÉ AI/cursos/)
+<!-- /ARCKHÉ-backlink:v1 -->
 
 ---
 

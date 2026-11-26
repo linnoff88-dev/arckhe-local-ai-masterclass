@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>1.1 The turning point: why now | Local AI Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha1/modulo-1-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha1/modulo-1-1.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha1/modulo-1-1.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha1/modulo-1-1.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha1/modulo-1-1.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha1/modulo-1-1.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-1.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-1.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-1.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<nav aria-label="Page index" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> of 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. The world changed this week</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Scarce and expensive hardware</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. The output is sovereignty</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. What you gain</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Myths that hold you back</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Your course map</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. The world changed this week</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Scarce and expensive hardware</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. The output is sovereignty</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. What you gain</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Myths that hold you back</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Your course map</a></li>
 </ol>
-<div aria-label="Module 1.1 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:1-1" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-emerald-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+<div aria-label="Module 1.1 progress" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:1-1" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-emerald-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-emerald-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 of 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Detailed content</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="1-1" data-inema-topic="modulo-1-1#topico-1" data-inema-track="1" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="1-1" data-ARCKHÉ-topic="modulo-1-1#topico-1" data-ARCKHÉ-track="1" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">📰 The world changed this week</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t1-p1">This isn’t headline hype: access to cutting-edge intelligence is becoming a <strong class="text-emerald-400">controlled privilege</strong>. The most capable models start becoming available first to selected groups — partner companies, governments, “early access.” Anyone not on the list gets left behind just when those on it have the biggest advantage.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t1-p1">This isn’t headline hype: access to cutting-edge intelligence is becoming a <strong class="text-emerald-400">controlled privilege</strong>. The most capable models start becoming available first to selected groups — partner companies, governments, “early access.” Anyone not on the list gets left behind just when those on it have the biggest advantage.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Frontier model"</strong> is the most capable LLM right now — the top of the line (like the latest version of Opus, GPT, or Gemini). <strong>"LLM"</strong> is the AI model that runs behind ChatGPT: in practice, a giant file of “weights” + a program that generates text from it.</p>
@@ -217,19 +217,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Reaction</div><div class="text-xs text-neutral-400">bring home</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-1-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-1#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">💸 Hardware is scarce and expensive</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t2-p1">The second driver of the shift is physical: <strong class="text-emerald-400">memory and GPUs are getting expensive and hard to come by</strong>. And the pressure is likely to get worse—because robots, drones, self-driving cars, and AI data centers will consume memory on a scale that hasn't even started yet.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t2-p1">The second driver of the shift is physical: <strong class="text-emerald-400">memory and GPUs are getting expensive and hard to come by</strong>. And the pressure is likely to get worse—because robots, drones, self-driving cars, and AI data centers will consume memory on a scale that hasn't even started yet.</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center"><span class="text-emerald-400 font-bold">1</span></div>
@@ -264,19 +264,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Strategy</div><div class="text-xs text-neutral-400">get started now</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-1-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🛡️ The way out is sovereignty</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t3-p1">If access can be restricted and the hardware can become inaccessible, the answer is to stop depending on it. <strong class="text-emerald-400">AI sovereignty</strong> is simple to define: the intelligence runs on your machine, under your control, and no one can shut it down.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t3-p1">If access can be restricted and the hardware can become inaccessible, the answer is to stop depending on it. <strong class="text-emerald-400">AI sovereignty</strong> is simple to define: the intelligence runs on your machine, under your control, and no one can shut it down.</p>
 <div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 rounded-xl border border-emerald-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center"><span class="mr-2">🎯</span> What changes when it’s local</h3>
 <ul class="space-y-2 text-neutral-300">
@@ -296,19 +296,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Freedom</div><div class="text-xs text-neutral-400">to choose</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-1-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-1#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🎁 What you get</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t4-p1">The three pillars of local AI — <strong class="text-emerald-400">private, unlimited, and non-removable</strong> — they’re not marketing. Each enables things the cloud simply doesn’t allow. Compare:</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t4-p1">The three pillars of local AI — <strong class="text-emerald-400">private, unlimited, and non-removable</strong> — they’re not marketing. Each enables things the cloud simply doesn’t allow. Compare:</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-emerald-900/20 rounded-xl border border-emerald-500/30 p-6">
 <h4 class="font-bold text-emerald-400 mb-4">✓ Local AI</h4>
@@ -340,19 +340,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Resilient</div><div class="text-xs text-neutral-400">doesn't disappear</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-1-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-1#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🧱 Myths that hold you back</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t5-p1">Three beliefs stop most people at the door. Let’s dismantle each one — because they cost you the opportunity to get started.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t5-p1">Three beliefs stop most people at the door. Let’s dismantle each one — because they cost you the opportunity to get started.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ The myth</h4>
@@ -382,19 +382,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Antidote</div><div class="text-xs text-neutral-400">test it yourself</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-1-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-1#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🗺️ Your course map</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-1-t6-p1">The four tracks come together into a single path: you move from theory to a lab that works for you. Here's how they connect:</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-1-t6-p1">The four tracks come together into a single path: you move from theory to a lab that works for you. Here's how they connect:</p>
 <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
 <svg aria-label="The four tracks start with you and converge in a local AI lab that runs agents 24/7" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
@@ -447,14 +447,14 @@
 <p class="text-neutral-400 text-sm"><strong>How to check:</strong> note the total RAM (e.g., 16 GB). In Track 2, you’ll use this number to choose the right model. If you have an NVIDIA GPU, also run <span class="font-mono text-emerald-400">nvidia-smi</span> to check the VRAM.</p>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-1-1#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-1-1#q1">
 <p class="font-medium mb-4">Self-check (optional): according to this module, what's the main reason to get into local AI <em>now</em>?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Local models are already smarter than cloud models</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Restricted access + rising hardware costs = the sovereignty window is open today</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Because the cloud will cease to exist</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Local models are already smarter than cloud models</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Restricted access + rising hardware costs = the sovereignty window is open today</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) Because the cloud will cease to exist</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">T1</div><div class="text-xs text-neutral-400">the why</div></div>
@@ -463,9 +463,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">T4</div><div class="text-xs text-neutral-400">24/7 agents</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
@@ -493,7 +493,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -501,7 +501,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -509,9 +509,9 @@
 <script src="../../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-1-1#q1',{answer:1,explain:{0:'Ainda nêo — hoje muitos modelos locais sêo mais simples que o topo da nuvem. A vantagem é controle, nêo pico de inteligência.',1:'Isso. A soma de acesso restrito + hardware encarecendo é o que torna esta a hora de montar seu lab.',2:'Nêo. A nuvem continua útil; a ideia é nêo depender só dela.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-1-1#q1',{answer:1,explain:{0:'Ainda nêo — hoje muitos modelos locais sêo mais simples que o topo da nuvem. A vantagem é controle, nêo pico de inteligência.',1:'Isso. A soma de acesso restrito + hardware encarecendo é o que torna esta a hora de montar seu lab.',2:'Nêo. A nuvem continua útil; a ideia é nêo depender só dela.'}});}
       }
     });
   </script>

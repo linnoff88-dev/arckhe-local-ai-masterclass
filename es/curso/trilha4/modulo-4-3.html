@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>4.3 Paso a paso #1: escáner de seguridad 24/7 | IA Local Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha4/modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha4/modulo-4-3.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha4/modulo-4-3.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha4/modulo-4-3.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha4/modulo-4-3.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="../../../en/curso/trilha4/modulo-4-3.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="modulo-4-3.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Saltar al contenido</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<nav aria-label="Índice de la página" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Sección <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. El objetivo del escáner</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Diseño de la solución</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Paso 1 · exploración determinista</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Paso 2 · el agente revisa</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Paso 3 · programar 24/7</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Reforzar el worker</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. El objetivo del escáner</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Diseño de la solución</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Paso 1 · exploración determinista</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Paso 2 · el agente revisa</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Paso 3 · programar 24/7</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Reforzar el worker</a></li>
 </ol>
-<div aria-label="Progreso del módulo 4.3" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:4-3" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-amber-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-amber-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+<div aria-label="Progreso del módulo 4.3" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:4-3" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-amber-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-amber-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 de 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Contenido detallado</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="4-3" data-inema-topic="modulo-4-3#topico-1" data-inema-track="4" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="4-3" data-ARCKHÉ-topic="modulo-4-3#topico-1" data-ARCKHÉ-track="4" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🎯 El objetivo del escáner</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p1">La auditoría de seguridad suele ser un evento poco frecuente: alguien ejecuta algunas herramientas antes de un deploy importante y se olvida de ellas el resto del tiempo. Con IA local <strong class="text-amber-400">ilimitada y siempre encendida</strong>, puedes invertirlo: un worker recorre tu repositorio <strong class="text-amber-400">continuamente</strong>, en busca de secretos filtrados, dependencias vulnerables y patrones inseguros, sin que gastes nada más que electricidad.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t1-p1">La auditoría de seguridad suele ser un evento poco frecuente: alguien ejecuta algunas herramientas antes de un deploy importante y se olvida de ellas el resto del tiempo. Con IA local <strong class="text-amber-400">ilimitada y siempre encendida</strong>, puedes invertirlo: un worker recorre tu repositorio <strong class="text-amber-400">continuamente</strong>, en busca de secretos filtrados, dependencias vulnerables y patrones inseguros, sin que gastes nada más que electricidad.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> ¿Eres nuevo por aquí?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Secreto"</strong> es cualquier credencial que se filtre al código por accidente: clave de API, token, contraseña de base de datos. <strong>"Escáner de seguridad"</strong> es un programa que lee el código para buscar estos secretos y otros riesgos conocidos. Aquí se convierte en un <strong>worker 24/7</strong>: un proceso que funciona solo, en ciclo, sin que tengas que presionar el botón.</p>
@@ -217,19 +217,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Local</div><div class="text-xs text-neutral-400">nada se filtra</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-4-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-4-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🗺️ Diseño de la solución</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">Antes del código, el diseño. El secreto de un buen escáner no es echarle todo al LLM: es una <strong class="text-amber-400">cinta transportadora</strong>: herramientas económicas y precisas detectan; el modelo local solo <strong class="text-amber-400">evalúa y explica</strong>, y cron lo repite. Cada pieza hace lo que mejor sabe hacer.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t2-p1">Antes del código, el diseño. El secreto de un buen escáner no es echarle todo al LLM: es una <strong class="text-amber-400">cinta transportadora</strong>: herramientas económicas y precisas detectan; el modelo local solo <strong class="text-amber-400">evalúa y explica</strong>, y cron lo repite. Cada pieza hace lo que mejor sabe hacer.</p>
 <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
 <svg aria-label="Flujo de escaneo: el repositorio pasa por herramientas determinísticas, luego por el modelo local que hace la clasificación inicial y genera un informe fechado; un bucle de cron repite el ciclo 24/7" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
@@ -273,7 +273,7 @@
 </svg>
 </div>
 <p class="text-sm text-neutral-400 mb-6">Lee de izquierda a derecha: el <strong class="text-neutral-200">repositorio</strong> alimenta las <strong class="text-neutral-200">herramientas deterministas</strong> (paso 1), los hallazgos van al <strong class="text-neutral-200">modelo local</strong> que evalúa el riesgo (paso 2) y devuelve un <strong class="text-neutral-200">informe fechado</strong>. La flecha cian de abajo es el <strong class="text-neutral-200">cron</strong> (paso 3), cerrando el ciclo 24/7.</p>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t2-p2">Estos tres pasos son exactamente las próximas tres secciones. En resumen:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-ARCKHÉ-block="m4-3-t2-p2">Estos tres pasos son exactamente las próximas tres secciones. En resumen:</p>
 <!-- TIMELINE DOS PASSOS -->
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
@@ -299,19 +299,19 @@
 </div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-4-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-4-3#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🔍 Paso 1 · exploración determinística</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">La tentación es pedirle al LLM «encuentra los problemas de seguridad». <strong class="text-amber-400">No hagas esto primero.</strong> Un modelo puede pasar por alto un secreto obvio o inventar uno que no existe. Las herramientas determinísticas —que siempre dan la misma respuesta para la misma entrada— detectan con precisión quirúrgica. Ejecútalas primero. El LLM entra solo en el paso 2.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t3-p1">La tentación es pedirle al LLM «encuentra los problemas de seguridad». <strong class="text-amber-400">No hagas esto primero.</strong> Un modelo puede pasar por alto un secreto obvio o inventar uno que no existe. Las herramientas determinísticas —que siempre dan la misma respuesta para la misma entrada— detectan con precisión quirúrgica. Ejecútalas primero. El LLM entra solo en el paso 2.</p>
 <!-- COPY-RUN: ferramentas determinísticas -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: las herramientas que detectan</h3>
@@ -337,19 +337,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Determinista</div><div class="text-xs text-neutral-400">sin alucinar</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-4-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-4-3#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🤖 Paso 2 · el agente revisa</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">Ahora el modelo local adquiere una utilidad real. No busca nada: recibe la <strong class="text-amber-400">lista de hallazgos</strong> de las herramientas y hace lo que haría una persona en una revisión: asigna un nivel de riesgo a cada elemento y explica la corrección en una línea. Llamas al modelo mediante <strong class="text-amber-400">API local compatible con OpenAI</strong> (la de Ollama, de la ruta 3.5).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t4-p1">Ahora el modelo local adquiere una utilidad real. No busca nada: recibe la <strong class="text-amber-400">lista de hallazgos</strong> de las herramientas y hace lo que haría una persona en una revisión: asigna un nivel de riesgo a cada elemento y explica la corrección en una línea. Llamas al modelo mediante <strong class="text-amber-400">API local compatible con OpenAI</strong> (la de Ollama, de la ruta 3.5).</p>
 <!-- COPY-RUN: prompt de triagem -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: el modelo local clasifica un hallazgo</h3>
@@ -371,7 +371,7 @@
 </div>
 <p class="text-neutral-400 text-sm"><strong>Cómo verificar:</strong> la respuesta JSON incluye <span class="font-mono text-amber-400">.choices[0].message.content</span> con algo como "Riesgo: alto — revoca la clave en AWS, elimínala del historial y usa una variable de entorno." Una <span class="font-mono text-amber-400">temperature</span> una temperatura baja mantiene la clasificación consistente.</p>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t4-p2">El punto clave es la <strong class="text-amber-400">división del trabajo</strong>: el modelo es excelente para priorizar y explicar, pero pésimo como fuente de verdad. Mira cuándo confiar en él y cuándo no:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-ARCKHÉ-block="m4-3-t4-p2">El punto clave es la <strong class="text-amber-400">división del trabajo</strong>: el modelo es excelente para priorizar y explicar, pero pésimo como fuente de verdad. Mira cuándo confiar en él y cuándo no:</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Buen uso del modelo</h4>
@@ -393,19 +393,19 @@
 </div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-4-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-4-3#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">⏰ Paso 3 · programar 24/7</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">La detección + el triage se convierten en un <strong class="text-amber-400">empleado</strong> cuando se ejecutan solas. Aquí es donde el <span class="font-mono text-amber-400">cron</span> (el programador por tiempo, de la sección 4.2) entra en acción: ejecuta el script cada pocas horas, guarda un <strong class="text-amber-400">informe fechado</strong> y — la parte que te mantiene cuerdo — solo te molesta cuando hay algo <strong class="text-amber-400">nuevo</strong> desde la última ronda.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t5-p1">La detección + el triage se convierten en un <strong class="text-amber-400">empleado</strong> cuando se ejecutan solas. Aquí es donde el <span class="font-mono text-amber-400">cron</span> (el programador por tiempo, de la sección 4.2) entra en acción: ejecuta el script cada pocas horas, guarda un <strong class="text-amber-400">informe fechado</strong> y — la parte que te mantiene cuerdo — solo te molesta cuando hay algo <strong class="text-amber-400">nuevo</strong> desde la última ronda.</p>
 <!-- COPY-RUN PRINCIPAL: o script completo -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run principal: el script de la cadena</h3>
@@ -449,19 +449,19 @@
 <p class="text-neutral-300 text-sm">El enemigo de un worker 24/7 es la <strong>fatiga de alertas</strong>: si te avisa en cada ronda, dejarás de leer. Por eso, "alertar solo sobre lo nuevo" no es un detalle: es lo que decide si confiarás en el empleado o lo silenciarás durante la primera semana.</p>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-4-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-4-3#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🔒 Fortaleciendo el worker</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">Funciona: ahora hazlo confiable. Un scanner que grita falsos positivos todo el día o que se sale del alcance se convierte en otro ruido que se ignora. Y hay una línea que <strong class="text-amber-400">no se cruza</strong>: el código no va a ninguna parte. Estas prácticas distinguen un juguete de un empleado en quien confías.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m4-3-t6-p1">Funciona: ahora hazlo confiable. Un scanner que grita falsos positivos todo el día o que se sale del alcance se convierte en otro ruido que se ignora. Y hay una línea que <strong class="text-amber-400">no se cruza</strong>: el código no va a ninguna parte. Estas prácticas distinguen un juguete de un empleado en quien confías.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Hazlo</h4>
@@ -491,14 +491,14 @@
 </ul>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-3#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-4-3#q1">
 <p class="font-medium mb-4">Autoevaluación (opcional): ¿por qué ejecutar <em>gitleaks / npm audit</em> ¿ANTES de llamar al modelo local?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Porque el LLM no puede leer código de ninguna manera</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Las herramientas son deterministas y precisas al detectar; el LLM solo interviene para clasificar y explicar lo que encontraron</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Para que el código se envíe a la nube antes del análisis</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Porque el LLM no puede leer código de ninguna manera</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Las herramientas son deterministas y precisas al detectar; el LLM solo interviene para clasificar y explicar lo que encontraron</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) Para que el código se envíe a la nube antes del análisis</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Alcance</div><div class="text-xs text-neutral-400">menos ruido</div></div>
@@ -507,9 +507,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Humano</div><div class="text-xs text-neutral-400">decide y corrige</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como leído</span><span class="inema-label-done">Leído ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como leído</span><span class="ARCKHÉ-label-done">Leído ✓</span>
 </button>
 </div>
 </section>
@@ -537,7 +537,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -545,7 +545,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -553,9 +553,9 @@
 <script src="../../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-3#q1',{answer:1,explain:{0:'Nêo — o LLM lê código sim. O motivo é outro: ele nêo é a melhor ferramenta de detecçêo bruta.',1:'Isso. Ferramenta determinística detecta com precisêo (sem alucinar); o modelo local entra depois só pra triar risco e explicar a correçêo.',2:'O oposto do objetivo. O código nunca deve sair da máquina — todo o ganho é varrer sem expor.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-4-3#q1',{answer:1,explain:{0:'Nêo — o LLM lê código sim. O motivo é outro: ele nêo é a melhor ferramenta de detecçêo bruta.',1:'Isso. Ferramenta determinística detecta com precisêo (sem alucinar); o modelo local entra depois só pra triar risco e explicar a correçêo.',2:'O oposto do objetivo. O código nunca deve sair da máquina — todo o ganho é varrer sem expor.'}});}
       }
     });
   </script>

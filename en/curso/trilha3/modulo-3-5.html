@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>3.5 Serving via an OpenAI-compatible local API | IA Local Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-5.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-5.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha3/modulo-3-5.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha3/modulo-3-5.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha3/modulo-3-5.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha3/modulo-3-5.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-3-5.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha3/modulo-3-5.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<nav aria-label="Page index" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> of 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Why a local API</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. The Ollama endpoint</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. First call with curl</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. From code: local OpenAI SDK</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Streaming, embeddings &amp; models</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Expose it on the tailnet safely</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Why a local API</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. The Ollama endpoint</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. First call with curl</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. From code: local OpenAI SDK</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Streaming, embeddings &amp; models</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Expose it on the tailnet safely</a></li>
 </ol>
-<div aria-label="Module 3.5 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-5" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+<div aria-label="Module 3.5 progress" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:3-5" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-purple-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-purple-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 of 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Detailed content</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="3-5" data-inema-topic="modulo-3-5#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="3-5" data-ARCKHÉ-topic="modulo-3-5#topico-1" data-ARCKHÉ-track="3" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🔌 Why a local API</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t1-p1">A chat interface is great for talking with you. But a <strong class="text-purple-400">program</strong> doesn't communicate through a screen—it needs an address to send text and receive a response. That address is the <strong class="text-purple-400">API</strong>. Ollama’s trick is to speak exactly the same “format” OpenAI uses: that way, any app, script, or agent that already knows how to talk to ChatGPT works with your local model by changing just one line.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t1-p1">A chat interface is great for talking with you. But a <strong class="text-purple-400">program</strong> doesn't communicate through a screen—it needs an address to send text and receive a response. That address is the <strong class="text-purple-400">API</strong>. Ollama’s trick is to speak exactly the same “format” OpenAI uses: that way, any app, script, or agent that already knows how to talk to ChatGPT works with your local model by changing just one line.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>"API"</strong> (Application Programming Interface) is an entry point through which one program asks another for something. <strong>"Endpoint"</strong> is the exact address of that port — a URL like <span class="font-mono text-purple-400">http://localhost:11434/v1/chat/completions</span>. <strong>"OpenAI-compatible"</strong> means that the request and response format is identical to OpenAI’s API — same keys <span class="font-mono text-neutral-200">model</span>, <span class="font-mono text-neutral-200">messages</span>, <span class="font-mono text-neutral-200">choices</span> — just served by your machine.</p>
@@ -229,19 +229,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Unblocks</div><div class="text-xs text-neutral-400">scripts &amp; agents</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-3-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-5#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🌐 The Ollama endpoint</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t2-p1">When you installed Ollama (Module 3.1), it already started an HTTP server listening on <strong class="text-purple-400">http://localhost:11434</strong>. <span class="font-mono text-neutral-200">localhost</span> = the machine itself; <span class="font-mono text-neutral-200">11434</span> = the port. This server offers two sets of routes: the <strong>native</strong> from Ollama and the <strong>OpenAI-compatible</strong> under <span class="font-mono text-neutral-200">/v1</span>. To reuse existing apps and SDKs, always use the ones for <span class="font-mono text-neutral-200">/v1</span>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t2-p1">When you installed Ollama (Module 3.1), it already started an HTTP server listening on <strong class="text-purple-400">http://localhost:11434</strong>. <span class="font-mono text-neutral-200">localhost</span> = the machine itself; <span class="font-mono text-neutral-200">11434</span> = the port. This server offers two sets of routes: the <strong>native</strong> from Ollama and the <strong>OpenAI-compatible</strong> under <span class="font-mono text-neutral-200">/v1</span>. To reuse existing apps and SDKs, always use the ones for <span class="font-mono text-neutral-200">/v1</span>.</p>
 <p class="text-neutral-400 text-sm mb-4">The path of a request, from your program to the model and back:</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
@@ -286,19 +286,19 @@
 <p class="text-neutral-300 text-sm">If the port <strong>11434</strong> doesn't respond, the server isn't running. On Linux/macOS, the Ollama app keeps it running; if you need to start it manually, use <span class="font-mono text-purple-400">ollama serve</span>. "Connection refused" is almost always this: the service isn't running or is on another machine.</p>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-3-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-5#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">⌨️ First call with curl</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t3-p1">The fastest way to prove the API works is the <strong class="text-purple-400">curl</strong> — a terminal tool that makes HTTP requests. No library installation, no code: just the terminal and a JSON object. If this responds, your local API is up.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t3-p1">The fastest way to prove the API works is the <strong class="text-purple-400">curl</strong> — a terminal tool that makes HTTP requests. No library installation, no code: just the terminal and a JSON object. If this responds, your local API is up.</p>
 <!-- COPY-RUN curl -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: chat via curl</h3>
@@ -332,19 +332,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">content</div><div class="text-xs text-neutral-400">the answer</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-3-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-5#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🐍 From code: OpenAI SDK pointed to the local model</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t4-p1">This is where compatibility shines. The <strong class="text-purple-400">Official OpenAI SDK</strong> (the library <span class="font-mono text-neutral-200">openai</span> in Python) works with Ollama—just change the <span class="font-mono text-neutral-200">base_url</span> for your local endpoint and pass a <span class="font-mono text-neutral-200">api_key</span> any (Ollama doesn't validate the key; it's required only because the SDK asks for one).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t4-p1">This is where compatibility shines. The <strong class="text-purple-400">Official OpenAI SDK</strong> (the library <span class="font-mono text-neutral-200">openai</span> in Python) works with Ollama—just change the <span class="font-mono text-neutral-200">base_url</span> for your local endpoint and pass a <span class="font-mono text-neutral-200">api_key</span> any (Ollama doesn't validate the key; it's required only because the SDK asks for one).</p>
 <!-- COPY-RUN Python -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🐍</span> Practical example: chat in Python</h3>
@@ -387,19 +387,19 @@
 </div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-3-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-5#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🌊 Streaming, embeddings, and multiple models</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t5-p1">The same API does three more things you'll use a lot: <strong class="text-purple-400">streaming</strong> (the response arrives word by word, like in ChatGPT), <strong class="text-purple-400">embeddings</strong> (turn text into vectors—the foundation of RAG, in the next module) and <strong class="text-purple-400">route by model</strong> (just change the field <span class="font-mono text-neutral-200">model</span>).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t5-p1">The same API does three more things you'll use a lot: <strong class="text-purple-400">streaming</strong> (the response arrives word by word, like in ChatGPT), <strong class="text-purple-400">embeddings</strong> (turn text into vectors—the foundation of RAG, in the next module) and <strong class="text-purple-400">route by model</strong> (just change the field <span class="font-mono text-neutral-200">model</span>).</p>
 <!-- COPY-RUN streaming -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">🌊</span> Streaming: token-by-token responses</h3>
@@ -440,19 +440,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">1 endpoint</div><div class="text-xs text-neutral-400">N models</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-3-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-5#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🔒 Safely exposing it on the tailnet</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-5-t6-p1">By default, the API only responds on <span class="font-mono text-neutral-200">localhost</span> — no one outside can reach it. But in Module 2.4, you set up a <strong class="text-purple-400">tailnet</strong> (private network via Tailscale). Put the two pieces together, and you can use your home model from your work laptop or phone—all within your private network, without exposing anything to the internet.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-5-t6-p1">By default, the API only responds on <span class="font-mono text-neutral-200">localhost</span> — no one outside can reach it. But in Module 2.4, you set up a <strong class="text-purple-400">tailnet</strong> (private network via Tailscale). Put the two pieces together, and you can use your home model from your work laptop or phone—all within your private network, without exposing anything to the internet.</p>
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
 <svg aria-label="An app or script calls the local API on port 11434, which runs the model; a cyan branch shows another device accessing the same API through the Tailscale tailnet" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
@@ -536,14 +536,14 @@
 </div>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-5#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-3-5#q1">
 <p class="font-medium mb-4">Self-check (optional): to use the OpenAI SDK with your local model, what do you adjust?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Set the base_url to api.openai.com and use my real key</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Set base_url to http://localhost:11434/v1 and use any api_key (e.g., "ollama"), since Ollama doesn’t validate the key</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) I need to train the model before the API works</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Set the base_url to api.openai.com and use my real key</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Set base_url to http://localhost:11434/v1 and use any api_key (e.g., "ollama"), since Ollama doesn’t validate the key</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) I need to train the model before the API works</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">localhost</div><div class="text-xs text-neutral-400">closed-source</div></div>
@@ -552,9 +552,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Public</div><div class="text-xs text-neutral-400">never</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
@@ -582,7 +582,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -590,7 +590,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -598,9 +598,9 @@
 <script src="../../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-5#q1',{answer:1,explain:{0:'Nêo — apontar pra api.openai.com manda tudo pra nuvem. O objetivo aqui é o contrário: usar o modelo na sua máquina.',1:'Isso. base_url local + uma api_key qualquer (o Ollama ignora a chave). Mesmo SDK, modelo local.',2:'Nêo. O modelo já está pronto; a API só serve o que o Ollama já roda — nada de treinar.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-3-5#q1',{answer:1,explain:{0:'Nêo — apontar pra api.openai.com manda tudo pra nuvem. O objetivo aqui é o contrário: usar o modelo na sua máquina.',1:'Isso. base_url local + uma api_key qualquer (o Ollama ignora a chave). Mesmo SDK, modelo local.',2:'Nêo. O modelo já está pronto; a API só serve o que o Ollama já roda — nada de treinar.'}});}
       }
     });
   </script>

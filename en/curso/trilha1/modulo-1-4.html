@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>1.4 Anatomy of a local LLM | Local AI Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha1/modulo-1-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha1/modulo-1-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha1/modulo-1-4.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha1/modulo-1-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha1/modulo-1-4.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha1/modulo-1-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha1/modulo-1-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-1-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha1/modulo-1-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-emerald-400 bg-emerald-500/10" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<nav aria-label="Page index" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> of 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Weights and parameters</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Tokens and context</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Quantization</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Memory: the resource that matters most</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Open model families</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Licenses matter</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-1">1. Weights and parameters</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-2">2. Tokens and context</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-3">3. Quantization</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-4">4. Memory: the resource that matters most</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-5">5. Open model families</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-emerald-400" href="#topico-6">6. Licenses matter</a></li>
 </ol>
-<div aria-label="Module 1.4 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:1-4" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-emerald-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-emerald-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+<div aria-label="Module 1.4 progress" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:1-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-emerald-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-emerald-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 of 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Detailed content</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="1-4" data-inema-topic="modulo-1-4#topico-1" data-inema-track="1" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="1-4" data-ARCKHÉ-topic="modulo-1-4#topico-1" data-ARCKHÉ-track="1" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">⚖️ Weights and parameters</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t1-p1">When you see a model called <strong class="text-emerald-400">"Llama 3.1 8B"</strong> or <strong class="text-emerald-400">"Qwen2.5 32B"</strong>, that number is the most important thing on the label. It tells you the <strong class="text-neutral-100">brain size</strong> of the model. Understanding what it means already helps you choose better than most people.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t1-p1">When you see a model called <strong class="text-emerald-400">"Llama 3.1 8B"</strong> or <strong class="text-emerald-400">"Qwen2.5 32B"</strong>, that number is the most important thing on the label. It tells you the <strong class="text-neutral-100">brain size</strong> of the model. Understanding what it means already helps you choose better than most people.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>Parameters (weights)</strong> are the numbers the model learned during training — they hold everything it "knows". <strong>"7B"</strong> means <strong>7 billion</strong> parameters (the B stands for <em>billion</em>). <strong>"70B"</strong> = 70 billion; <strong>"235B"</strong> = 235 billion. In practice, the model file is basically a giant list of these numbers.</p>
@@ -232,19 +232,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">instruct</div><div class="text-xs text-neutral-400">the version that chats</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-1-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🔤 Tokens and context window</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t2-p1">The model doesn’t read letters or entire words: it reads <strong class="text-emerald-400">tokens</strong>. And it can only pay attention to a limited number of them at a time—the <strong class="text-emerald-400">context window</strong>. These two concepts explain why the model sometimes "forgets" the beginning of a long conversation.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t2-p1">The model doesn’t read letters or entire words: it reads <strong class="text-emerald-400">tokens</strong>. And it can only pay attention to a limited number of them at a time—the <strong class="text-emerald-400">context window</strong>. These two concepts explain why the model sometimes "forgets" the beginning of a long conversation.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>Token</strong> = a piece of text. It can be a short word, part of a word, or a punctuation mark. A rule of thumb for Portuguese/English: <strong>1 token ≈ 4 characters ≈ ¾ of a word</strong>. The phrase "Local AI is power" has ~5–6 tokens. <strong>Context</strong> = how many tokens the model can “read at once” (input + response together).</p>
@@ -284,19 +284,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Large window</div><div class="text-xs text-neutral-400">uses memory</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-1-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🗜️ Quantization: the trick that makes AI fit</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t3-p1">This is perhaps the most important concept in the module. <strong class="text-emerald-400">Quantization</strong> is what lets you run a large model on modest hardware. It’s the difference between “it won’t fit on my machine” and “it runs just fine.”</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t3-p1">This is perhaps the most important concept in the module. <strong class="text-emerald-400">Quantization</strong> is what lets you run a large model on modest hardware. It’s the difference between “it won’t fit on my machine” and “it runs just fine.”</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>Quantization</strong> = reduce the <em>accuracy</em> of each weight so it takes up less space. Instead of storing each number with many digits (FP16, 16 bits = 2 bytes per weight), you store it with fewer (Q8 ≈ 1 byte; Q4 ≈ half a byte). It’s like saving a photo at lower quality: the file gets much smaller, and in practice, you barely notice the difference.</p>
@@ -372,19 +372,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Sweet spot</div><div class="text-xs text-neutral-400">Q4_K_M / Q5_K_M</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-1-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🧠 Memory: the feature that matters most</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t4-p1">If there’s one number that determines whether a model will run on your machine, it’s <strong class="text-emerald-400">memory</strong>. It’s not the processor type or the graphics card brand: it’s how much memory you have to load the weights. Here you’ll learn to estimate that in your head.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t4-p1">If there’s one number that determines whether a model will run on your machine, it’s <strong class="text-emerald-400">memory</strong>. It’s not the processor type or the graphics card brand: it’s how much memory you have to load the weights. Here you’ll learn to estimate that in your head.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>VRAM</strong> is video card memory (GPU) — the fastest kind for AI. <strong>RAM</strong> is system memory. On Macs with <em>unified memory</em>, they're the same thing. The model needs to fit entirely (or almost entirely) in this memory to run fast. The <strong>KV cache</strong> is extra working memory that the model uses to “remember” what it has already read in the conversation—and it <strong>grows along with the context</strong>.</p>
@@ -430,19 +430,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">KV cache</div><div class="text-xs text-neutral-400">grows with context</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-1-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🌳 Open model families</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t5-p1">The open world isn’t just one model — it’s <strong class="text-emerald-400">families</strong>, each from a different lab, with different strengths. Knowing the main names saves you from getting lost when it's time to choose. These are the ones you'll come across most often:</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t5-p1">The open world isn’t just one model — it’s <strong class="text-emerald-400">families</strong>, each from a different lab, with different strengths. Knowing the main names saves you from getting lost when it's time to choose. These are the ones you'll come across most often:</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
 <div class="bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-emerald-400 mb-1">🦙 Llama (Meta)</h4>
@@ -489,19 +489,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Mistral</div><div class="text-xs text-neutral-400">a lot in a little</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-1-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-1-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">📜 Licenses matter</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m1-4-t6-p1">"Open" doesn’t mean "anything goes." Each family comes with a <strong class="text-emerald-400">license</strong> that determines what you can do—especially if you're using it for work or a product. Ignoring this can cause headaches later.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m1-4-t6-p1">"Open" doesn’t mean "anything goes." Each family comes with a <strong class="text-emerald-400">license</strong> that determines what you can do—especially if you're using it for work or a product. Ignoring this can cause headaches later.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>License</strong> = the model’s “terms of use.” It says whether you can use it commercially, redistribute it, modify it, and what conditions you need to meet. The most permissive are <strong>Apache 2.0</strong> e <strong>MIT</strong> (almost “do whatever you want”). Others, like the Llama license, are open but have <em>constraints</em> (e.g., rules for very large companies or attribution requirements).</p>
@@ -553,14 +553,14 @@
 </ul>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-1-4#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-1-4#q1">
 <p class="font-medium mb-4">Self-check (optional): you want to run a <strong>13B</strong> and has a GPU with <strong>8 GB</strong>. What’s the most sensible move, according to this module?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Run the 13B in FP16 — maximum quality is always worth it</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Use a quantization (e.g., Q4 ≈ 7 GB) — it fits comfortably in 8 GB and retains nearly all the quality</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Give up—8 GB can’t run anything useful</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Run the 13B in FP16 — maximum quality is always worth it</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Use a quantization (e.g., Q4 ≈ 7 GB) — it fits comfortably in 8 GB and retains nearly all the quality</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) Give up—8 GB can’t run anything useful</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Apache / MIT</div><div class="text-xs text-neutral-400">almost "anything goes"</div></div>
@@ -569,9 +569,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-emerald-400 font-bold text-sm mb-1">Commercial?</div><div class="text-xs text-neutral-400">check first</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
@@ -600,7 +600,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -608,7 +608,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -616,9 +616,9 @@
 <script src="../../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-1-4#q1',{answer:1,explain:{0:'Nêo cabe — um 13B em FP16 pede ~26 GB, muito acima dos 8 GB. É justamente o caso em que a quantizaçêo salva.',1:'Isso. Em Q4 o 13B fica em ~7 GB e entra nos 8 GB mantendo quase toda a qualidade — o uso clássico da quantizaçêo.',2:'Nada disso. Com 8 GB e quantizaçêo você roda 7B–13B numa boa; desistir seria jogar fora a máquina que você já tem.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-1-4#q1',{answer:1,explain:{0:'Nêo cabe — um 13B em FP16 pede ~26 GB, muito acima dos 8 GB. É justamente o caso em que a quantizaçêo salva.',1:'Isso. Em Q4 o 13B fica em ~7 GB e entra nos 8 GB mantendo quase toda a qualidade — o uso clássico da quantizaçêo.',2:'Nada disso. Com 8 GB e quantizaçêo você roda 7B–13B numa boa; desistir seria jogar fora a máquina que você já tem.'}});}
       }
     });
   </script>

@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>2.4 Rede privada com Tailscale | IA Local Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha2/modulo-2-4.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha2/modulo-2-4.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha2/modulo-2-4.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-2-4.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha2/modulo-2-4.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha2/modulo-2-4.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<nav aria-label="Índice da página" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. O problema: usar de qualquer lugar</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. O que é Tailscale</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Instalar e logar</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Acessando o modelo pela rede</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Do celular ao laptop</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Segurança e ACLs</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. O problema: usar de qualquer lugar</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. O que é Tailscale</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. Instalar e logar</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Acessando o modelo pela rede</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Do celular ao laptop</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Segurança e ACLs</a></li>
 </ol>
-<div aria-label="Progresso do módulo 2.4" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-4" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+<div aria-label="Progresso do módulo 2.4" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:2-4" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-blue-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-blue-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 de 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="2-4" data-inema-topic="modulo-2-4#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="2-4" data-ARCKHÉ-topic="modulo-2-4#topico-1" data-ARCKHÉ-track="2" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🌐 O problema: usar seus modelos de qualquer lugar</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t1-p1">O modelo está rodando lindamente — só que na máquina de casa. Você sai, e ele fica trancado atrás do seu roteador. O instinto errado é <strong class="text-blue-400">abrir uma porta</strong> no roteador (port-forward) e apontar pra internet. Isso põe seu PC exposto ao mundo inteiro: qualquer bot que varre a internet acha a porta aberta em minutos.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t1-p1">O modelo está rodando lindamente — só que na máquina de casa. Você sai, e ele fica trancado atrás do seu roteador. O instinto errado é <strong class="text-blue-400">abrir uma porta</strong> no roteador (port-forward) e apontar pra internet. Isso põe seu PC exposto ao mundo inteiro: qualquer bot que varre a internet acha a porta aberta em minutos.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Porta"</strong> é um número que identifica um serviço numa máquina (o Ollama atende na <span class="font-mono">11434</span>). <strong>"Port-forward"</strong> é mandar o roteador encaminhar essa porta pra internet pública — cômodo, mas é abrir a janela da sua casa pra rua. <strong>"VPN"</strong> é um túnel criptografado que liga máquinas como se estivessem na mesma rede local.</p>
@@ -220,19 +220,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Caminho</div><div class="text-xs text-neutral-400">rede privada</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-2-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-4#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🕸️ O que é Tailscale</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t2-p1">Tailscale é uma <strong class="text-blue-400">VPN mesh</strong>: em vez de todo mundo passar por um servidor central, cada dispositivo fala <em>direto</em> com os outros, num túnel criptografado. Você instala, faz login com a mesma conta em cada aparelho, e pronto — eles formam uma rede privada chamada <strong class="text-blue-400">tailnet</strong>, como se estivessem ligados no mesmo switch.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t2-p1">Tailscale é uma <strong class="text-blue-400">VPN mesh</strong>: em vez de todo mundo passar por um servidor central, cada dispositivo fala <em>direto</em> com os outros, num túnel criptografado. Você instala, faz login com a mesma conta em cada aparelho, e pronto — eles formam uma rede privada chamada <strong class="text-blue-400">tailnet</strong>, como se estivessem ligados no mesmo switch.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <ul class="space-y-2 text-neutral-300 text-sm">
@@ -292,19 +292,19 @@
 </div>
 <p class="text-sm text-neutral-400 mb-6">Os quatro dispositivos (em azul) ficam interligados na mesma <strong class="text-neutral-200">tailnet</strong> — linhas tracejadas mostram que a conversa é direta, peer-a-peer. O <strong class="text-neutral-200">modelo</strong> (em ciano) roda no PC com GPU e, por estar na rede, qualquer aparelho logado o alcança pelo IP <span class="font-mono">100.x</span>.</p>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-2-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-4#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">⚙️ Instalar e logar</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t3-p1">Pôr um dispositivo na tailnet sêo <strong class="text-blue-400">três passos</strong>: instalar o cliente, subir o Tailscale e autenticar. Faça isso em cada máquina que você quer na rede (PC, servidor, laptop) — o celular usa o app da loja.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t3-p1">Pôr um dispositivo na tailnet sêo <strong class="text-blue-400">três passos</strong>: instalar o cliente, subir o Tailscale e autenticar. Faça isso em cada máquina que você quer na rede (PC, servidor, laptop) — o celular usa o app da loja.</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
@@ -347,19 +347,19 @@
 <p class="text-neutral-300 text-sm">Numa máquina que fica sempre ligada (seu servidor/PC do modelo), use <span class="font-mono">sudo tailscale up --ssh</span> pra também poder entrar nela por SSH de qualquer lugar da tailnet — sem abrir porta nenhuma. E ligue a opçêo de <strong>chave que nêo expira</strong> no painel admin pra nêo precisar reautenticar esse host toda hora.</p>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-2-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-4#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">📡 Acessando o modelo pela rede</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t4-p1">Por padrêo, o Ollama só escuta em <span class="font-mono text-blue-400">localhost</span> — ou seja, só a própria máquina o enxerga. Pra outros dispositivos da tailnet chamarem o modelo, você manda o Ollama escutar em <strong class="text-blue-400">todas as interfaces</strong> com <span class="font-mono text-blue-400">OLLAMA_HOST=0.0.0.0</span>. Aí qualquer aparelho logado fala com ele pelo IP <span class="font-mono">100.x</span> do host.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t4-p1">Por padrêo, o Ollama só escuta em <span class="font-mono text-blue-400">localhost</span> — ou seja, só a própria máquina o enxerga. Pra outros dispositivos da tailnet chamarem o modelo, você manda o Ollama escutar em <strong class="text-blue-400">todas as interfaces</strong> com <span class="font-mono text-blue-400">OLLAMA_HOST=0.0.0.0</span>. Aí qualquer aparelho logado fala com ele pelo IP <span class="font-mono">100.x</span> do host.</p>
 <div class="bg-gradient-to-br from-blue-900/30 to-dark-800 rounded-xl border border-blue-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center"><span class="mr-2">🎯</span> O fluxo, em duas máquinas</h3>
 <ul class="space-y-2 text-neutral-300">
@@ -396,19 +396,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">:11434</div><div class="text-xs text-neutral-400">porta do Ollama</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-2-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-4#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">📱 Do celular ao laptop</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t5-p1">Aqui o truque fica concreto: instale o app <strong class="text-blue-400">Tailscale</strong> no celular (App Store / Play Store), logue com a <strong>mesma conta</strong>, e o telefone entra na tailnet. Agora, do 4G na rua, você abre uma interface de chat apontada pro IP <span class="font-mono">100.x</span> de casa e conversa com o seu modelo — rodando na sua GPU, sem nuvem, sem porta aberta.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t5-p1">Aqui o truque fica concreto: instale o app <strong class="text-blue-400">Tailscale</strong> no celular (App Store / Play Store), logue com a <strong>mesma conta</strong>, e o telefone entra na tailnet. Agora, do 4G na rua, você abre uma interface de chat apontada pro IP <span class="font-mono">100.x</span> de casa e conversa com o seu modelo — rodando na sua GPU, sem nuvem, sem porta aberta.</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
@@ -443,19 +443,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Você</div><div class="text-xs text-neutral-400">em qualquer lugar</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-2-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-4#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🛡️ Segurança e ACLs</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-4-t6-p1">A tailnet já é privada — mas dá pra apertar mais. O princípio é o <strong class="text-blue-400">menor privilégio</strong>: cada dispositivo só alcança o que precisa. Numa rede de poucos aparelhos seus isso importa pouco; quando você adicionar a máquina de um colega ou um servidor compartilhado, as <strong class="text-blue-400">ACLs</strong> viram essenciais.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-4-t6-p1">A tailnet já é privada — mas dá pra apertar mais. O princípio é o <strong class="text-blue-400">menor privilégio</strong>: cada dispositivo só alcança o que precisa. Numa rede de poucos aparelhos seus isso importa pouco; quando você adicionar a máquina de um colega ou um servidor compartilhado, as <strong class="text-blue-400">ACLs</strong> viram essenciais.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <ul class="space-y-2 text-neutral-300 text-sm">
@@ -510,14 +510,14 @@
 <p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> marque o host do modelo com a tag <span class="font-mono text-blue-400">modelo</span> no painel; depois, de um device autorizado, o <span class="font-mono text-blue-400">curl 100.x:11434/api/tags</span> responde — e de um device fora da regra, a conexêo é recusada. Menor privilégio na prática.</p>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-4#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-2-4#q1">
 <p class="font-medium mb-4">Auto-checagem (opcional): qual é a forma recomendada de acessar seu modelo local quando você está fora de casa?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Abrir a porta 11434 no roteador e apontar pra internet pública</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Entrar na tailnet pelo Tailscale e chamar o host pelo IP 100.x — sem abrir porta nenhuma</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Publicar o IP público do seu PC num site pra acessar de fora</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Abrir a porta 11434 no roteador e apontar pra internet pública</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Entrar na tailnet pelo Tailscale e chamar o host pelo IP 100.x — sem abrir porta nenhuma</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) Publicar o IP público do seu PC num site pra acessar de fora</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Privilégio</div><div class="text-xs text-neutral-400">o menor possível</div></div>
@@ -526,9 +526,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Internet</div><div class="text-xs text-neutral-400">nunca exposta</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
@@ -556,7 +556,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -564,7 +564,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -572,9 +572,9 @@
 <script src="../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-4#q1',{answer:1,explain:{0:'Nêo — abrir porta no roteador expõe seu PC à internet inteira; é justamente o que queremos evitar.',1:'Isso. A tailnet liga seus dispositivos numa rede privada criptografada; você chega no host pelo IP 100.x sem abrir nada pra fora.',2:'Nêo. Publicar o IP público te deixa exposto e ainda depende de IP fixo/DNS dinâmico — frágil e inseguro.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-2-4#q1',{answer:1,explain:{0:'Nêo — abrir porta no roteador expõe seu PC à internet inteira; é justamente o que queremos evitar.',1:'Isso. A tailnet liga seus dispositivos numa rede privada criptografada; você chega no host pelo IP 100.x sem abrir nada pra fora.',2:'Nêo. Publicar o IP público te deixa exposto e ainda depende de IP fixo/DNS dinâmico — frágil e inseguro.'}});}
       }
     });
   </script>

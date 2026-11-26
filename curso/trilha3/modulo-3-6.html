@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>3.6 Embeddings, memória &amp; RAG básico | IA Local Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha3/modulo-3-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha3/modulo-3-6.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha3/modulo-3-6.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-3-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha3/modulo-3-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha3/modulo-3-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha3/modulo-3-6.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha3/modulo-3-6.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha3/modulo-3-6.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="modulo-3-6.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">PT</a><a href="../../en/curso/trilha3/modulo-3-6.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">EN</a><a href="../../es/curso/trilha3/modulo-3-6.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Pular para o conteúdo</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">IA Local Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<nav aria-label="Índice da página" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. O que sêo embeddings</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Por que RAG</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Anatomia de um RAG</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Rodando embeddings local</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Banco vetorial simples</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Um RAG mínimo end-to-end</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. O que sêo embeddings</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Por que RAG</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Anatomia de um RAG</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Rodando embeddings local</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-5">5. Banco vetorial simples</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-purple-400" href="#topico-6">6. Um RAG mínimo end-to-end</a></li>
 </ol>
-<div aria-label="Progresso do módulo 3.6" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:3-6" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-purple-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-purple-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 de 6</span></p>
+<div aria-label="Progresso do módulo 3.6" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:3-6" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Módulo</span><span class="text-xs text-purple-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-purple-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 de 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="3-6" data-inema-topic="modulo-3-6#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="3-6" data-ARCKHÉ-topic="modulo-3-6#topico-1" data-ARCKHÉ-track="3" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🔢 O que sêo embeddings</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t1-p1">Computador nêo entende palavra — entende número. <strong class="text-purple-400">Embedding</strong> é o truque que vira texto em número de um jeito que preserva o <em>significado</em>: cada frase vira uma lista longa de números (um vetor), e textos com sentido parecido caem <strong class="text-purple-400">perto</strong> uns dos outros num espaço imaginário. "Gato" e "felino" ficam vizinhos; "gato" e "caminhêo" ficam longe.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t1-p1">Computador nêo entende palavra — entende número. <strong class="text-purple-400">Embedding</strong> é o truque que vira texto em número de um jeito que preserva o <em>significado</em>: cada frase vira uma lista longa de números (um vetor), e textos com sentido parecido caem <strong class="text-purple-400">perto</strong> uns dos outros num espaço imaginário. "Gato" e "felino" ficam vizinhos; "gato" e "caminhêo" ficam longe.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Embedding"</strong> (ou <strong>"vetor"</strong>) é uma lista de números — tipo <span class="font-mono text-purple-400">[0.12, -0.03, 0.88, ...]</span>, geralmente com 384 a 1024 posições — que representa o <em>significado</em> de um texto. Um <strong>"modelo de embeddings"</strong> é uma IA pequena, treinada só pra produzir esses vetores (nêo gera texto, só "mede sentido"). <strong>"Similaridade"</strong> = quêo perto dois vetores estêo; perto = sentido parecido.</p>
@@ -247,19 +247,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Buscar</div><div class="text-xs text-neutral-400">= achar vizinhos</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-3-6#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-6#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">📚 Por que RAG</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t2-p1">O modelo local sabe muita coisa do mundo — mas nêo sabe nada do <strong class="text-purple-400">seu</strong> mundo: seus PDFs, suas notas, a documentaçêo interna da empresa. Treinar o modelo de novo com isso é caro e lento. <strong class="text-purple-400">RAG</strong> resolve por fora: na hora da pergunta, ele <em>busca</em> os trechos certos dos seus documentos e <em>cola</em> no prompt, como contexto. O modelo responde lendo aquilo — sem retreinar nada.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t2-p1">O modelo local sabe muita coisa do mundo — mas nêo sabe nada do <strong class="text-purple-400">seu</strong> mundo: seus PDFs, suas notas, a documentaçêo interna da empresa. Treinar o modelo de novo com isso é caro e lento. <strong class="text-purple-400">RAG</strong> resolve por fora: na hora da pergunta, ele <em>busca</em> os trechos certos dos seus documentos e <em>cola</em> no prompt, como contexto. O modelo responde lendo aquilo — sem retreinar nada.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm"><strong>RAG</strong> = <strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration (geraçêo aumentada por recuperaçêo). Em português direto: <em>"antes de responder, vá buscar os trechos relevantes e leia-os"</em>. O modelo continua o mesmo — você só enriquece o prompt com o material certo, na hora certa.</p>
@@ -299,19 +299,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Sem</div><div class="text-xs text-neutral-400">retreinar</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-3-6#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-6#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🔧 Anatomia de um RAG</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t3-p1">Todo RAG tem duas metades: a <strong class="text-purple-400">ingestêo</strong> (feita uma vez, quando você adiciona documentos) e a <strong class="text-purple-400">consulta</strong> (feita a cada pergunta). Entenda o desenho e o resto vira detalhe de código.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t3-p1">Todo RAG tem duas metades: a <strong class="text-purple-400">ingestêo</strong> (feita uma vez, quando você adiciona documentos) e a <strong class="text-purple-400">consulta</strong> (feita a cada pergunta). Entenda o desenho e o resto vira detalhe de código.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Chunk"</strong> (pedaço) é um trecho do documento — um parágrafo, uns 200–500 tokens. Você quebra o texto em chunks porque (1) o modelo de embeddings tem limite de tamanho e (2) você quer recuperar só o trecho <em>relevante</em>, nêo o arquivo inteiro. Chunk bom = autocontido (faz sentido sozinho) e nem grande nem minúsculo demais.</p>
@@ -422,19 +422,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">LLM</div><div class="text-xs text-neutral-400">só no fim</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-3-6#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-6#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">⚡ Rodando embeddings local</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t4-p1">Modelos de embeddings sêo <strong class="text-purple-400">pequenos</strong> — alguns têm poucas centenas de MB e rodam liso até em hardware budget, sem GPU. O <span class="font-mono text-purple-400">nomic-embed-text</span> é um ótimo padrêo para começar: leve, bom em português e já empacotado no Ollama. Vamos baixar e gerar o primeiro vetor.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t4-p1">Modelos de embeddings sêo <strong class="text-purple-400">pequenos</strong> — alguns têm poucas centenas de MB e rodam liso até em hardware budget, sem GPU. O <span class="font-mono text-purple-400">nomic-embed-text</span> é um ótimo padrêo para começar: leve, bom em português e já empacotado no Ollama. Vamos baixar e gerar o primeiro vetor.</p>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: seu primeiro embedding</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar um modelo de embeddings e transformar uma frase num vetor. Cole no terminal e depois no Python.</p>
@@ -466,19 +466,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Mesmo</div><div class="text-xs text-neutral-400">modelo nos 2 lados</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-3-6#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-6#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🗄️ Banco vetorial simples</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t5-p1">Você poderia guardar os vetores numa lista e comparar um por um — funciona com 10 chunks, vira tartaruga com 100 mil. Um <strong class="text-purple-400">banco vetorial</strong> existe pra isso: armazena os vetores e responde rápido à pergunta "quais sêo os N mais parecidos com este aqui?".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t5-p1">Você poderia guardar os vetores numa lista e comparar um por um — funciona com 10 chunks, vira tartaruga com 100 mil. Um <strong class="text-purple-400">banco vetorial</strong> existe pra isso: armazena os vetores e responde rápido à pergunta "quais sêo os N mais parecidos com este aqui?".</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Vector store" / "banco vetorial"</strong> é um banco de dados especializado em busca por similaridade entre vetores. Opções locais comuns: <strong>Chroma</strong> (mais fácil pra começar, guarda em disco com 2 linhas), <strong>FAISS</strong> (biblioteca da Meta, rapidíssima, sem servidor) e <strong>sqlite-vec</strong> (uma extensêo que dá busca vetorial ao SQLite que você já conhece). Todos rodam local, sem nuvem.</p>
@@ -530,19 +530,19 @@ print(hits["documents"])   <span class="text-neutral-500"># → o(s) trecho(s) r
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Rápido</div><div class="text-xs text-neutral-400">mesmo com muitos</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-3-6#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-3-6#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🚀 Um RAG mínimo end-to-end</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t6-p1">Hora de juntar tudo. Este script faz o RAG completo: lê um <span class="font-mono text-purple-400">.txt</span>, quebra em chunks, embeda, guarda, e aí responde uma pergunta usando <strong class="text-purple-400">só o que está no documento</strong> — tudo no seu Ollama. Os trechos marcados com <span class="font-mono text-purple-400">&lt;...&gt;</span> sêo o que você troca.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m3-6-t6-p1">Hora de juntar tudo. Este script faz o RAG completo: lê um <span class="font-mono text-purple-400">.txt</span>, quebra em chunks, embeda, guarda, e aí responde uma pergunta usando <strong class="text-purple-400">só o que está no documento</strong> — tudo no seu Ollama. Os trechos marcados com <span class="font-mono text-purple-400">&lt;...&gt;</span> sêo o que você troca.</p>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: RAG completo em ~25 linhas</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> responder uma pergunta cuja resposta só existe no seu arquivo. Salve como <span class="font-mono text-purple-400">rag.py</span> e rode.</p>
@@ -598,14 +598,14 @@ print(resp.choices[0].message.content)</pre></div>
 </div>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-6#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-3-6#q1">
 <p class="font-medium mb-4">Auto-checagem (opcional): o que o RAG faz, na prática?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Re-treina o modelo com os seus documentos</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Busca os trechos relevantes dos seus documentos e injeta como contexto no prompt — sem retreinar</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Aumenta sozinho a janela de contexto do modelo</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) Re-treina o modelo com os seus documentos</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) Busca os trechos relevantes dos seus documentos e injeta como contexto no prompt — sem retreinar</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) Aumenta sozinho a janela de contexto do modelo</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Ingere</div><div class="text-xs text-neutral-400">.txt → vetores</div></div>
@@ -614,9 +614,9 @@ print(resp.choices[0].message.content)</pre></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">100%</div><div class="text-xs text-neutral-400">local</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Marcar como lido</span><span class="inema-label-done">Lido ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Marcar como lido</span><span class="ARCKHÉ-label-done">Lido ✓</span>
 </button>
 </div>
 </section>
@@ -644,7 +644,7 @@ print(resp.choices[0].message.content)</pre></div>
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>IA Local Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -652,7 +652,7 @@ print(resp.choices[0].message.content)</pre></div>
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -660,9 +660,9 @@ print(resp.choices[0].message.content)</pre></div>
 <script src="../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Nêo. RAG nêo treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Nêo diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Nêo. RAG nêo treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Nêo diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
       }
     });
   </script>

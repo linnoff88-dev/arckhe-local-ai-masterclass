@@ -4,28 +4,28 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="local-ai" name="inema-course"/>
+<meta content="local-ai" name="ARCKHÉ-course"/>
 <title>2.2 How to choose: what fits your machine | IA Local Masterclass</title>
 <script>
   (function () {
     try {
       var html = document.documentElement;
-      var DEF = { theme: 'inema-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
+      var DEF = { theme: 'ARCKHÉ-dark', font: 'inter', fontScale: 100, lineWidth: 68, leading: 1.7, accent: 'emerald' };
       function clone(o){var r={};for(var x in o)r[x]=o[x];return r;}
       var p = clone(DEF);
       try {
-        var raw = localStorage.getItem('inema.prefs');
+        var raw = localStorage.getItem('ARCKHÉ.prefs');
         if (raw) { var parsed = JSON.parse(raw); if (parsed && typeof parsed==='object'){ for (var k in DEF) if (parsed[k]!=null) p[k]=parsed[k]; } }
-        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='inema-dark'; }
+        else { var legacy = localStorage.getItem('theme'); if (legacy==='light') p.theme='claro'; else if (legacy==='dark') p.theme='ARCKHÉ-dark'; }
       } catch(e){ p = clone(DEF); }
-      var THEMES = { 'inema-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
-      var t = THEMES[p.theme] || THEMES['inema-dark'];
+      var THEMES = { 'ARCKHÉ-dark':{dark:true,attr:null,cs:'dark'}, 'claro':{dark:false,attr:null,cs:'light'}, 'sepia':{dark:false,attr:'sepia',cs:'light'}, 'foco':{dark:null,attr:'foco',cs:null}, 'contraste':{dark:true,attr:'contraste',cs:'dark'} };
+      var t = THEMES[p.theme] || THEMES['ARCKHÉ-dark'];
       if (t.dark===true) html.classList.add('dark'); else if (t.dark===false) html.classList.remove('dark');
       if (t.attr) html.setAttribute('data-theme', t.attr); else html.removeAttribute('data-theme');
       html.style.colorScheme = (t.cs ? t.cs : (html.classList.contains('dark')?'dark':'light'));
       html.setAttribute('data-font', p.font||'inter'); html.setAttribute('data-accent', p.accent||'emerald');
       var s = html.style, scale=(+p.fontScale||100);
-      s.setProperty('--inema-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
+      s.setProperty('--ARCKHÉ-font-scale',(scale/100).toString()); s.setProperty('font-size',scale+'%');
       s.setProperty('--measure',(+p.lineWidth||68)+'ch'); s.setProperty('--lh-body',(+p.leading||1.7).toString());
       var fam = p.font==='system' ? 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif' : (p.font==='leitura' ? '"Atkinson Hyperlegible","Inter",system-ui,sans-serif' : '"Inter",system-ui,sans-serif');
       s.setProperty('--font-body', fam);
@@ -40,7 +40,7 @@
   </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="../../../assets/learn.css" rel="stylesheet"/>
-<script data-inema-manifest="" type="application/json">
+<script data-ARCKHÉ-manifest="" type="application/json">
   {
     "course": "local-ai",
     "tracks": [
@@ -113,8 +113,8 @@
     .dark .border-dark-600 { border-color: #374151; }
     .dark .divide-dark-600 > :not([hidden]) ~ :not([hidden]) { border-color: #374151; }
   </style>
-<link href="https://inematds.github.io/local-ai-masterclass/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/local-ai-masterclass/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
-<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<link href="https://linnoff88-dev.github.io/arckhe-/curso/trilha2/modulo-2-2.html" hreflang="pt-BR" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/en/curso/trilha2/modulo-2-2.html" hreflang="en" rel="alternate"/><link href="https://linnoff88-dev.github.io/arckhe-/es/curso/trilha2/modulo-2-2.html" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="ARCKHÉ-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../../../curso/trilha2/modulo-2-2.html" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="modulo-2-2.html" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../../../es/curso/trilha2/modulo-2-2.html" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
 <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:px-4 focus:py-2 focus:bg-dark-800 focus:rounded-lg" href="#conteudo">Skip to content</a>
 <nav class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +125,7 @@
 <span class="font-bold text-lg hidden sm:inline">Local AI Masterclass</span>
 </a>
 <span class="text-neutral-600">|</span>
-<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://inema.club" target="_blank">INEMA.CLUB</a>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a>
 </div>
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentals</span></a>
@@ -163,32 +163,32 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid lg:grid-cols-[230px_1fr] gap-8">
 <!-- TOC -->
 <aside class="hidden lg:block">
-<nav aria-label="Page index" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="inema-toc-pos" data-inema-section-counter="">1</span> of 6</p>
+<nav aria-label="Page index" class="sticky top-24 self-start" data-ARCKHÉ-toc="">
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Section <span class="ARCKHÉ-toc-pos" data-ARCKHÉ-section-counter="">1</span> of 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. The right question</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. A rule of thumb for memory</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. VRAM, RAM, or unified memory?</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Speed: tokens/s</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Start with what you have</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Upgrade plan</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. The right question</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. A rule of thumb for memory</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-3">3. VRAM, RAM, or unified memory?</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-4">4. Speed: tokens/s</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-5">5. Start with what you have</a></li>
+<li><a class="ARCKHÉ-toc-link text-neutral-400 hover:text-blue-400" href="#topico-6">6. Upgrade plan</a></li>
 </ol>
-<div aria-label="Module 2.2 progress" aria-valuemax="100" aria-valuemin="0" class="inema-meter mt-6 pt-4 border-t border-dark-600" data-inema-meter="modulo:2-2" role="progressbar">
-<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-blue-400 font-bold" data-inema-meter-pct="">0%</span></div>
-<div class="inema-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="inema-bar__fill h-full bg-blue-500" data-inema-meter-fill="" style="width:0%"></div></div>
-<p class="text-[11px] text-neutral-500 mt-1"><span data-inema-meter-frac="">0 of 6</span></p>
+<div aria-label="Module 2.2 progress" aria-valuemax="100" aria-valuemin="0" class="ARCKHÉ-meter mt-6 pt-4 border-t border-dark-600" data-ARCKHÉ-meter="modulo:2-2" role="progressbar">
+<div class="flex items-center justify-between mb-1"><span class="text-xs text-neutral-400">Module</span><span class="text-xs text-blue-400 font-bold" data-ARCKHÉ-meter-pct="">0%</span></div>
+<div class="ARCKHÉ-bar h-1.5 rounded-full bg-dark-700 overflow-hidden"><div class="ARCKHÉ-bar__fill h-full bg-blue-500" data-ARCKHÉ-meter-fill="" style="width:0%"></div></div>
+<p class="text-[11px] text-neutral-500 mt-1"><span data-ARCKHÉ-meter-frac="">0 of 6</span></p>
 </div>
 </nav>
 </aside>
-<main class="inema-prose min-w-0" id="conteudo">
+<main class="ARCKHÉ-prose min-w-0" id="conteudo">
 <h2 class="text-2xl font-bold mb-6">Detailed content</h2>
 <!-- TÓPICO 1 -->
-<section class="mb-16" data-inema-module="2-2" data-inema-topic="modulo-2-2#topico-1" data-inema-track="2" id="topico-1" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-module="2-2" data-ARCKHÉ-topic="modulo-2-2#topico-1" data-ARCKHÉ-track="2" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🎯 The right question: which model do you want to run?</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t1-p1">Most people start in the wrong place: they look at the machine and ask, "what fits here?" Reverse the order. <strong class="text-blue-400">Start with the use case</strong> — the task determines the model size, the size determines memory needs, and memory points to the hardware. Hardware is the <em>last</em> question, not the first one.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t1-p1">Most people start in the wrong place: they look at the machine and ask, "what fits here?" Reverse the order. <strong class="text-blue-400">Start with the use case</strong> — the task determines the model size, the size determines memory needs, and memory points to the hardware. Hardware is the <em>last</em> question, not the first one.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Use case"</strong> is the concrete task: summarize email, write code, classify text, chat. <strong>"Size"</strong> is the number of model parameters, measured in billions — the <strong>7B</strong>, <strong>13B</strong>, <strong>70B</strong> of the name. More parameters ≈ more capable, but heavier. <strong>"Quantization"</strong> is how much each parameter has been compressed (Q4, Q8, FP16) — we’ll cover this in the next topic.</p>
@@ -226,19 +226,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Hardware</div><div class="text-xs text-neutral-400">is the final question</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 2 -->
-<section class="mb-16" data-inema-topic="modulo-2-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-2#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">📐 The memory rule of thumb</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t2-p1">This is the calculation that determines almost everything. The model's size on disk and in memory comes from a simple formula—you don't need more than multiplication:</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t2-p1">This is the calculation that determines almost everything. The model's size on disk and in memory comes from a simple formula—you don't need more than multiplication:</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-blue-500/30 text-neutral-200 overflow-x-auto mb-6">
 <div class="text-blue-400">GB ≈ (parameters in billions) × (bytes per weight) + context overhead</div>
 <div class="text-neutral-500 mt-2"># bytes per weight, by quantization:</div>
@@ -250,7 +250,7 @@
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Weight"</strong> (or parameter) is a number the model learned. A 7B has 7 billion of them. <strong>"Bytes per weight"</strong> is how much space each number takes: FP16 stores it at full precision (2 bytes), <strong>quantize</strong> compresses to 8 or 4 bits (1 or ~0.5 byte), shrinking the file. <strong>"Context overhead"</strong> (the KV cache) is extra memory that grows as the conversation gets longer—reserve 1 to 3 GB for typical contexts.</p>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-2-t2-p2">Applying the formula to the most common sizes (weights only, before context):</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-ARCKHÉ-block="m2-2-t2-p2">Applying the formula to the most common sizes (weights only, before context):</p>
 <div class="font-mono text-xs sm:text-sm bg-dark-900 rounded-xl border border-dark-600 p-4 overflow-x-auto mb-3">
 <table class="w-full text-left whitespace-nowrap">
 <thead>
@@ -275,19 +275,19 @@
 <p class="text-neutral-300 text-sm">Never fill memory to the brim. Reserve <strong>10–20% headroom</strong> for the operating system, <strong>1–3 GB</strong> for the context, and prefer the largest quantization that still fits — <span class="font-mono text-blue-400">Q4_K_M</span> is the sweet spot: it shrinks a lot and loses little quality. A quick rule of thumb: <strong>size in billions ÷ 2 ≈ GB in Q4</strong>.</p>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 3 -->
-<section class="mb-16" data-inema-topic="modulo-2-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-2#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🧭 VRAM, RAM, or unified memory in your decision</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t3-p1">The rule of thumb tells you <em>how many GB</em>. The remaining question is <em>which memory</em>. The type of memory your hardware profile offers determines which model range is worth using — and the speed you’ll experience.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t3-p1">The rule of thumb tells you <em>how many GB</em>. The remaining question is <em>which memory</em>. The type of memory your hardware profile offers determines which model range is worth using — and the speed you’ll experience.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>VRAM</strong> is video card memory (GPU) — limited but fast; the model flies when it fits entirely in it. <strong>RAM</strong> is system memory, used by the CPU — plentiful and cheap, but slow for inference. <strong>Unified memory</strong> (Apple Silicon) is a single pool shared by the CPU and GPU — it fits a large model, with midrange bandwidth.</p>
@@ -352,24 +352,24 @@
 </div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 4 -->
-<section class="mb-16" data-inema-topic="modulo-2-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-2#topico-4" id="topico-4" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">⚡ Acceptable speed: tokens per second</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t4-p1">Fitting is one thing; being <em>usable</em> is another. The metric that measures this is <strong class="text-blue-400">tokens/s</strong> — how fast the text comes out. And what matters here isn’t memory size, but <strong class="text-blue-400">band</strong> (how quickly memory delivers data to the processor).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t4-p1">Fitting is one thing; being <em>usable</em> is another. The metric that measures this is <strong class="text-blue-400">tokens/s</strong> — how fast the text comes out. And what matters here isn’t memory size, but <strong class="text-blue-400">band</strong> (how quickly memory delivers data to the processor).</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> New here?</h3>
 <p class="text-neutral-300 text-sm"><strong>"Token"</strong> is a piece of a word — on average, a word has 1 to 2 tokens. <strong>"Tokens/s"</strong> is how many of these chunks the model generates per second. For comparison: you read aloud at about <strong>~5 tokens/s</strong>; above that, the text appears faster than you can read.</p>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m2-2-t4-p2">Use these ranges as a reference to see whether a model+hardware combination is worthwhile:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-ARCKHÉ-block="m2-2-t4-p2">Use these ranges as a reference to see whether a model+hardware combination is worthwhile:</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
@@ -404,19 +404,19 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Overflowed</div><div class="text-xs text-neutral-400">sharp drop</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 5 -->
-<section class="mb-16" data-inema-topic="modulo-2-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-2#topico-5" id="topico-5" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">💰 Start with what you already have</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t5-p1">The best first machine is the one on your desk. The path to <strong class="text-blue-400">zero cost</strong> is straightforward: the laptop you already use + Ollama + a 3B to 8B model in Q4. Before thinking about buying anything, check what your machine has — it takes two commands.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t5-p1">The best first machine is the one on your desk. The path to <strong class="text-blue-400">zero cost</strong> is straightforward: the laptop you already use + Ollama + a 3B to 8B model in Q4. Before thinking about buying anything, check what your machine has — it takes two commands.</p>
 <!-- COPY-RUN -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Practical example: read your machine's memory</h3>
@@ -455,19 +455,19 @@
 </div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
 <!-- TÓPICO 6 -->
-<section class="mb-16" data-inema-topic="modulo-2-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
+<section class="mb-16" data-ARCKHÉ-topic="modulo-2-2#topico-6" id="topico-6" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🚀 Putting together an upgrade plan</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-2-t6-p1">If it’s time to invest, spend in the right order. The golden rule: <strong class="text-blue-400">memory first, always</strong>. A model that doesn't fit won't run—having bandwidth doesn't help much if there's not enough space. Follow this priority:</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-ARCKHÉ-block="m2-2-t6-p1">If it’s time to invest, spend in the right order. The golden rule: <strong class="text-blue-400">memory first, always</strong>. A model that doesn't fit won't run—having bandwidth doesn't help much if there's not enough space. Follow this priority:</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">1</span></div>
@@ -505,14 +505,14 @@
 <p class="text-neutral-300 text-sm">Don’t buy for your dream model — buy for the model you <strong>actually</strong> uses today, with one tier to spare. The ecosystem gets more efficient every month: the hardware you buy will perform better tomorrow than it does now.</p>
 </div>
 <!-- CHECAGEM LEVE -->
-<div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-2-2#q1">
+<div class="ARCKHÉ-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-ARCKHÉ-check="modulo-2-2#q1">
 <p class="font-medium mb-4">Self-check (optional): You have 16 GB of RAM and no dedicated GPU. Based on the rule of thumb, what’s the safest choice for everyday chat?</p>
-<div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) A 70B in FP16 — it’s the smartest</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) A 7B–8B model in Q4 (~5 GB), leaving room for the OS and context</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) A 34B in Q8 (~36 GB)—a balance between size and quality</button>
+<div class="ARCKHÉ-check-options space-y-2">
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="0" type="button">A) A 70B in FP16 — it’s the smartest</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="1" type="button">B) A 7B–8B model in Q4 (~5 GB), leaving room for the OS and context</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-ARCKHÉ-check-option="2" type="button">C) A 34B in Q8 (~36 GB)—a balance between size and quality</button>
 </div>
-<div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
+<div aria-live="polite" class="mt-4 text-sm" data-ARCKHÉ-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">1º</div><div class="text-xs text-neutral-400">memory</div></div>
@@ -521,9 +521,9 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Rule</div><div class="text-xs text-neutral-400">fit &gt; fast</div></div>
 </div>
 <div class="flex justify-start mt-6">
-<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
-<span aria-hidden="true" class="inema-ico-todo">○</span><span aria-hidden="true" class="inema-ico-done">●</span>
-<span class="inema-label-todo">Mark as read</span><span class="inema-label-done">Read ✓</span>
+<button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-ARCKHÉ-read-toggle="" type="button">
+<span aria-hidden="true" class="ARCKHÉ-ico-todo">○</span><span aria-hidden="true" class="ARCKHÉ-ico-done">●</span>
+<span class="ARCKHÉ-label-todo">Mark as read</span><span class="ARCKHÉ-label-done">Read ✓</span>
 </button>
 </div>
 </section>
@@ -551,7 +551,7 @@
 </div>
 <footer class="border-t border-dark-600 py-8 mt-8">
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
-<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://inema.club" target="_blank">INEMA.CLUB</a></p>
+<p>Local AI Masterclass · 2026 · <a class="text-sky-400 hover:text-sky-300" href="https://ARCKHÉ AI" target="_blank">ARCKHÉ AI</a></p>
 </div>
 </footer>
 <script>
@@ -559,7 +559,7 @@
     const themeToggle=document.getElementById('theme-toggle');const di=document.getElementById('theme-toggle-dark-icon');const li=document.getElementById('theme-toggle-light-icon');const root=document.documentElement;
     function syncIcons(){if(root.classList.contains('dark')){li.classList.remove('hidden');di.classList.add('hidden')}else{di.classList.remove('hidden');li.classList.add('hidden')}}
     syncIcons();
-    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('inema.prefs')||'{}');pr.theme=root.classList.contains('dark')?'inema-dark':'claro';localStorage.setItem('inema.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
+    if(themeToggle){themeToggle.addEventListener('click',()=>{root.classList.toggle('dark');localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light');try{var pr=JSON.parse(localStorage.getItem('ARCKHÉ.prefs')||'{}');pr.theme=root.classList.contains('dark')?'ARCKHÉ-dark':'claro';localStorage.setItem('ARCKHÉ.prefs',JSON.stringify(pr));}catch(e){}syncIcons();})}
     function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden'}}
     function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
@@ -567,9 +567,9 @@
 <script src="../../../assets/learn.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-      if(window.INEMA&&typeof INEMA.init==='function'){
-        INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-2#q1',{answer:1,explain:{0:'Nêo cabe nem perto — um 70B em FP16 pede cerca de 140 GB. Em 16 GB isso nem carrega.',1:'Isso. Um 7B–8B em Q4 ocupa ~5 GB, cabe com folga em 16 GB e dá conta do chat do dia a dia.',2:'Um 34B em Q8 pede ~36 GB — mais que o dobro do que você tem. Nêo cabe.'}});}
+      if(window.ARCKHÉ&&typeof ARCKHÉ.init==='function'){
+        ARCKHÉ.init();
+        if(ARCKHÉ.registerCheck){ARCKHÉ.registerCheck('modulo-2-2#q1',{answer:1,explain:{0:'Nêo cabe nem perto — um 70B em FP16 pede cerca de 140 GB. Em 16 GB isso nem carrega.',1:'Isso. Um 7B–8B em Q4 ocupa ~5 GB, cabe com folga em 16 GB e dá conta do chat do dia a dia.',2:'Um 34B em Q8 pede ~36 GB — mais que o dobro do que você tem. Nêo cabe.'}});}
       }
     });
   </script>

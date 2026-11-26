@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,7 +140,7 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
 <a class="hover:text-amber-400" href="index.html">Avançado &amp; Agentes 24/7</a><span>/</span>
@@ -164,7 +164,7 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. O objetivo: um buddy de verdade</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Personalidade via system prompt</a></li>
@@ -191,7 +191,7 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t1-p1">Você já tem as peças espalhadas pelo curso: um modelo rodando (3.1), uma API local (3.5), memória com RAG (3.6) e rede privada com Tailscale (2.4). Este passo a passo costura tudo num <strong class="text-amber-400">companheiro pessoal</strong> — com nome, jeito de falar, uma tela pra conversar e uma voz pra te responder em voz alta. Nada sai da sua máquina.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> é uma instrução fixa que o modelo lê <em>antes</em> de qualquer conversa: define quem ele é, o tom e as regras. É a <strong>personalidade</strong> do buddy. <strong>"TTS"</strong> = text-to-speech (texto → fala) e <strong>"STT"</strong> = speech-to-text (fala → texto): os dois rodam local também, sem mandar seu áudio pra ninguém.</p>
+<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> é uma instruçêo fixa que o modelo lê <em>antes</em> de qualquer conversa: define quem ele é, o tom e as regras. É a <strong>personalidade</strong> do buddy. <strong>"TTS"</strong> = text-to-speech (texto → fala) e <strong>"STT"</strong> = speech-to-text (fala → texto): os dois rodam local também, sem mandar seu áudio pra ninguém.</p>
 </div>
 <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> As quatro peças do buddy</h3>
@@ -219,7 +219,7 @@
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Personalidade limitada ao que a plataforma deixa</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Seu áudio e suas conversas passam por terceiros</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Voz e uso pesado custam por minuto/token</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Some se cortarem acesso, preço ou região</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Some se cortarem acesso, preço ou regiêo</span></li>
 </ul>
 </div>
 </div>
@@ -242,7 +242,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🪪 Personalidade via system prompt</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t2-p1">A personalidade não vem de "treinar" nada — vem de uma <strong class="text-amber-400">instrução fixa</strong>. No Ollama você grava essa instrução num <strong>Modelfile</strong> (a receita que você viu no módulo 3.1) e cria um modelo nomeado a partir dela. Mude o texto do <span class="font-mono text-amber-400">SYSTEM</span> e você muda quem o buddy é.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t2-p1">A personalidade nêo vem de "treinar" nada — vem de uma <strong class="text-amber-400">instruçêo fixa</strong>. No Ollama você grava essa instruçêo num <strong>Modelfile</strong> (a receita que você viu no módulo 3.1) e cria um modelo nomeado a partir dela. Mude o texto do <span class="font-mono text-amber-400">SYSTEM</span> e você muda quem o buddy é.</p>
 <!-- COPY-RUN: Modelfile -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: dê nome e tom ao "Hermes"</h3>
@@ -254,8 +254,8 @@
 <div>SYSTEM """</div>
 <div>Você é o Hermes, o assistente pessoal local do Nei.</div>
 <div>Tom: direto, caloroso e com bom humor leve. Trate por "você".</div>
-<div>Regras: respostas curtas por padrão; pergunte antes de assumir;</div>
-<div>nunca invente dados — se não souber, diga. Responda em PT-BR.</div>
+<div>Regras: respostas curtas por padrêo; pergunte antes de assumir;</div>
+<div>nunca invente dados — se nêo souber, diga. Responda em PT-BR.</div>
 <div>"""</div>
 <div class="mt-2 text-neutral-500"># afina o comportamento</div>
 <div>PARAMETER temperature 0.6</div>
@@ -266,11 +266,11 @@
 <div>ollama create hermes -f Modelfile</div>
 <div>ollama run hermes</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> pergunte <em>"quem é você?"</em>. Ele deve se apresentar como Hermes, no tom definido — e respeitar as regras (curto, sem inventar). Não gostou? Edite o <span class="font-mono">SYSTEM</span> e rode <span class="font-mono text-amber-400">ollama create</span> de novo.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> pergunte <em>"quem é você?"</em>. Ele deve se apresentar como Hermes, no tom definido — e respeitar as regras (curto, sem inventar). Nêo gostou? Edite o <span class="font-mono">SYSTEM</span> e rode <span class="font-mono text-amber-400">ollama create</span> de novo.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Um bom system prompt tem <strong>quatro partes</strong>: quem ele é (nome/papel), como fala (tom), o que pode/não pode (regras) e o idioma. Evite parágrafos enormes — o modelo segue melhor instruções curtas e específicas do que um manual. Comece simples e vá ajustando conforme ele te responde.</p>
+<p class="text-neutral-300 text-sm">Um bom system prompt tem <strong>quatro partes</strong>: quem ele é (nome/papel), como fala (tom), o que pode/nêo pode (regras) e o idioma. Evite parágrafos enormes — o modelo segue melhor instruções curtas e específicas do que um manual. Comece simples e vá ajustando conforme ele te responde.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Papel</div><div class="text-xs text-neutral-400">quem ele é</div></div>
@@ -320,7 +320,7 @@
 <p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> abra o arquivo no navegador, digite uma pergunta e clique em Enviar — a resposta do seu modelo local aparece na tela. É o seu buddy com cara própria.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚠️</span> Atenção: CORS</h3>
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">⚠️</span> Atençêo: CORS</h3>
 <p class="text-neutral-300 text-sm">Se o navegador bloquear a chamada (erro de CORS ao abrir via <span class="font-mono">file://</span>), libere a origem no Ollama: rode com <span class="font-mono text-amber-400">OLLAMA_ORIGINS=*</span> (ex.: <span class="font-mono">OLLAMA_ORIGINS=* ollama serve</span>). Para o buddy de verdade, prefira o <strong>Open WebUI</strong> em <span class="font-mono">http://localhost:3000</span> — ele já cuida disso e te dá histórico, troca de modelo e RAG de documentos.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -415,7 +415,7 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t5-p1">Dar voz já é meio caminho. O outro meio é dar <strong class="text-amber-400">ouvidos</strong>: poder falar com o buddy em vez de digitar. É opcional — mas com STT local o ciclo fica completo (você fala → ele entende → responde → fala de volta).</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"STT"</strong> = speech-to-text: transforma <em>fala em texto</em> (o oposto do TTS). O <strong>whisper.cpp</strong> é uma implementação local e enxuta do modelo Whisper que roda em CPU — grava o microfone, transcreve e devolve texto, sem mandar seu áudio pra nuvem.</p>
+<p class="text-neutral-300 text-sm"><strong>"STT"</strong> = speech-to-text: transforma <em>fala em texto</em> (o oposto do TTS). O <strong>whisper.cpp</strong> é uma implementaçêo local e enxuta do modelo Whisper que roda em CPU — grava o microfone, transcreve e devolve texto, sem mandar seu áudio pra nuvem.</p>
 </div>
 <!-- COPY-RUN: whisper.cpp -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
@@ -436,7 +436,7 @@
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Vale dar ouvidos quando</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Você quer usar de mãos livres (cozinha, dirigindo)</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Você quer usar de mêos livres (cozinha, dirigindo)</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Falar é mais rápido que digitar pro seu caso</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Quer um assistente de voz 100% privado</span></li>
 </ul>
@@ -445,7 +445,7 @@
 <h4 class="font-bold text-red-400 mb-4">✗ Fique no texto se</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Hardware é fraco — STT + LLM + TTS juntos pesam</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ambiente barulhento atrapalha a transcrição</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ambiente barulhento atrapalha a transcriçêo</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Você só quer o buddy de texto por enquanto (comece simples)</span></li>
 </ul>
 </div>
@@ -465,7 +465,7 @@
 </div>
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-5-t6-p1">Falta encaixar as duas últimas peças e ligar o motor. <strong class="text-amber-400">Memória</strong>: com RAG (3.6) o buddy lembra de você — preferências, projetos, conversas antigas — buscando esses trechos e injetando no contexto antes de responder. <strong class="text-amber-400">Alcance</strong>: rodando atrás do Tailscale (2.4), você fala com ele do celular, de qualquer lugar, como se estivesse em casa. Veja como tudo se compõe:</p>
 <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-<svg aria-label="A equação do buddy: interface mais cérebro LLM mais voz mais memória somam o seu buddy local" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<svg aria-label="A equaçêo do buddy: interface mais cérebro LLM mais voz mais memória somam o seu buddy local" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
 <lineargradient id="m45-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
 <filter height="180%" id="m45-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
@@ -501,7 +501,7 @@
 <text fill="#fcd9a0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="850" y="138">nome · cara · voz · memória</text>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">Leia como uma <strong class="text-neutral-200">equação</strong>: cara + cérebro + voz + memória (as peças em ciano que você montou no curso) somam um <strong class="text-neutral-200">buddy local completo</strong> (em âmbar). Tire qualquer parcela e ele ainda funciona — só fica menos buddy.</p>
+<p class="text-sm text-neutral-400 mb-6">Leia como uma <strong class="text-neutral-200">equaçêo</strong>: cara + cérebro + voz + memória (as peças em ciano que você montou no curso) somam um <strong class="text-neutral-200">buddy local completo</strong> (em âmbar). Tire qualquer parcela e ele ainda funciona — só fica menos buddy.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Memória + celular, na prática</h3>
 <p class="text-neutral-300 text-sm"><strong>Memória (RAG, 3.6):</strong> guarde notas suas (preferências, fatos, histórico) num vector store e, a cada pergunta, busque os trechos relevantes e cole no prompt — assim o Hermes "lembra" sem retreinar nada. <strong>Celular (Tailscale, 2.4):</strong> com <span class="font-mono text-amber-400">OLLAMA_HOST=0.0.0.0</span> e o app Tailscale no telefone, troque <span class="font-mono">localhost</span> pelo IP <span class="font-mono">100.x</span> da sua máquina e fale com o buddy de qualquer lugar — sem abrir nada pra internet pública.</p>
@@ -528,7 +528,7 @@
 <div>  aplay r.wav</div>
 <div>done</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode <span class="font-mono text-amber-400">bash buddy-voz.sh</span>, pergunte algo e <em>ouça</em> a resposta do seu buddy. Digite <span class="font-mono">sair</span> pra encerrar. Requer <span class="font-mono">curl</span>, <span class="font-mono">jq</span>, <span class="font-mono">piper</span> e <span class="font-mono">aplay</span>. Quer ouvido também? Troque o <span class="font-mono">read</span> pela transcrição do whisper.cpp (tópico 5).</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode <span class="font-mono text-amber-400">bash buddy-voz.sh</span>, pergunte algo e <em>ouça</em> a resposta do seu buddy. Digite <span class="font-mono">sair</span> pra encerrar. Requer <span class="font-mono">curl</span>, <span class="font-mono">jq</span>, <span class="font-mono">piper</span> e <span class="font-mono">aplay</span>. Quer ouvido também? Troque o <span class="font-mono">read</span> pela transcriçêo do whisper.cpp (tópico 5).</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
@@ -544,7 +544,7 @@
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Expor a porta 11434 direto na internet</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>System prompt gigante que o modelo ignora</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Empilhar STT+LLM+TTS em hardware que não aguenta</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Empilhar STT+LLM+TTS em hardware que nêo aguenta</span></li>
 </ul>
 </div>
 </div>
@@ -614,7 +614,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-5#q1',{answer:1,explain:{0:'Não precisa — treinar do zero é caro e desnecessário. A personalidade vem da instrução, não de novo treino.',1:'Isso. O system prompt (ex.: o SYSTEM do Modelfile) define papel, tom e regras que o modelo lê antes de cada conversa.',2:'A voz dá som à fala, mas não define quem ele é. Personalidade = system prompt.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-5#q1',{answer:1,explain:{0:'Nêo precisa — treinar do zero é caro e desnecessário. A personalidade vem da instruçêo, nêo de novo treino.',1:'Isso. O system prompt (ex.: o SYSTEM do Modelfile) define papel, tom e regras que o modelo lê antes de cada conversa.',2:'A voz dá som à fala, mas nêo define quem ele é. Personalidade = system prompt.'}});}
       }
     });
   </script>

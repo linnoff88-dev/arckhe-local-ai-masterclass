@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -310,7 +310,7 @@
 </tbody>
 </table>
 </div>
-<!-- SVG: barra de quantização encolhendo -->
+<!-- SVG: barra de quantizaçêo encolhendo -->
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
 <svg aria-label="Barras del tamaño de un modelo 7B que se reducen según la cuantización: FP16 baja de unos 14 GB a Q4_K_M con unos 4.4 GB, conservando aproximadamente el 95 por ciento de la calidad: el punto ideal" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
@@ -513,7 +513,7 @@
 <h2 class="text-2xl font-bold">✅ Verificar la calidad y la integridad</h2>
 </div>
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t6-p1">Descargado: ahora confirma dos cosas: que el archivo llegó <strong class="text-purple-400">entero</strong> (descarga no corrupta) y que la cuantización <strong class="text-purple-400">no fue demasiado lejos</strong>. Dos minutos de prueba evitan horas de "¿por qué este modelo funciona tan mal?".</p>
-<!-- COPY-RUN verificação -->
+<!-- COPY-RUN verificaçêo -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Ejemplo práctico: checksum + prompt estándar</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> confirmar la integridad del archivo y hacer una prueba de sanidad de la respuesta.</p>
@@ -615,7 +615,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-3#q1',{answer:1,explain:{0:'FP16 de um 7B são ~14 GB — não cabe em 8 GB de VRAM, e o ganho sobre Q5/Q4 é marginal.',1:'Isso. Q4_K_M (~4.4 GB) cabe com folga e segura ~95% da qualidade — o equilíbrio que a comunidade chama de ponto doce. Suba para Q5_K_M se sobrar memória.',2:'Não. Q2_K encolhe o arquivo, mas a qualidade despenca; é último recurso quando falta memória, não o padrão.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-3#q1',{answer:1,explain:{0:'FP16 de um 7B sêo ~14 GB — nêo cabe em 8 GB de VRAM, e o ganho sobre Q5/Q4 é marginal.',1:'Isso. Q4_K_M (~4.4 GB) cabe com folga e segura ~95% da qualidade — o equilíbrio que a comunidade chama de ponto doce. Suba para Q5_K_M se sobrar memória.',2:'Nêo. Q2_K encolhe o arquivo, mas a qualidade despenca; é último recurso quando falta memória, nêo o padrêo.'}});}
       }
     });
   </script>

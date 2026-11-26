@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,10 +140,10 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
-<a class="hover:text-purple-400" href="index.html">Instalação &amp; Técnicas</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Instalaçêo &amp; Técnicas</a><span>/</span>
 <span class="text-purple-400">Módulo 3.4</span>
 </div>
 </nav>
@@ -164,7 +164,7 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Janela de contexto na prática</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Temperatura, top_p e top_k</a></li>
@@ -198,8 +198,8 @@
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
-<h4 class="font-semibold text-neutral-100 mb-1">Comece pelo padrão</h4>
-<p class="text-neutral-300 text-sm">Muitos modelos vêm com <span class="font-mono text-purple-400">num_ctx</span> de 2048 ou 4096. Para chat e perguntas curtas, isso já basta — não mexa só por mexer.</p>
+<h4 class="font-semibold text-neutral-100 mb-1">Comece pelo padrêo</h4>
+<p class="text-neutral-300 text-sm">Muitos modelos vêm com <span class="font-mono text-purple-400">num_ctx</span> de 2048 ou 4096. Para chat e perguntas curtas, isso já basta — nêo mexa só por mexer.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
@@ -219,7 +219,7 @@
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Não ligue 128k de contexto "por garantia". Se você normalmente faz perguntas curtas, uma janela de 4k–8k responde mais rápido e libera VRAM para as <em>camadas</em> do modelo — que é o que mais importa para a qualidade.</p>
+<p class="text-neutral-300 text-sm">Nêo ligue 128k de contexto "por garantia". Se você normalmente faz perguntas curtas, uma janela de 4k–8k responde mais rápido e libera VRAM para as <em>camadas</em> do modelo — que é o que mais importa para a qualidade.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">num_ctx</div><div class="text-xs text-neutral-400">tamanho da janela</div></div>
@@ -244,9 +244,9 @@
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <ul class="space-y-2 text-neutral-300 text-sm">
-<li><strong>Temperatura</strong> — quão "criativo/aleatório" o modelo é. Baixa (0–0.3) = determinístico e repetível; alta (0.8–1.2) = diverso e surpreendente.</li>
+<li><strong>Temperatura</strong> — quêo "criativo/aleatório" o modelo é. Baixa (0–0.3) = determinístico e repetível; alta (0.8–1.2) = diverso e surpreendente.</li>
 <li><strong>top_p</strong> (nucleus) — corta a cauda: só considera as palavras que somam, por exemplo, 90% da probabilidade (<span class="font-mono text-purple-400">top_p 0.9</span>).</li>
-<li><strong>top_k</strong> — limita a escolha às <em>k</em> palavras mais prováveis (<span class="font-mono text-purple-400">top_k 40</span>). Mexa em temperatura primeiro; top_p/top_k são ajuste fino.</li>
+<li><strong>top_k</strong> — limita a escolha às <em>k</em> palavras mais prováveis (<span class="font-mono text-purple-400">top_k 40</span>). Mexa em temperatura primeiro; top_p/top_k sêo ajuste fino.</li>
 </ul>
 </div>
 <h3 class="text-lg font-semibold text-purple-400 mb-3 flex items-center"><span class="mr-2">📋</span> Receitas por tarefa</h3>
@@ -265,16 +265,16 @@
 <td class="px-4 py-3 text-neutral-100 font-medium">Código / SQL</td>
 <td class="px-4 py-3 font-mono text-purple-400">0.1–0.2</td>
 <td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
-<td class="px-4 py-3 text-neutral-400">precisão e respostas reproduzíveis</td>
+<td class="px-4 py-3 text-neutral-400">precisêo e respostas reproduzíveis</td>
 </tr>
 <tr class="bg-dark-800">
-<td class="px-4 py-3 text-neutral-100 font-medium">Extração / JSON</td>
+<td class="px-4 py-3 text-neutral-100 font-medium">Extraçêo / JSON</td>
 <td class="px-4 py-3 font-mono text-purple-400">0.0–0.2</td>
 <td class="px-4 py-3 font-mono text-neutral-300">0.8</td>
 <td class="px-4 py-3 text-neutral-400">formato rígido, sem inventar campos</td>
 </tr>
 <tr class="bg-dark-800">
-<td class="px-4 py-3 text-neutral-100 font-medium">Chat / explicação</td>
+<td class="px-4 py-3 text-neutral-100 font-medium">Chat / explicaçêo</td>
 <td class="px-4 py-3 font-mono text-purple-400">0.5–0.7</td>
 <td class="px-4 py-3 font-mono text-neutral-300">0.9</td>
 <td class="px-4 py-3 text-neutral-400">natural, mas ainda focado</td>
@@ -295,7 +295,7 @@
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Gerar código que precisa compilar</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Extrair dados em formato fixo</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Respostas que devem ser sempre iguais</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Classificação e roteamento</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Classificaçêo e roteamento</span></li>
 </ul>
 </div>
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
@@ -303,8 +303,8 @@
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Gerar muitas variações de uma ideia</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Textos de marketing e títulos</span></li>
-<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Quebrar repetição e respostas "engessadas"</span></li>
-<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ficção e roteiros</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Quebrar repetiçêo e respostas "engessadas"</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Ficçêo e roteiros</span></li>
 </ul>
 </div>
 </div>
@@ -324,14 +324,14 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t3-p1">Antes de qualquer pergunta, o <strong class="text-purple-400">system prompt</strong> diz ao modelo <em>quem ele é</em> e <em>como deve responder</em>. É a alavanca de qualidade mais barata que existe: bem escrito, ele corrige verborragia, formato e tom sem você trocar de modelo.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> é uma instrução fixa, separada da sua mensagem, que vale para a conversa toda. Pense nele como o "cargo e regras do funcionário": define <strong>papel</strong> (o que ele é), <strong>formato</strong> (como entrega) e <strong>restrições</strong> (o que não pode fazer).</p>
+<p class="text-neutral-300 text-sm"><strong>"System prompt"</strong> é uma instruçêo fixa, separada da sua mensagem, que vale para a conversa toda. Pense nele como o "cargo e regras do funcionário": define <strong>papel</strong> (o que ele é), <strong>formato</strong> (como entrega) e <strong>restrições</strong> (o que nêo pode fazer).</p>
 </div>
 <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🧱</span> Os três blocos de um bom system prompt</h3>
 <ul class="space-y-2 text-neutral-300">
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Papel:</strong> "Você é um assistente técnico conciso para desenvolvedores."</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Formato:</strong> "Responda em no máximo 5 linhas. Use bullets quando listar passos."</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Restrições:</strong> "Se não souber, diga que não sabe. Não invente comandos."</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Restrições:</strong> "Se nêo souber, diga que nêo sabe. Nêo invente comandos."</span></li>
 </ul>
 </div>
 <!-- COPY-RUN: system prompt reutilizável -->
@@ -342,11 +342,11 @@
 <div class="text-neutral-500"># system prompt — assistente técnico conciso</div>
 <div>Você é um assistente técnico conciso para</div>
 <div>desenvolvedores. Regras:</div>
-<div>- Responda direto, sem introdução nem preâmbulo.</div>
+<div>- Responda direto, sem introduçêo nem preâmbulo.</div>
 <div>- Máximo de 5 linhas, salvo se eu pedir mais.</div>
 <div>- Para passos, use uma lista numerada curta.</div>
 <div>- Mostre comandos em bloco de código.</div>
-<div>- Se não tiver certeza, diga "não sei" — não invente.</div>
+<div>- Se nêo tiver certeza, diga "nêo sei" — nêo invente.</div>
 <div>- Responda sempre em português do Brasil.</div>
 </div>
 <p class="text-neutral-400 text-sm mb-3"><strong>Como usar no Ollama (Modelfile):</strong></p>
@@ -373,13 +373,13 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🧩 Offload GPU/CPU e camadas</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p1">Um modelo é uma pilha de <strong class="text-purple-400">camadas</strong>. O ideal é que todas caibam na GPU, onde rodam rápido. Quando não cabem, o runtime <em>transborda</em> as que sobram para a CPU — e essas ficam bem mais lentas. O parâmetro que controla isso é o <span class="font-mono text-purple-400">num_gpu</span>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t4-p1">Um modelo é uma pilha de <strong class="text-purple-400">camadas</strong>. O ideal é que todas caibam na GPU, onde rodam rápido. Quando nêo cabem, o runtime <em>transborda</em> as que sobram para a CPU — e essas ficam bem mais lentas. O parâmetro que controla isso é o <span class="font-mono text-purple-400">num_gpu</span>.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Offload"</strong> = empurrar parte do trabalho da GPU para a CPU. <strong>"num_gpu"</strong> (no Ollama) = quantas camadas do modelo são colocadas na GPU; o resto vai para a CPU/RAM. Mais camadas na GPU = mais rápido, <em>desde que</em> caibam na VRAM. Se você forçar camadas demais e a VRAM estourar, vira <em>out of memory</em>.</p>
+<p class="text-neutral-300 text-sm"><strong>"Offload"</strong> = empurrar parte do trabalho da GPU para a CPU. <strong>"num_gpu"</strong> (no Ollama) = quantas camadas do modelo sêo colocadas na GPU; o resto vai para a CPU/RAM. Mais camadas na GPU = mais rápido, <em>desde que</em> caibam na VRAM. Se você forçar camadas demais e a VRAM estourar, vira <em>out of memory</em>.</p>
 </div>
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-<svg aria-label="As camadas do modelo são divididas: a maioria roda na GPU, rápida, e o restante transborda para a CPU, lenta — controlado pelo parâmetro num_gpu" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
+<svg aria-label="As camadas do modelo sêo divididas: a maioria roda na GPU, rápida, e o restante transborda para a CPU, lenta — controlado pelo parâmetro num_gpu" class="w-full h-auto" role="img" viewbox="0 0 1000 260">
 <defs>
 <lineargradient id="m34-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
 <filter height="180%" id="m34-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
@@ -409,7 +409,7 @@
 <!-- CPU panel -->
 <rect fill="#0e1b26" height="190" rx="16" stroke="#38bdf8" stroke-width="2" width="380" x="560" y="44"></rect>
 <text fill="#38bdf8" font-family="Inter,sans-serif" font-size="17" font-weight="700" text-anchor="middle" x="750" y="72">CPU · RAM</text>
-<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="750" y="90">lento · o que não coube</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="750" y="90">lento · o que nêo coube</text>
 <g font-family="Inter,sans-serif" font-size="11" font-weight="600">
 <g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="120"></rect><text fill="#bfe6ff" x="600" y="132">Camada 8</text></g>
 <g><rect fill="#16364a" height="16" rx="4" stroke="#38bdf8" stroke-width="1" width="316" x="592" y="143"></rect><text fill="#bfe6ff" x="600" y="155">Camada 9</text></g>
@@ -456,34 +456,34 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">⚡ KV cache, batch e desempenho</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p1">Velocidade não é só "GPU boa". Três coisas mexem no <strong class="text-purple-400">tokens/s</strong>: quanta memória o KV cache come, o tamanho do batch e onde as camadas estão. Aqui você junta os parâmetros num lugar só — via API.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t5-p1">Velocidade nêo é só "GPU boa". Três coisas mexem no <strong class="text-purple-400">tokens/s</strong>: quanta memória o KV cache come, o tamanho do batch e onde as camadas estêo. Aqui você junta os parâmetros num lugar só — via API.</p>
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> O que acelera × o que desacelera</h3>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
 <ul class="space-y-2 text-neutral-300">
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Modelo cabendo inteiro na GPU</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Janela de contexto só do tamanho que precisa</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Quantização de KV cache (q8/q4) para liberar VRAM</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Quantizaçêo de KV cache (q8/q4) para liberar VRAM</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Manter o modelo "quente" (carregado) entre chamadas</span></li>
 </ul>
 <ul class="space-y-2 text-neutral-300">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Camadas transbordando para a CPU</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>num_ctx gigante "por garantia"</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Swapping em disco quando a RAM enche</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Recarregar o modelo a cada requisição</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Recarregar o modelo a cada requisiçêo</span></li>
 </ul>
 </div>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Batch"</strong> = quantos tokens o modelo processa de uma vez na fase de leitura do prompt; batch maior acelera prompts longos, mas usa mais memória. <strong>"Quantização de KV cache"</strong> = guardar a memória de trabalho em precisão menor (ex.: <span class="font-mono text-purple-400">q8_0</span>) para caber contexto maior na mesma VRAM — com perda mínima.</p>
+<p class="text-neutral-300 text-sm"><strong>"Batch"</strong> = quantos tokens o modelo processa de uma vez na fase de leitura do prompt; batch maior acelera prompts longos, mas usa mais memória. <strong>"Quantizaçêo de KV cache"</strong> = guardar a memória de trabalho em precisêo menor (ex.: <span class="font-mono text-purple-400">q8_0</span>) para caber contexto maior na mesma VRAM — com perda mínima.</p>
 </div>
 <!-- COPY-RUN: Ollama via API com options -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: parâmetros via API do Ollama</h3>
-<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> rodar uma geração controlada, passando temperatura e janela de contexto juntas no campo <span class="font-mono text-purple-400">options</span>. Cole no terminal (o Ollama precisa estar rodando).</p>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> rodar uma geraçêo controlada, passando temperatura e janela de contexto juntas no campo <span class="font-mono text-purple-400">options</span>. Cole no terminal (o Ollama precisa estar rodando).</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
-<div class="text-neutral-500"># geração determinística com contexto de 8k</div>
+<div class="text-neutral-500"># geraçêo determinística com contexto de 8k</div>
 <div>curl http://localhost:11434/api/generate -d '{</div>
 <div>  "model": "qwen2.5:7b",</div>
 <div>  "prompt": "Explique o que é num_ctx em 2 linhas.",</div>
@@ -497,7 +497,7 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">tokens/s</div><div class="text-xs text-neutral-400">a métrica-chave</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">KV cache</div><div class="text-xs text-neutral-400">come VRAM</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Batch</div><div class="text-xs text-neutral-400">acelera o prompt</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Swap</div><div class="text-xs text-neutral-400">o vilão lento</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Swap</div><div class="text-xs text-neutral-400">o vilêo lento</div></div>
 </div>
 <div class="flex justify-start mt-6">
 <button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/30 text-purple-400 hover:bg-purple-500/30 transition-colors" data-inema-read-toggle="" type="button">
@@ -512,7 +512,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🩺 Diagnóstico: por que está lento ou ruim?</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p1">Quando a saída decepciona, o problema quase sempre é um dos quatro suspeitos: modelo grande demais, quantização agressiva demais, contexto enorme ou swap em disco. Este checklist separa "está lento" de "está ruim".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-4-t6-p1">Quando a saída decepciona, o problema quase sempre é um dos quatro suspeitos: modelo grande demais, quantizaçêo agressiva demais, contexto enorme ou swap em disco. Este checklist separa "está lento" de "está ruim".</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ Sintoma: está LENTO</h4>
@@ -538,7 +538,7 @@
 <h4 class="font-bold text-red-400 mb-4">✗ Sintoma: está RUIM</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Quant agressivo (Q2/Q3) → respostas frágeis</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Temperatura alta numa tarefa que pede precisão</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Temperatura alta numa tarefa que pede precisêo</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem system prompt → modelo "viaja"</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Contexto curto → ele esquece o início</span></li>
 </ul>
@@ -559,7 +559,7 @@
 <div class="inema-check-options space-y-2">
 <button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Temperatura alta (0.9) para o modelo "pensar mais"</button>
 <button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Temperatura baixa (0.1–0.2) para respostas determinísticas e reproduzíveis</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Aumentar num_ctx para 32k — isso melhora a precisão</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Aumentar num_ctx para 32k — isso melhora a precisêo</button>
 </div>
 <div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
 </div>
@@ -582,7 +582,7 @@
 <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
 <div class="space-y-4 mb-8">
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Contexto (num_ctx) é equilíbrio</strong><span class="text-neutral-400"> — só do tamanho que a tarefa pede; ele pesa no KV cache.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Temperatura escolhe preciso × criativo</strong><span class="text-neutral-400"> — baixa para código/extração, alta para brainstorm.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Temperatura escolhe preciso × criativo</strong><span class="text-neutral-400"> — baixa para código/extraçêo, alta para brainstorm.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">System prompt é alavanca barata</strong><span class="text-neutral-400"> — papel + formato + restrições mudam a qualidade sem trocar de modelo.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Offload e diagnóstico</strong><span class="text-neutral-400"> — camadas na GPU = rápido; separe "lento" (memória) de "ruim" (quant/temp/prompt).</span></div></div>
 </div>
@@ -618,7 +618,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-4#q1',{answer:1,explain:{0:'Não — temperatura alta aumenta a aleatoriedade. SQL ficaria diferente a cada execução e mais propenso a erro.',1:'Isso. Temperatura baixa torna a saída determinística e reproduzível — ideal para código e SQL que precisam ser sempre corretos.',2:'Não. Aumentar a janela de contexto não melhora a precisão por si só; só permite ler mais texto de uma vez (e gasta mais memória).'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-4#q1',{answer:1,explain:{0:'Nêo — temperatura alta aumenta a aleatoriedade. SQL ficaria diferente a cada execuçêo e mais propenso a erro.',1:'Isso. Temperatura baixa torna a saída determinística e reproduzível — ideal para código e SQL que precisam ser sempre corretos.',2:'Nêo. Aumentar a janela de contexto nêo melhora a precisêo por si só; só permite ler mais texto de uma vez (e gasta mais memória).'}});}
       }
     });
   </script>

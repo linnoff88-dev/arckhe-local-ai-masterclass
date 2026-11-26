@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -329,7 +329,7 @@
 <!-- legendas de lane -->
 <text fill="#c084fc" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="24" y="26">INGESTION (once)</text>
 <text fill="#38bdf8" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="24" y="300">QUERY (with each question)</text>
-<!-- arrows ingestão -->
+<!-- arrows ingestêo -->
 <g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2">
 <path d="M174,68 L210,68" marker-end="url(#m36-ah)"></path>
 <path d="M354,68 L392,68" marker-end="url(#m36-ah)"></path>
@@ -348,7 +348,7 @@
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="192" y="246">embeds</text>
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="452" y="214">nearest-neighbor search</text>
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="634" y="158">snippets</text>
-<!-- caixas ingestão -->
+<!-- caixas ingestêo -->
 <g font-family="Inter,sans-serif">
 <g><rect fill="#1a1230" height="56" rx="12" stroke="#c084fc" stroke-width="2" width="150" x="24" y="40"></rect><text fill="#e9d5ff" font-size="14" font-weight="700" text-anchor="middle" x="99" y="66">📄 Document</text><text fill="#c4b5d6" font-size="11" text-anchor="middle" x="99" y="84">.txt / .pdf</text></g>
 <g><rect fill="#1a1230" height="56" rx="12" stroke="#c084fc" stroke-width="2" width="144" x="210" y="40"></rect><text fill="#e9d5ff" font-size="14" font-weight="700" text-anchor="middle" x="282" y="66">✂️ Chunks</text><text fill="#c4b5d6" font-size="11" text-anchor="middle" x="282" y="84">(chunks)</text></g>
@@ -557,7 +557,7 @@ LLM = "qwen2.5:7b"                       <span class="text-neutral-500"># &lt;tr
 def embed(txt):
     return client.embeddings.create(model=EMB, input=txt).data[0].embedding
 
-<span class="text-neutral-500"># 1) INGESTÃO: lê o .txt, quebra em chunks, embeda e guarda</span>
+<span class="text-neutral-500"># 1) INGESTêO: lê o .txt, quebra em chunks, embeda e guarda</span>
 texto  = open("notas.txt").read()        <span class="text-neutral-500"># &lt;seu arquivo .txt&gt;</span>
 chunks = [c for c in texto.split("\n\n") if c.strip()]   <span class="text-neutral-500"># 1 parágrafo = 1 chunk</span>
 col = chromadb.Client().create_collection("notas")
@@ -662,7 +662,7 @@ print(resp.choices[0].message.content)</pre></div>
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Não. RAG não treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Não diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Nêo. RAG nêo treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Nêo diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
       }
     });
   </script>

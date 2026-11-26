@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,7 +140,7 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
 <a class="hover:text-amber-400" href="index.html">Avançado &amp; Agentes 24/7</a><span>/</span>
@@ -164,10 +164,10 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. O objetivo do scanner</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Desenho da solução</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. Desenho da soluçêo</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Passo 1 · varredura determinística</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Passo 2 · o agente revisa</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Passo 3 · agendar 24/7</a></li>
@@ -191,7 +191,7 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t1-p1">Auditoria de segurança costuma ser um evento raro: alguém roda umas ferramentas antes de um deploy importante e esquece o resto do tempo. Com IA local <strong class="text-amber-400">ilimitada e sempre ligada</strong>, dá pra inverter isso — um worker varre seu repositório <strong class="text-amber-400">continuamente</strong>, atrás de segredos vazados, dependências vulneráveis e padrões inseguros, sem você gastar nada além de eletricidade.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Segredo"</strong> é qualquer credencial que vaza pro código por engano: chave de API, token, senha de banco. <strong>"Scanner de segurança"</strong> é um programa que lê o código procurando esses segredos e outros riscos conhecidos. Aqui ele vira um <strong>worker 24/7</strong>: um processo que roda sozinho, em ciclo, sem precisar de você apertando o botão.</p>
+<p class="text-neutral-300 text-sm"><strong>"Segredo"</strong> é qualquer credencial que vaza pro código por engano: chave de API, token, senha de banco. <strong>"Scanner de segurança"</strong> é um programa que lê o código procurando esses segredos e outros riscos conhecidos. Aqui ele vira um <strong>worker 24/7</strong>: um processo que roda sozinho, em ciclo, sem precisar de você apertando o botêo.</p>
 </div>
 <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> O que esse funcionário caça</h3>
@@ -199,7 +199,7 @@
 <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Segredos vazados:</strong> chaves de API e senhas que entraram no commit por descuido.</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Dependências vulneráveis:</strong> bibliotecas com CVEs conhecidos (npm, pip).</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>Padrões inseguros:</strong> coisas suspeitas que merecem o olho de um revisor.</span></li>
-<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>O que é novo:</strong> alertar só quando aparece algo que ontem não existia.</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400 mt-1">•</span><span><strong>O que é novo:</strong> alertar só quando aparece algo que ontem nêo existia.</span></li>
 </ul>
 </div>
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
@@ -227,9 +227,9 @@
 <section class="mb-16" data-inema-topic="modulo-4-3#topico-2" id="topico-2" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">2</span>
-<h2 class="text-2xl font-bold">🗺️ Desenho da solução</h2>
+<h2 class="text-2xl font-bold">🗺️ Desenho da soluçêo</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">Antes do código, o desenho. O segredo de um bom scanner não é jogar tudo no LLM — é uma <strong class="text-amber-400">esteira</strong>: ferramentas baratas e precisas detectam, o modelo local só <strong class="text-amber-400">triagem e explica</strong>, e o cron repete. Cada peça faz o que faz de melhor.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t2-p1">Antes do código, o desenho. O segredo de um bom scanner nêo é jogar tudo no LLM — é uma <strong class="text-amber-400">esteira</strong>: ferramentas baratas e precisas detectam, o modelo local só <strong class="text-amber-400">triagem e explica</strong>, e o cron repete. Cada peça faz o que faz de melhor.</p>
 <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
 <svg aria-label="Esteira de varredura: o repositório passa por ferramentas determinísticas, depois pelo modelo local que faz triagem, e gera um relatório datado; um laço de cron repete o ciclo 24 por 7" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
@@ -272,22 +272,22 @@
 <text fill="#fde68a" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="894" y="134">datado + alerta</text>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">Leia da esquerda para a direita: o <strong class="text-neutral-200">repositório</strong> alimenta as <strong class="text-neutral-200">ferramentas determinísticas</strong> (passo 1), os achados vão para o <strong class="text-neutral-200">modelo local</strong> que triagem o risco (passo 2), e sai um <strong class="text-neutral-200">relatório datado</strong>. A seta ciano embaixo é o <strong class="text-neutral-200">cron</strong> (passo 3) fechando o laço 24/7.</p>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t2-p2">Esses três passos são exatamente as próximas três seções. Em resumo:</p>
+<p class="text-sm text-neutral-400 mb-6">Leia da esquerda para a direita: o <strong class="text-neutral-200">repositório</strong> alimenta as <strong class="text-neutral-200">ferramentas determinísticas</strong> (passo 1), os achados vêo para o <strong class="text-neutral-200">modelo local</strong> que triagem o risco (passo 2), e sai um <strong class="text-neutral-200">relatório datado</strong>. A seta ciano embaixo é o <strong class="text-neutral-200">cron</strong> (passo 3) fechando o laço 24/7.</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t2-p2">Esses três passos sêo exatamente as próximas três seções. Em resumo:</p>
 <!-- TIMELINE DOS PASSOS -->
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Varredura determinística primeiro</h4>
-<p class="text-neutral-300 text-sm">Ferramentas como <span class="font-mono text-amber-400">gitleaks</span> e <span class="font-mono text-amber-400">npm audit</span> acham segredos e CVEs com precisão — rápidas, baratas e sem alucinação. Elas fazem a detecção bruta.</p>
+<p class="text-neutral-300 text-sm">Ferramentas como <span class="font-mono text-amber-400">gitleaks</span> e <span class="font-mono text-amber-400">npm audit</span> acham segredos e CVEs com precisêo — rápidas, baratas e sem alucinaçêo. Elas fazem a detecçêo bruta.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">O modelo local triagem os achados</h4>
-<p class="text-neutral-300 text-sm">O LLM entra <em>depois</em>: lê a lista de achados, classifica risco (alto/médio/baixo) e sugere a correção em linguagem clara. Ele explica, não inventa.</p>
+<p class="text-neutral-300 text-sm">O LLM entra <em>depois</em>: lê a lista de achados, classifica risco (alto/médio/baixo) e sugere a correçêo em linguagem clara. Ele explica, nêo inventa.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
@@ -311,7 +311,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🔍 Passo 1 · varredura determinística</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">A tentação é pedir pro LLM "ache os problemas de segurança". <strong class="text-amber-400">Não faça isso primeiro.</strong> Um modelo pode esquecer um segredo óbvio ou inventar um que não existe. Ferramentas determinísticas — que sempre dão a mesma resposta pra mesma entrada — fazem a detecção com precisão cirúrgica. Rode-as antes. O LLM entra só no passo 2.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t3-p1">A tentaçêo é pedir pro LLM "ache os problemas de segurança". <strong class="text-amber-400">Nêo faça isso primeiro.</strong> Um modelo pode esquecer um segredo óbvio ou inventar um que nêo existe. Ferramentas determinísticas — que sempre dêo a mesma resposta pra mesma entrada — fazem a detecçêo com precisêo cirúrgica. Rode-as antes. O LLM entra só no passo 2.</p>
 <!-- COPY-RUN: ferramentas determinísticas -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: as ferramentas que detectam</h3>
@@ -328,7 +328,7 @@
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Combine os dois mundos de propósito: a ferramenta determinística é <strong>precisa mas burra</strong> (acha o padrão, não entende o contexto); o LLM é <strong>flexível mas falível</strong> (entende, mas pode errar). Deixe cada um no que é bom — ferramenta detecta, modelo explica. Nunca o contrário.</p>
+<p class="text-neutral-300 text-sm">Combine os dois mundos de propósito: a ferramenta determinística é <strong>precisa mas burra</strong> (acha o padrêo, nêo entende o contexto); o LLM é <strong>flexível mas falível</strong> (entende, mas pode errar). Deixe cada um no que é bom — ferramenta detecta, modelo explica. Nunca o contrário.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">gitleaks</div><div class="text-xs text-neutral-400">segredos</div></div>
@@ -349,11 +349,11 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">🤖 Passo 2 · o agente revisa</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">Agora o modelo local ganha utilidade real. Ele não procura nada — recebe a <strong class="text-amber-400">lista de achados</strong> das ferramentas e faz o que humano faria numa revisão: dá um nível de risco a cada item e explica a correção em uma linha. Você chama o modelo pela <strong class="text-amber-400">API local compatível com OpenAI</strong> (a do Ollama, da trilha 3.5).</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t4-p1">Agora o modelo local ganha utilidade real. Ele nêo procura nada — recebe a <strong class="text-amber-400">lista de achados</strong> das ferramentas e faz o que humano faria numa revisêo: dá um nível de risco a cada item e explica a correçêo em uma linha. Você chama o modelo pela <strong class="text-amber-400">API local compatível com OpenAI</strong> (a do Ollama, da trilha 3.5).</p>
 <!-- COPY-RUN: prompt de triagem -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run: o modelo local triagem um achado</h3>
-<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> mandar um achado para o modelo e receber risco + correção. Endpoint <span class="font-mono text-amber-400">localhost</span> — nada sai da máquina.</p>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> mandar um achado para o modelo e receber risco + correçêo. Endpoint <span class="font-mono text-amber-400">localhost</span> — nada sai da máquina.</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
 <div>curl -s http://localhost:11434/v1/chat/completions \</div>
 <div>  -H "Content-Type: application/json" -d '{</div>
@@ -362,8 +362,8 @@
 <div>    "messages": [</div>
 <div>      {"role":"system","content":"Você é um revisor de</div>
 <div>      segurança. Para cada achado, dê o risco</div>
-<div>      (alto/médio/baixo) e a correção em 1 linha.</div>
-<div>      Não invente achados que não estão na lista."},</div>
+<div>      (alto/médio/baixo) e a correçêo em 1 linha.</div>
+<div>      Nêo invente achados que nêo estêo na lista."},</div>
 <div>      {"role":"user","content":"Achado do gitleaks:</div>
 <div>      AWS_SECRET_KEY exposta em config/prod.env:12"}</div>
 <div>    ]</div>
@@ -371,14 +371,14 @@
 </div>
 <p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> a resposta JSON traz <span class="font-mono text-amber-400">.choices[0].message.content</span> com algo como "Risco: alto — revogue a chave na AWS, remova do histórico e use variável de ambiente." A <span class="font-mono text-amber-400">temperature</span> baixa mantém a triagem consistente.</p>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t4-p2">O ponto-chave é a <strong class="text-amber-400">divisão de trabalho</strong>: o modelo é ótimo pra priorizar e explicar, péssimo pra ser a fonte da verdade. Veja onde confiar nele e onde não:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m4-3-t4-p2">O ponto-chave é a <strong class="text-amber-400">divisêo de trabalho</strong>: o modelo é ótimo pra priorizar e explicar, péssimo pra ser a fonte da verdade. Veja onde confiar nele e onde nêo:</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Bom uso do modelo</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Priorizar: o que é grave de verdade vs ruído</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Explicar o risco em português claro</span></li>
-<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Sugerir a correção concreta</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Sugerir a correçêo concreta</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Resumir 50 achados num parágrafo</span></li>
 </ul>
 </div>
@@ -388,7 +388,7 @@
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Ser o único que "procura" segredos</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar nele pra dizer que está tudo limpo</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Aplicar correções sozinho, sem você ver</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Inventar CVEs que a ferramenta não achou</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Inventar CVEs que a ferramenta nêo achou</span></li>
 </ul>
 </div>
 </div>
@@ -405,7 +405,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">⏰ Passo 3 · agendar 24/7</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">Detecção + triagem viram um <strong class="text-amber-400">funcionário</strong> quando rodam sozinhas. É aqui que o <span class="font-mono text-amber-400">cron</span> (o agendador por tempo, da seção 4.2) entra: ele dispara o script a cada poucas horas, grava um <strong class="text-amber-400">relatório datado</strong> e — a parte que mantém você são — só te incomoda quando há algo <strong class="text-amber-400">novo</strong> desde a última rodada.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t5-p1">Detecçêo + triagem viram um <strong class="text-amber-400">funcionário</strong> quando rodam sozinhas. É aqui que o <span class="font-mono text-amber-400">cron</span> (o agendador por tempo, da seçêo 4.2) entra: ele dispara o script a cada poucas horas, grava um <strong class="text-amber-400">relatório datado</strong> e — a parte que mantém você sêo — só te incomoda quando há algo <strong class="text-amber-400">novo</strong> desde a última rodada.</p>
 <!-- COPY-RUN PRINCIPAL: o script completo -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Copy-run principal: o script da esteira</h3>
@@ -423,7 +423,7 @@
 <div>BODY=$(jq -n --rawfile L /tmp/leaks.json '{</div>
 <div>  model:"qwen2.5:7b", temperature:0.2, messages:[</div>
 <div>  {role:"system",content:"Revisor de segurança. Dê</div>
-<div>  risco e correção em 1 linha por achado."},</div>
+<div>  risco e correçêo em 1 linha por achado."},</div>
 <div>  {role:"user",content:("Achados:\n"+$L)}]}')</div>
 <div>RESP=$(curl -s http://localhost:11434/v1/chat/completions \</div>
 <div>  -H "Content-Type: application/json" -d "$BODY" \</div>
@@ -446,7 +446,7 @@
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">O inimigo de um worker 24/7 é a <strong>fadiga de alerta</strong>: se ele te avisa toda rodada, você para de ler. Por isso o "alertar só no que é novo" não é detalhe — é o que decide se você vai confiar no funcionário ou silenciá-lo na primeira semana.</p>
+<p class="text-neutral-300 text-sm">O inimigo de um worker 24/7 é a <strong>fadiga de alerta</strong>: se ele te avisa toda rodada, você para de ler. Por isso o "alertar só no que é novo" nêo é detalhe — é o que decide se você vai confiar no funcionário ou silenciá-lo na primeira semana.</p>
 </div>
 <div class="flex justify-start mt-6">
 <button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
@@ -461,7 +461,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🔒 Endurecendo o worker</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">Funciona — agora torne confiável. Um scanner que grita falso positivo o dia todo, ou que escapa do escopo, vira mais um barulho ignorado. E há uma linha que <strong class="text-amber-400">não se cruza</strong>: o código não vai pra lugar nenhum. Estas práticas separam um brinquedo de um funcionário em quem você confia.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-3-t6-p1">Funciona — agora torne confiável. Um scanner que grita falso positivo o dia todo, ou que escapa do escopo, vira mais um barulho ignorado. E há uma linha que <strong class="text-amber-400">nêo se cruza</strong>: o código nêo vai pra lugar nenhum. Estas práticas separam um brinquedo de um funcionário em quem você confia.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Faça</h4>
@@ -469,14 +469,14 @@
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Manter o modelo 100% local (endpoint <span class="font-mono">localhost</span>)</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Definir escopo: pastas e tipos de arquivo que importam</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Manter uma allowlist de falsos positivos conhecidos</span></li>
-<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Tratar o relatório como sugestão — você decide e corrige</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span>Tratar o relatório como sugestêo — você decide e corrige</span></li>
 </ul>
 </div>
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ Evite</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mandar trechos de código pra uma API de nuvem "só pra ajudar"</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Deixar o agente aplicar correções sem revisão humana</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Deixar o agente aplicar correções sem revisêo humana</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Varrer tudo sem escopo (lento e cheio de ruído)</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Confiar que "sem alerta" = "100% seguro"</span></li>
 </ul>
@@ -486,16 +486,16 @@
 <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Box de alerta: a regra de ouro</h3>
 <p class="text-neutral-300 text-sm mb-3">Todo o sentido deste worker é varrer código <strong>sem expor código</strong>. Se em algum ponto você mandar os achados — ou pior, os trechos — para um serviço de terceiro, perdeu o jogo: criou um novo vazamento ao caçar vazamentos.</p>
 <ul class="space-y-2 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Tudo local:</strong> ferramentas e modelo rodam na sua máquina; o tráfego não sai de <span class="font-mono">localhost</span> (ou da sua tailnet privada).</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Revisão humana:</strong> o scanner prioriza e sugere; quem revoga uma chave e abre um PR é você.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Tudo local:</strong> ferramentas e modelo rodam na sua máquina; o tráfego nêo sai de <span class="font-mono">localhost</span> (ou da sua tailnet privada).</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span><strong>Revisêo humana:</strong> o scanner prioriza e sugere; quem revoga uma chave e abre um PR é você.</span></li>
 </ul>
 </div>
 <!-- CHECAGEM LEVE -->
 <div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-3#q1">
 <p class="font-medium mb-4">Auto-checagem (opcional): por que rodar <em>gitleaks / npm audit</em> ANTES de chamar o modelo local?</p>
 <div class="inema-check-options space-y-2">
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Porque o LLM não consegue ler código de jeito nenhum</button>
-<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) As ferramentas são determinísticas e precisas na detecção; o LLM entra só pra triar e explicar o que elas acharam</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) Porque o LLM nêo consegue ler código de jeito nenhum</button>
+<button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) As ferramentas sêo determinísticas e precisas na detecçêo; o LLM entra só pra triar e explicar o que elas acharam</button>
 <button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="2" type="button">C) Para que o código seja enviado à nuvem antes da análise</button>
 </div>
 <div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
@@ -519,9 +519,9 @@
 <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
 <div class="space-y-4 mb-8">
 <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">O objetivo</strong><span class="text-neutral-400"> — um worker que varre o codebase 24/7 atrás de segredos e deps vulneráveis, ilimitado e privado porque é local.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 1: detectar</strong><span class="text-neutral-400"> — ferramentas determinísticas (gitleaks, npm audit, pip-audit) fazem a detecção precisa.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 2: triar</strong><span class="text-neutral-400"> — o modelo local classifica risco e sugere correção via API OpenAI-compatível.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 3: agendar</strong><span class="text-neutral-400"> — cron roda o script, grava relatório datado e alerta só no que é novo. Tudo local, com revisão humana.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 1: detectar</strong><span class="text-neutral-400"> — ferramentas determinísticas (gitleaks, npm audit, pip-audit) fazem a detecçêo precisa.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 2: triar</strong><span class="text-neutral-400"> — o modelo local classifica risco e sugere correçêo via API OpenAI-compatível.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Passo 3: agendar</strong><span class="text-neutral-400"> — cron roda o script, grava relatório datado e alerta só no que é novo. Tudo local, com revisêo humana.</span></div></div>
 </div>
 <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
 <h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
@@ -555,7 +555,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-3#q1',{answer:1,explain:{0:'Não — o LLM lê código sim. O motivo é outro: ele não é a melhor ferramenta de detecção bruta.',1:'Isso. Ferramenta determinística detecta com precisão (sem alucinar); o modelo local entra depois só pra triar risco e explicar a correção.',2:'O oposto do objetivo. O código nunca deve sair da máquina — todo o ganho é varrer sem expor.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-3#q1',{answer:1,explain:{0:'Nêo — o LLM lê código sim. O motivo é outro: ele nêo é a melhor ferramenta de detecçêo bruta.',1:'Isso. Ferramenta determinística detecta com precisêo (sem alucinar); o modelo local entra depois só pra triar risco e explicar a correçêo.',2:'O oposto do objetivo. O código nunca deve sair da máquina — todo o ganho é varrer sem expor.'}});}
       }
     });
   </script>

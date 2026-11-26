@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,10 +140,10 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
-<a class="hover:text-purple-400" href="index.html">Instalação &amp; Técnicas</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Instalaçêo &amp; Técnicas</a><span>/</span>
 <span class="text-purple-400">Módulo 3.3</span>
 </div>
 </nav>
@@ -151,7 +151,7 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.3</span>
 <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧩 Escolhendo e baixando o modelo certo</h1>
-<p class="text-lg text-neutral-300 max-w-3xl">É aqui que a teoria vira arquivo no disco. Você vai entender o <strong class="text-neutral-100">Hugging Face</strong>, o formato <strong class="text-neutral-100">GGUF</strong> e — o ponto que mais importa — a <strong class="text-neutral-100">quantização</strong>: a decisão que define se o modelo cabe e roda bem na sua máquina. No fim, você baixa a versão certa com um comando.</p>
+<p class="text-lg text-neutral-300 max-w-3xl">É aqui que a teoria vira arquivo no disco. Você vai entender o <strong class="text-neutral-100">Hugging Face</strong>, o formato <strong class="text-neutral-100">GGUF</strong> e — o ponto que mais importa — a <strong class="text-neutral-100">quantizaçêo</strong>: a decisêo que define se o modelo cabe e roda bem na sua máquina. No fim, você baixa a versêo certa com um comando.</p>
 <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
 <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
 <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~35</div><div class="text-xs text-neutral-400">Minutos</div></div>
@@ -164,7 +164,7 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. Hugging Face: o hub</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Formatos: GGUF vs resto</a></li>
@@ -198,7 +198,7 @@
 <p class="text-neutral-300 mb-4">Abra a página do modelo e procure quatro coisas — elas decidem tudo:</p>
 <ul class="space-y-2 text-neutral-300">
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Parâmetros:</strong> está no nome (7B, 14B, 70B). Mais parâmetros ≈ mais capaz e mais pesado.</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Variante:</strong> prefira a versão <em>Instruct</em> / <em>Chat</em> (treinada para conversar), não a "base" crua.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Variante:</strong> prefira a versêo <em>Instruct</em> / <em>Chat</em> (treinada para conversar), nêo a "base" crua.</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Aba "Files":</strong> os arquivos reais. É onde você vê se existe <code class="font-mono text-purple-400">GGUF</code> e quais quantizações.</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span><strong>Licença:</strong> aberto ≠ liberado pra tudo. Confira uso comercial antes de depender dele.</span></li>
 </ul>
@@ -230,12 +230,12 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">📦 Formatos: GGUF, safetensors, GPTQ/AWQ</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t2-p1">Na aba "Files" você vai topar com extensões diferentes. Elas não são versões "melhores" ou "piores" — são <strong class="text-purple-400">embalagens para runtimes diferentes</strong>. Escolher a errada é a causa nº 1 de "baixei e não roda".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t2-p1">Na aba "Files" você vai topar com extensões diferentes. Elas nêo sêo versões "melhores" ou "piores" — sêo <strong class="text-purple-400">embalagens para runtimes diferentes</strong>. Escolher a errada é a causa nº 1 de "baixei e nêo roda".</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <p class="text-neutral-300 text-sm mb-2"><strong>GGUF</strong> = formato de arquivo único que empacota o modelo já pronto para rodar em CPU e/ou GPU via <em>llama.cpp</em> — o motor por trás do Ollama e do LM Studio. É o formato da IA local "plug and play".</p>
-<p class="text-neutral-300 text-sm mb-2"><strong>safetensors</strong> = formato de pesos "crus", do ecossistema Python/PyTorch (Transformers, vLLM). Seguro e padrão para treino e servidores de GPU — mas pede mais setup.</p>
-<p class="text-neutral-300 text-sm"><strong>GPTQ / AWQ</strong> = pesos já quantizados feitos para rodar <em>só em GPU</em> via runtimes como vLLM/AutoGPTQ. Rápidos em GPU, mas não é o caminho mais simples para começar.</p>
+<p class="text-neutral-300 text-sm mb-2"><strong>safetensors</strong> = formato de pesos "crus", do ecossistema Python/PyTorch (Transformers, vLLM). Seguro e padrêo para treino e servidores de GPU — mas pede mais setup.</p>
+<p class="text-neutral-300 text-sm"><strong>GPTQ / AWQ</strong> = pesos já quantizados feitos para rodar <em>só em GPU</em> via runtimes como vLLM/AutoGPTQ. Rápidos em GPU, mas nêo é o caminho mais simples para começar.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
@@ -243,7 +243,7 @@
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Roda no Ollama e no LM Studio sem configurar nada</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Funciona em CPU, GPU ou os dois (offload)</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Um arquivo só, com a quantização embutida</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Um arquivo só, com a quantizaçêo embutida</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Ideal para Mac, laptop e PCs sem GPU monstro</span></li>
 </ul>
 </div>
@@ -252,8 +252,8 @@
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Pedem Python + Transformers/vLLM e dependências</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPTQ/AWQ geralmente exigem GPU NVIDIA dedicada</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Não abrem direto no Ollama/LM Studio</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Brilham em servidores e treino — não no "começar fácil"</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nêo abrem direto no Ollama/LM Studio</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Brilham em servidores e treino — nêo no "começar fácil"</span></li>
 </ul>
 </div>
 </div>
@@ -280,13 +280,13 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🔢 Lendo as quantizações</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t3-p1">Dentro do GGUF tem um monte de variantes: <code class="font-mono text-purple-400">Q4_K_M</code>, <code class="font-mono text-purple-400">Q5_K_M</code>, <code class="font-mono text-purple-400">Q8_0</code>... Esse é o coração da escolha. Decifrar esses sufixos é o que separa "baixei certo" de "baixei 14 GB que não cabem".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t3-p1">Dentro do GGUF tem um monte de variantes: <code class="font-mono text-purple-400">Q4_K_M</code>, <code class="font-mono text-purple-400">Q5_K_M</code>, <code class="font-mono text-purple-400">Q8_0</code>... Esse é o coraçêo da escolha. Decifrar esses sufixos é o que separa "baixei certo" de "baixei 14 GB que nêo cabem".</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm mb-2"><strong>Quantização</strong> = reduzir a precisão dos pesos do modelo (de 16 bits para 8, 5, 4...) para o arquivo ficar muito menor e caber em menos memória, perdendo pouca qualidade.</p>
-<p class="text-neutral-300 text-sm">Lendo <strong>Q4_K_M</strong>: o <strong>Q4</strong> = ~4 bits por peso (quanto menor o número, menor e "mais comprimido"); o <strong>K</strong> = método moderno "k-quant" (mais inteligente que o antigo); o <strong>M</strong> = tamanho <em>Medium</em> da variante (há <em>S</em>/small e <em>L</em>/large). FP16 = sem quantização, precisão cheia.</p>
+<p class="text-neutral-300 text-sm mb-2"><strong>Quantizaçêo</strong> = reduzir a precisêo dos pesos do modelo (de 16 bits para 8, 5, 4...) para o arquivo ficar muito menor e caber em menos memória, perdendo pouca qualidade.</p>
+<p class="text-neutral-300 text-sm">Lendo <strong>Q4_K_M</strong>: o <strong>Q4</strong> = ~4 bits por peso (quanto menor o número, menor e "mais comprimido"); o <strong>K</strong> = método moderno "k-quant" (mais inteligente que o antigo); o <strong>M</strong> = tamanho <em>Medium</em> da variante (há <em>S</em>/small e <em>L</em>/large). FP16 = sem quantizaçêo, precisêo cheia.</p>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t3-p2">Use um modelo <strong>7B</strong> como régua. Veja o que cada quantização faz com o tamanho e a qualidade — o <strong class="text-purple-400">ponto doce</strong> é onde o arquivo já é pequeno mas a qualidade quase não caiu:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t3-p2">Use um modelo <strong>7B</strong> como régua. Veja o que cada quantizaçêo faz com o tamanho e a qualidade — o <strong class="text-purple-400">ponto doce</strong> é onde o arquivo já é pequeno mas a qualidade quase nêo caiu:</p>
 <!-- TABELA MONO DE QUANTIZAÇÕES -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-4 sm:p-6 mb-6 overflow-x-auto">
 <table class="w-full text-left font-mono text-sm border-collapse min-w-[520px]">
@@ -304,15 +304,15 @@
 <tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q8_0</td><td class="py-2 pr-4">~8</td><td class="py-2 pr-4">~7.7 GB</td><td class="py-2 pr-4">~quase idêntica</td><td class="py-2 text-neutral-400">quer qualidade quase total</td></tr>
 <tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q6_K</td><td class="py-2 pr-4">~6.5</td><td class="py-2 pr-4">~5.5 GB</td><td class="py-2 pr-4">ótima</td><td class="py-2 text-neutral-400">meio-termo alto</td></tr>
 <tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q5_K_M</td><td class="py-2 pr-4">~5.5</td><td class="py-2 pr-4">~5.1 GB</td><td class="py-2 pr-4">muito boa</td><td class="py-2 text-neutral-400">ponto doce alto</td></tr>
-<tr class="border-b border-dark-700 bg-purple-500/20"><td class="py-2 pr-4 text-purple-400 font-bold">Q4_K_M ★</td><td class="py-2 pr-4">~4.5</td><td class="py-2 pr-4">~4.4 GB</td><td class="py-2 pr-4">boa</td><td class="py-2 text-neutral-300 font-semibold">melhor equilíbrio (padrão)</td></tr>
+<tr class="border-b border-dark-700 bg-purple-500/20"><td class="py-2 pr-4 text-purple-400 font-bold">Q4_K_M ★</td><td class="py-2 pr-4">~4.5</td><td class="py-2 pr-4">~4.4 GB</td><td class="py-2 pr-4">boa</td><td class="py-2 text-neutral-300 font-semibold">melhor equilíbrio (padrêo)</td></tr>
 <tr class="border-b border-dark-700"><td class="py-2 pr-4 text-neutral-100">Q3_K_M</td><td class="py-2 pr-4">~3.5</td><td class="py-2 pr-4">~3.5 GB</td><td class="py-2 pr-4">começa a cair</td><td class="py-2 text-neutral-400">só se faltar memória</td></tr>
 <tr><td class="py-2 pr-4 text-neutral-100">Q2_K</td><td class="py-2 pr-4">~2.6</td><td class="py-2 pr-4">~2.8 GB</td><td class="py-2 pr-4">degrada bastante</td><td class="py-2 text-neutral-400">último recurso</td></tr>
 </tbody>
 </table>
 </div>
-<!-- SVG: barra de quantização encolhendo -->
+<!-- SVG: barra de quantizaçêo encolhendo -->
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-<svg aria-label="Barras do tamanho de um modelo 7B encolhendo conforme a quantização: FP16 cerca de 14 GB cai para Q4_K_M cerca de 4.4 GB mantendo aproximadamente 95 por cento da qualidade, o ponto doce" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
+<svg aria-label="Barras do tamanho de um modelo 7B encolhendo conforme a quantizaçêo: FP16 cerca de 14 GB cai para Q4_K_M cerca de 4.4 GB mantendo aproximadamente 95 por cento da qualidade, o ponto doce" class="w-full h-auto" role="img" viewbox="0 0 1000 240">
 <defs>
 <lineargradient id="m33-grad" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
 <filter height="180%" id="m33-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="2"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
@@ -349,13 +349,13 @@
 <text fill="#f0a0a0" font-family="Inter,sans-serif" font-size="12" text-anchor="end" x="965" y="217">~80% ↓</text>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">Leia de cima para baixo: o arquivo <strong class="text-neutral-200">encolhe rápido</strong> (de ~14 GB para ~4.4 GB) enquanto a qualidade cai <strong class="text-neutral-200">devagar</strong> — até o <strong class="text-neutral-200">Q4_K_M</strong>, onde a curva ainda está alta. Abaixo dele (Q3, Q2) a qualidade começa a despencar. Por isso a comunidade trata <strong class="text-neutral-200">Q4_K_M / Q5_K_M</strong> como o equilíbrio padrão.</p>
+<p class="text-sm text-neutral-400 mb-6">Leia de cima para baixo: o arquivo <strong class="text-neutral-200">encolhe rápido</strong> (de ~14 GB para ~4.4 GB) enquanto a qualidade cai <strong class="text-neutral-200">devagar</strong> — até o <strong class="text-neutral-200">Q4_K_M</strong>, onde a curva ainda está alta. Abaixo dele (Q3, Q2) a qualidade começa a despencar. Por isso a comunidade trata <strong class="text-neutral-200">Q4_K_M / Q5_K_M</strong> como o equilíbrio padrêo.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Regra de bolso: comece em <strong>Q4_K_M</strong>. Se sobrar memória, suba para <strong>Q5_K_M</strong> ou <strong>Q8_0</strong> e ganhe um tiquinho de qualidade. Só desça para Q3/Q2 se o modelo <em>não couber</em> — e sabendo que vai notar a perda.</p>
+<p class="text-neutral-300 text-sm">Regra de bolso: comece em <strong>Q4_K_M</strong>. Se sobrar memória, suba para <strong>Q5_K_M</strong> ou <strong>Q8_0</strong> e ganhe um tiquinho de qualidade. Só desça para Q3/Q2 se o modelo <em>nêo couber</em> — e sabendo que vai notar a perda.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q4_K_M</div><div class="text-xs text-neutral-400">o padrão</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q4_K_M</div><div class="text-xs text-neutral-400">o padrêo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q5/Q8</div><div class="text-xs text-neutral-400">se sobra RAM</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Q3/Q2</div><div class="text-xs text-neutral-400">só se apertar</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">_K_M</div><div class="text-xs text-neutral-400">método moderno</div></div>
@@ -377,7 +377,7 @@
 <!-- COPY-RUN 1 -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Caminho 1 — Ollama baixa pra você</h3>
-<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar o Qwen2.5 7B já no formato e quantização certos, com um comando. O <code class="font-mono text-purple-400">q4_K_M</code> na tag escolhe a quantização do ponto doce.</p>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar o Qwen2.5 7B já no formato e quantizaçêo certos, com um comando. O <code class="font-mono text-purple-400">q4_K_M</code> na tag escolhe a quantizaçêo do ponto doce.</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
 <div class="text-neutral-500"># baixa a tag já quantizada Q4_K_M (~4.4 GB)</div>
 <div>ollama pull qwen2.5:7b-instruct-q4_K_M</div>
@@ -389,7 +389,7 @@
 <!-- COPY-RUN 2 + timeline -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Caminho 2 — GGUF direto do Hugging Face</h3>
-<p class="text-neutral-400 text-sm mb-4"><strong>Objetivo:</strong> usar um GGUF que <em>não</em> está no catálogo do Ollama (baixado da aba "Files" de um model card). Três passos:</p>
+<p class="text-neutral-400 text-sm mb-4"><strong>Objetivo:</strong> usar um GGUF que <em>nêo</em> está no catálogo do Ollama (baixado da aba "Files" de um model card). Três passos:</p>
 <div class="space-y-4 mb-5">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
@@ -421,7 +421,7 @@
 <div class="text-neutral-500 mt-2"># 3) roda</div>
 <div>ollama run meu-qwen</div>
 </div>
-<p class="text-neutral-400 text-sm mb-2"><strong>LM Studio (sem terminal):</strong> na aba de busca, procure o modelo, escolha a quantização (ex.: <strong>Q4_K_M</strong>) e clique <strong>Download</strong>. Ele reconhece o GGUF e já abre o chat — zero comando.</p>
+<p class="text-neutral-400 text-sm mb-2"><strong>LM Studio (sem terminal):</strong> na aba de busca, procure o modelo, escolha a quantizaçêo (ex.: <strong>Q4_K_M</strong>) e clique <strong>Download</strong>. Ele reconhece o GGUF e já abre o chat — zero comando.</p>
 <p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> <span class="font-mono text-purple-400">ollama list</span> mostra <span class="font-mono text-purple-400">meu-qwen</span> e o chat responde. No LM Studio, o modelo aparece em "My Models" e carrega no chat.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
@@ -450,7 +450,7 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t5-p1">Quant escolhida, falta a pergunta final: <strong class="text-purple-400">cabe na minha máquina?</strong> A regra de bolso da Trilha 2 fecha o ciclo — o tamanho do arquivo precisa caber na memória <em>com folga</em> para o contexto.</p>
 <!-- TABELA MONO recap de memória -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-4 sm:p-6 mb-6 overflow-x-auto">
-<p class="text-neutral-400 text-sm mb-3 font-sans">Tamanho aproximado por modelo × quantização (e quanta memória ter para rodar bem):</p>
+<p class="text-neutral-400 text-sm mb-3 font-sans">Tamanho aproximado por modelo × quantizaçêo (e quanta memória ter para rodar bem):</p>
 <table class="w-full text-left font-mono text-sm border-collapse min-w-[480px]">
 <thead>
 <tr class="text-neutral-400 border-b border-dark-600">
@@ -468,7 +468,7 @@
 </tbody>
 </table>
 </div>
-<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t5-p2">A diferença entre "cabe" e "não cabe" é a diferença entre rápido e inutilizável. Veja os dois cenários:</p>
+<p class="text-neutral-300 mb-4 leading-relaxed" data-inema-block="m3-3-t5-p2">A diferença entre "cabe" e "nêo cabe" é a diferença entre rápido e inutilizável. Veja os dois cenários:</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
 <h4 class="font-bold text-purple-400 mb-4">✓ Quant cabe na memória</h4>
@@ -490,7 +490,7 @@
 </div>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
-<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Fluxo de decisão</h3>
+<h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Fluxo de decisêo</h3>
 <p class="text-neutral-300 text-sm">Quanta memória você tem? → escolha o <strong>maior modelo</strong> cuja <strong>Q4_K_M</strong> caiba com 2–4 GB de folga. Coube com sobra? Suba a quant (Q5/Q8) <em>antes</em> de subir de modelo — qualidade extra é mais barata que dobrar o tamanho. 8 GB ≈ 7B Q4; 16 GB ≈ 13B Q4 ou 7B Q8; 24 GB+ ≈ 34B Q4.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
@@ -512,17 +512,17 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">✅ Verificando qualidade e integridade</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t6-p1">Baixou — agora confirme duas coisas: que o arquivo veio <strong class="text-purple-400">inteiro</strong> (download não corrompido) e que a quantização <strong class="text-purple-400">não foi longe demais</strong>. Dois minutos de teste evitam horas de "por que esse modelo está tão ruim?".</p>
-<!-- COPY-RUN verificação -->
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-3-t6-p1">Baixou — agora confirme duas coisas: que o arquivo veio <strong class="text-purple-400">inteiro</strong> (download nêo corrompido) e que a quantizaçêo <strong class="text-purple-400">nêo foi longe demais</strong>. Dois minutos de teste evitam horas de "por que esse modelo está têo ruim?".</p>
+<!-- COPY-RUN verificaçêo -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
-<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: checksum + prompt-padrão</h3>
+<h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: checksum + prompt-padrêo</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> confirmar integridade do arquivo e fazer um teste de sanidade na resposta.</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
 <div class="text-neutral-500"># 1) integridade: o HF mostra o SHA256 na aba "Files"; compare</div>
 <div>sha256sum Qwen2.5-7B-Instruct-Q4_K_M.gguf</div>
 <div class="text-neutral-500 mt-2"># Windows (PowerShell): Get-FileHash arquivo.gguf -Algorithm SHA256</div>
-<div class="text-neutral-500 mt-3"># 2) prompt-padrão de sanidade (use o MESMO em cada quant)</div>
-<div>ollama run qwen2.5:7b-instruct-q4_K_M "Resuma em 3 bullets o que é quantização."</div>
+<div class="text-neutral-500 mt-3"># 2) prompt-padrêo de sanidade (use o MESMO em cada quant)</div>
+<div>ollama run qwen2.5:7b-instruct-q4_K_M "Resuma em 3 bullets o que é quantizaçêo."</div>
 </div>
 <p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> o SHA256 tem que bater com o da página. A resposta deve vir coerente, em português, com 3 bullets de verdade — sem repetir, travar em loop ou trocar de idioma. Se virar salada, a quant pode estar agressiva demais: suba para Q5_K_M ou Q8.</p>
 </div>
@@ -548,7 +548,7 @@
 </div>
 <!-- CHECAGEM LEVE -->
 <div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-3-3#q1">
-<p class="font-medium mb-4">Auto-checagem (opcional): você tem 8 GB de VRAM e quer rodar um modelo 7B com o melhor equilíbrio qualidade × tamanho. Qual quantização é o "ponto doce" para começar?</p>
+<p class="font-medium mb-4">Auto-checagem (opcional): você tem 8 GB de VRAM e quer rodar um modelo 7B com o melhor equilíbrio qualidade × tamanho. Qual quantizaçêo é o "ponto doce" para começar?</p>
 <div class="inema-check-options space-y-2">
 <button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="0" type="button">A) FP16 — máxima qualidade, sempre vale a pena</button>
 <button class="block w-full text-left px-4 py-2 rounded-lg bg-dark-700 border border-dark-600 hover:bg-dark-600 transition-colors text-sm" data-inema-check-option="1" type="button">B) Q4_K_M (ou Q5_K_M se sobrar) — cabe folgado e mantém ~95% da qualidade</button>
@@ -558,11 +558,11 @@
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Guarde um "prompt-padrão" seu (um resumo, uma conta, uma pergunta sobre algo que você conhece) e rode-o sempre que testar um modelo ou quant nova. Comparar a <em>mesma</em> pergunta entre versões é o jeito mais rápido e honesto de sentir a perda de quantização.</p>
+<p class="text-neutral-300 text-sm">Guarde um "prompt-padrêo" seu (um resumo, uma conta, uma pergunta sobre algo que você conhece) e rode-o sempre que testar um modelo ou quant nova. Comparar a <em>mesma</em> pergunta entre versões é o jeito mais rápido e honesto de sentir a perda de quantizaçêo.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">SHA256</div><div class="text-xs text-neutral-400">integridade</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Prompt-padrão</div><div class="text-xs text-neutral-400">sanidade</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Prompt-padrêo</div><div class="text-xs text-neutral-400">sanidade</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Comparar</div><div class="text-xs text-neutral-400">Q4 vs Q5</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Salada?</div><div class="text-xs text-neutral-400">→ suba a quant</div></div>
 </div>
@@ -579,9 +579,9 @@
 <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="mr-3">📌</span> Resumo do módulo</h2>
 <div class="space-y-4 mb-8">
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Hugging Face é o hub</strong><span class="text-neutral-400"> — leia o model card: parâmetros, variante Instruct, aba Files, licença.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">GGUF para IA local</strong><span class="text-neutral-400"> — é o formato do Ollama/LM Studio; safetensors/GPTQ/AWQ são para outros runtimes.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quantização é a decisão-chave</strong><span class="text-neutral-400"> — Q4_K_M é o ponto doce; suba para Q5/Q8 se sobrar memória.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Cabe com folga e verifique</strong><span class="text-neutral-400"> — confira o SHA256 e teste com um prompt-padrão para flagrar quant agressiva.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">GGUF para IA local</strong><span class="text-neutral-400"> — é o formato do Ollama/LM Studio; safetensors/GPTQ/AWQ sêo para outros runtimes.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Quantizaçêo é a decisêo-chave</strong><span class="text-neutral-400"> — Q4_K_M é o ponto doce; suba para Q5/Q8 se sobrar memória.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Cabe com folga e verifique</strong><span class="text-neutral-400"> — confira o SHA256 e teste com um prompt-padrêo para flagrar quant agressiva.</span></div></div>
 </div>
 <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
 <h3 class="font-semibold text-purple-400 mb-2">Próximo módulo:</h3>
@@ -615,7 +615,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-3#q1',{answer:1,explain:{0:'FP16 de um 7B são ~14 GB — não cabe em 8 GB de VRAM, e o ganho sobre Q5/Q4 é marginal.',1:'Isso. Q4_K_M (~4.4 GB) cabe com folga e segura ~95% da qualidade — o equilíbrio que a comunidade chama de ponto doce. Suba para Q5_K_M se sobrar memória.',2:'Não. Q2_K encolhe o arquivo, mas a qualidade despenca; é último recurso quando falta memória, não o padrão.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-3#q1',{answer:1,explain:{0:'FP16 de um 7B sêo ~14 GB — nêo cabe em 8 GB de VRAM, e o ganho sobre Q5/Q4 é marginal.',1:'Isso. Q4_K_M (~4.4 GB) cabe com folga e segura ~95% da qualidade — o equilíbrio que a comunidade chama de ponto doce. Suba para Q5_K_M se sobrar memória.',2:'Nêo. Q2_K encolhe o arquivo, mas a qualidade despenca; é último recurso quando falta memória, nêo o padrêo.'}});}
       }
     });
   </script>

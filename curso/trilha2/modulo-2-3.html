@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-blue-400 bg-blue-500/10" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,7 +140,7 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-blue-400" href="../../index.html">Início</a><span>/</span>
 <a class="hover:text-blue-400" href="index.html">Hardware &amp; Lab</a><span>/</span>
@@ -164,7 +164,7 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-1">1. Preparando o terreno</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-blue-400" href="#topico-2">2. macOS (Apple Silicon)</a></li>
@@ -188,10 +188,10 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🧰 Preparando o terreno</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t1-p1">Um lab de IA local não precisa de nada exótico — precisa de três coisas <strong class="text-blue-400">em ordem</strong>: sistema operacional atualizado, espaço livre em disco e um terminal à mão. É a fundação sobre a qual tudo nas próximas trilhas vai rodar. Pular essa parte é a causa nº 1 de "instalei e não funcionou".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t1-p1">Um lab de IA local nêo precisa de nada exótico — precisa de três coisas <strong class="text-blue-400">em ordem</strong>: sistema operacional atualizado, espaço livre em disco e um terminal à mêo. É a fundaçêo sobre a qual tudo nas próximas trilhas vai rodar. Pular essa parte é a causa nº 1 de "instalei e nêo funcionou".</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Driver"</strong> é o programa que deixa o sistema conversar com uma peça de hardware — no nosso caso, a placa de vídeo (GPU). Sem o driver certo, a GPU existe na máquina mas o software de IA não consegue usá-la. <strong>"Terminal"</strong> é a janela de texto onde você digita comandos (Terminal no macOS, PowerShell no Windows, qualquer shell no Linux) — quase todo o setup passa por ele.</p>
+<p class="text-neutral-300 text-sm"><strong>"Driver"</strong> é o programa que deixa o sistema conversar com uma peça de hardware — no nosso caso, a placa de vídeo (GPU). Sem o driver certo, a GPU existe na máquina mas o software de IA nêo consegue usá-la. <strong>"Terminal"</strong> é a janela de texto onde você digita comandos (Terminal no macOS, PowerShell no Windows, qualquer shell no Linux) — quase todo o setup passa por ele.</p>
 </div>
 <p class="text-neutral-300 mb-4 leading-relaxed">Vale ter o mapa mental da <strong class="text-blue-400">pilha</strong> que faz IA local acontecer. Cada camada se apoia na de baixo: o modelo só roda se o runtime existe; o runtime só usa a GPU se o driver está instalado; e tudo isso vive sobre o hardware.</p>
 <div class="rounded-2xl border border-blue-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
@@ -234,7 +234,7 @@
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6">
 <h4 class="font-bold text-blue-400 mb-4">✓ Terreno pronto</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Sistema operacional na versão atual</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Sistema operacional na versêo atual</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>30–50 GB livres em disco para os modelos</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Driver da GPU instalado e enxergando a placa</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Terminal aberto e você confortável de colar comandos</span></li>
@@ -243,7 +243,7 @@
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ Terreno improvisado</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>SO travado numa versão antiga sem atualizar</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>SO travado numa versêo antiga sem atualizar</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Disco quase cheio — modelo nem termina de baixar</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPU presente, mas sem driver (roda tudo na CPU, lento)</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Medo do terminal — trava no primeiro comando</span></li>
@@ -254,7 +254,7 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">SO</div><div class="text-xs text-neutral-400">atualizado</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Disco</div><div class="text-xs text-neutral-400">espaço livre</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Driver</div><div class="text-xs text-neutral-400">da GPU</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Terminal</div><div class="text-xs text-neutral-400">à mão</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Terminal</div><div class="text-xs text-neutral-400">à mêo</div></div>
 </div>
 <div class="flex justify-start mt-6">
 <button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
@@ -269,7 +269,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">🍎 macOS (Apple Silicon)</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t2-p1">Se você tem um Mac com chip da família M (M1, M2, M3, M4), boa notícia: a base já vem quase pronta. A GPU é integrada e a Apple a expõe via <strong class="text-blue-400">Metal</strong> — <strong>não existe driver separado para instalar</strong>. Falta só uma peça: um gerenciador de pacotes para trazer as ferramentas de linha de comando. Esse é o <strong class="text-blue-400">Homebrew</strong>.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t2-p1">Se você tem um Mac com chip da família M (M1, M2, M3, M4), boa notícia: a base já vem quase pronta. A GPU é integrada e a Apple a expõe via <strong class="text-blue-400">Metal</strong> — <strong>nêo existe driver separado para instalar</strong>. Falta só uma peça: um gerenciador de pacotes para trazer as ferramentas de linha de comando. Esse é o <strong class="text-blue-400">Homebrew</strong>.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
 <ul class="space-y-1.5 text-neutral-300 text-sm">
@@ -285,11 +285,11 @@
 <div class="text-neutral-500"># Instala o Homebrew (pede sua senha do Mac)</div>
 <div>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> feche e reabra o Terminal, então rode <span class="font-mono text-blue-400">brew --version</span>. Deve aparecer algo como <span class="font-mono text-neutral-300">Homebrew 4.x</span>. Se o comando não for encontrado, o instalador imprime no fim duas linhas <span class="font-mono text-neutral-300">eval ...</span> — cole-as para adicionar o <span class="font-mono text-neutral-300">brew</span> ao PATH.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> feche e reabra o Terminal, entêo rode <span class="font-mono text-blue-400">brew --version</span>. Deve aparecer algo como <span class="font-mono text-neutral-300">Homebrew 4.x</span>. Se o comando nêo for encontrado, o instalador imprime no fim duas linhas <span class="font-mono text-neutral-300">eval ...</span> — cole-as para adicionar o <span class="font-mono text-neutral-300">brew</span> ao PATH.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">No Mac você <strong>não</strong> mexe com driver de GPU — o Metal já está lá. A vantagem do Apple Silicon é a <strong>memória unificada</strong>: RAM e VRAM são o mesmo pool, então um Mac com 32 GB+ roda modelos que travariam numa GPU com pouca VRAM (revisita a Trilha 2.1). O custo é a banda menor: roda grande, mas não tão rápido.</p>
+<p class="text-neutral-300 text-sm">No Mac você <strong>nêo</strong> mexe com driver de GPU — o Metal já está lá. A vantagem do Apple Silicon é a <strong>memória unificada</strong>: RAM e VRAM sêo o mesmo pool, entêo um Mac com 32 GB+ roda modelos que travariam numa GPU com pouca VRAM (revisita a Trilha 2.1). O custo é a banda menor: roda grande, mas nêo têo rápido.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Metal</div><div class="text-xs text-neutral-400">já incluso</div></div>
@@ -313,7 +313,7 @@
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m2-3-t3-p1">A dupla mais comum em workstations de IA é <strong class="text-blue-400">Linux + GPU NVIDIA</strong>. É aqui que aparece a peça que mais gente esquece: o driver da NVIDIA e o <strong class="text-blue-400">CUDA</strong>. Sem eles, sua placa de R$ 10 mil fica parada e o modelo roda lento na CPU.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"CUDA"</strong> é a camada de software da NVIDIA que deixa programas usarem a GPU para <em>cálculo</em> — não só para gráficos. É exatamente o que faz a IA rodar rápido na placa. O CUDA vem junto/depende do driver NVIDIA, então instalar o driver certo já resolve a maior parte.</p>
+<p class="text-neutral-300 text-sm"><strong>"CUDA"</strong> é a camada de software da NVIDIA que deixa programas usarem a GPU para <em>cálculo</em> — nêo só para gráficos. É exatamente o que faz a IA rodar rápido na placa. O CUDA vem junto/depende do driver NVIDIA, entêo instalar o driver certo já resolve a maior parte.</p>
 </div>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: a máquina enxerga a GPU?</h3>
@@ -324,7 +324,7 @@
 <div class="text-neutral-500 mt-2"># Listar o driver recomendado (Ubuntu/derivados)</div>
 <div>ubuntu-drivers devices</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> <span class="font-mono text-blue-400">nvidia-smi</span> deve mostrar uma tabela com o nome da GPU, a versão do driver e a memória (ex.: <span class="font-mono text-neutral-300">24576MiB</span>). Se der <span class="font-mono text-neutral-300">command not found</span>, o driver ainda não está instalado — siga o passo a passo abaixo usando o que <span class="font-mono text-blue-400">ubuntu-drivers devices</span> marcar como <span class="font-mono text-neutral-300">recommended</span>.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> <span class="font-mono text-blue-400">nvidia-smi</span> deve mostrar uma tabela com o nome da GPU, a versêo do driver e a memória (ex.: <span class="font-mono text-neutral-300">24576MiB</span>). Se der <span class="font-mono text-neutral-300">command not found</span>, o driver ainda nêo está instalado — siga o passo a passo abaixo usando o que <span class="font-mono text-blue-400">ubuntu-drivers devices</span> marcar como <span class="font-mono text-neutral-300">recommended</span>.</p>
 </div>
 <p class="text-neutral-300 mb-4 leading-relaxed">Instalar o driver no Ubuntu é uma sequência curta:</p>
 <div class="space-y-6 mb-6">
@@ -346,7 +346,7 @@
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center"><span class="text-blue-400 font-bold">3</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Instalar</h4>
-<p class="text-neutral-300 text-sm"><span class="font-mono text-blue-400">sudo ubuntu-drivers autoinstall</span> instala o recomendado. Para fixar uma versão: <span class="font-mono text-blue-400">sudo apt install nvidia-driver-550</span>.</p>
+<p class="text-neutral-300 text-sm"><span class="font-mono text-blue-400">sudo ubuntu-drivers autoinstall</span> instala o recomendado. Para fixar uma versêo: <span class="font-mono text-blue-400">sudo apt install nvidia-driver-550</span>.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
@@ -361,7 +361,7 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CUDA</div><div class="text-xs text-neutral-400">GPU faz cálculo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">nvidia-smi</div><div class="text-xs text-neutral-400">testa o driver</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">recommended</div><div class="text-xs text-neutral-400">confie nele</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Reiniciar</div><div class="text-xs text-neutral-400">não pule</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Reiniciar</div><div class="text-xs text-neutral-400">nêo pule</div></div>
 </div>
 <div class="flex justify-start mt-6">
 <button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 hover:bg-blue-500/30 transition-colors" data-inema-read-toggle="" type="button">
@@ -406,7 +406,7 @@
 <div class="text-neutral-500"># Instala WSL2 + Ubuntu de uma vez</div>
 <div>wsl --install</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> reinicie, abra o app <strong>Ubuntu</strong> pelo menu Iniciar e crie usuário/senha. Se você tem GPU NVIDIA com driver atualizado no Windows, <span class="font-mono text-blue-400">nvidia-smi</span> rodado <em>dentro</em> do Ubuntu já deve enxergar a placa — não precisa instalar driver dentro do WSL.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> reinicie, abra o app <strong>Ubuntu</strong> pelo menu Iniciar e crie usuário/senha. Se você tem GPU NVIDIA com driver atualizado no Windows, <span class="font-mono text-blue-400">nvidia-smi</span> rodado <em>dentro</em> do Ubuntu já deve enxergar a placa — nêo precisa instalar driver dentro do WSL.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Driver</div><div class="text-xs text-neutral-400">GeForce normal</div></div>
@@ -443,7 +443,7 @@
 </div>
 <div class="bg-dark-800 rounded-xl p-5 border border-blue-500/30">
 <h4 class="font-bold text-blue-400 mb-2">AMD · ROCm</h4>
-<p class="text-neutral-300 text-sm mb-2"><strong>Em evolução.</strong> Funciona, mas cheque a compatibilidade da sua placa antes.</p>
+<p class="text-neutral-300 text-sm mb-2"><strong>Em evoluçêo.</strong> Funciona, mas cheque a compatibilidade da sua placa antes.</p>
 <p class="text-neutral-400 text-xs">Linux é o terreno mais firme. Ollama já roda em várias GPUs AMD.</p>
 </div>
 <div class="bg-dark-800 rounded-xl p-5 border border-blue-500/30">
@@ -465,18 +465,18 @@
 <h4 class="font-bold text-red-400 mb-4">✗ Onde ainda dói</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>ROCm exige checar se a sua GPU AMD está na lista de suporte</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPUs muito novas ou muito antigas podem ainda não ter suporte</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar fabricantes na mesma máquina complica a configuração</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>GPUs muito novas ou muito antigas podem ainda nêo ter suporte</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Misturar fabricantes na mesma máquina complica a configuraçêo</span></li>
 </ul>
 </div>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Não trave nessa escolha. Se você já tem uma máquina, use o que ela tem — o Ollama (Trilha 3) detecta a GPU sozinho na maioria dos casos. Se for <em>comprar</em> pensando em IA local hoje, NVIDIA no PC ou Apple Silicon no Mac são os caminhos com menos surpresa.</p>
+<p class="text-neutral-300 text-sm">Nêo trave nessa escolha. Se você já tem uma máquina, use o que ela tem — o Ollama (Trilha 3) detecta a GPU sozinho na maioria dos casos. Se for <em>comprar</em> pensando em IA local hoje, NVIDIA no PC ou Apple Silicon no Mac sêo os caminhos com menos surpresa.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">CUDA</div><div class="text-xs text-neutral-400">maduro</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">ROCm</div><div class="text-xs text-neutral-400">em evolução</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">ROCm</div><div class="text-xs text-neutral-400">em evoluçêo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">MLX</div><div class="text-xs text-neutral-400">nativo no Mac</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-blue-400 font-bold text-sm mb-1">Ollama</div><div class="text-xs text-neutral-400">abstrai tudo</div></div>
 </div>
@@ -498,9 +498,9 @@
 <h3 class="text-lg font-semibold text-red-400 mb-3 flex items-center"><span class="mr-2">⚠️</span> Alerta: calor e energia</h3>
 <p class="text-neutral-300 text-sm mb-3">Rodar um modelo grande puxa GPU e CPU a 100% por minutos seguidos — isso <strong>esquenta</strong> e consome energia de verdade. Em laptop, o impacto é maior: a máquina pode acelerar as ventoinhas, dar throttle (cair de desempenho para se proteger) e gastar bateria rápido.</p>
 <ul class="space-y-1.5 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Não rode sobre cama/sofá que tampe as saídas de ar; prefira superfície dura e ventilada.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Nêo rode sobre cama/sofá que tampe as saídas de ar; prefira superfície dura e ventilada.</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Antes de deixar um agente <strong>24/7</strong> (Trilha 4), confira a temperatura sob carga e a conta de luz.</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Se a máquina desligar sozinha sob carga, quase sempre é superaquecimento — limpe a poeira e melhore a ventilação.</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400 mt-0.5">•</span><span>Se a máquina desligar sozinha sob carga, quase sempre é superaquecimento — limpe a poeira e melhore a ventilaçêo.</span></li>
 </ul>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -510,7 +510,7 @@
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Uma pasta dedicada para os modelos (sabe onde está tudo)</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Configs e Modelfiles versionados no git</span></li>
 <li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Olho no <span class="font-mono">nvidia-smi</span> / Monitor de Atividade sob carga</span></li>
-<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Fecha o que não está usando antes de carregar um modelo grande</span></li>
+<li class="flex items-start space-x-2"><span class="text-blue-400">✓</span><span>Fecha o que nêo está usando antes de carregar um modelo grande</span></li>
 </ul>
 </div>
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
@@ -579,7 +579,7 @@
 <div class="space-y-4 mb-8">
 <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">A base é uma pilha</strong><span class="text-neutral-400"> — hardware → driver → runtime → modelo; cada camada depende da de baixo.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Cada SO tem seu caminho</strong><span class="text-neutral-400"> — macOS só precisa do Homebrew; Linux+NVIDIA precisa do driver/CUDA; Windows roda nativo ou via WSL2.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">CUDA é maduro; ROCm/MLX são opções</strong><span class="text-neutral-400"> — e o Ollama abstrai os três para você.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">CUDA é maduro; ROCm/MLX sêo opções</strong><span class="text-neutral-400"> — e o Ollama abstrai os três para você.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-blue-400 mt-1">✓</span><div><strong class="text-neutral-100">Higiene importa</strong><span class="text-neutral-400"> — organize modelos, versione configs e vigie calor/energia, ainda mais para 24/7.</span></div></div>
 </div>
 <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
@@ -614,7 +614,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-3#q1',{answer:1,explain:{0:'Não. Isso descreve um modelo pequeno rodando na CPU — o CUDA não é um modelo, é a camada que destrava a GPU.',1:'Isso. CUDA é a camada da NVIDIA que deixa a GPU fazer o cálculo de IA; sem ela, a placa fica ociosa e tudo cai na CPU, lento.',2:'Não. Gerenciador de pacotes é o Homebrew (macOS) ou o apt (Linux). CUDA é a camada GPU↔software.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-2-3#q1',{answer:1,explain:{0:'Nêo. Isso descreve um modelo pequeno rodando na CPU — o CUDA nêo é um modelo, é a camada que destrava a GPU.',1:'Isso. CUDA é a camada da NVIDIA que deixa a GPU fazer o cálculo de IA; sem ela, a placa fica ociosa e tudo cai na CPU, lento.',2:'Nêo. Gerenciador de pacotes é o Homebrew (macOS) ou o apt (Linux). CUDA é a camada GPU↔software.'}});}
       }
     });
   </script>

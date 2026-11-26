@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-purple-400 hover:bg-purple-500/10 transition-colors" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-amber-400 bg-amber-500/10" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,7 +140,7 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-amber-400" href="../../index.html">Início</a><span>/</span>
 <a class="hover:text-amber-400" href="index.html">Avançado &amp; Agentes 24/7</a><span>/</span>
@@ -164,11 +164,11 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-1">1. Um agente que comanda tudo</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-2">2. O que é um agente, de verdade</a></li>
-<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Ferramentas reais de orquestração</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-3">3. Ferramentas reais de orquestraçêo</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-4">4. Roteando tarefas entre máquinas</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-5">5. Dando ferramentas com segurança</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-amber-400" href="#topico-6">6. Seu primeiro agente útil</a></li>
@@ -188,10 +188,10 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">1</span>
 <h2 class="text-2xl font-bold">🧠 Um agente que comanda tudo</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p1">A cena do vídeo é sedutora: você manda uma mensagem — "monte um resumo das minhas notas de hoje" — e um único assistente, apelidado de "IT guy", <strong class="text-amber-400">se vira</strong>. Ele liga o modelo certo, busca os arquivos, manda partes para outra máquina e devolve o resultado pronto. Não há mágica nisso. Há um <strong class="text-amber-400">orquestrador</strong>: um agente que recebe o objetivo em linguagem natural e coordena as peças que você já montou nas trilhas anteriores.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t1-p1">A cena do vídeo é sedutora: você manda uma mensagem — "monte um resumo das minhas notas de hoje" — e um único assistente, apelidado de "IT guy", <strong class="text-amber-400">se vira</strong>. Ele liga o modelo certo, busca os arquivos, manda partes para outra máquina e devolve o resultado pronto. Nêo há mágica nisso. Há um <strong class="text-amber-400">orquestrador</strong>: um agente que recebe o objetivo em linguagem natural e coordena as peças que você já montou nas trilhas anteriores.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Orquestrador"</strong> é o agente-maestro: ele não toca cada instrumento, ele <em>decide quem toca o quê e quando</em>. Em vez de você abrir o terminal, escolher o modelo, copiar arquivos e juntar tudo na mão, o orquestrador transforma um pedido em uma sequência de passos e executa cada um chamando as ferramentas certas.</p>
+<p class="text-neutral-300 text-sm"><strong>"Orquestrador"</strong> é o agente-maestro: ele nêo toca cada instrumento, ele <em>decide quem toca o quê e quando</em>. Em vez de você abrir o terminal, escolher o modelo, copiar arquivos e juntar tudo na mêo, o orquestrador transforma um pedido em uma sequência de passos e executa cada um chamando as ferramentas certas.</p>
 </div>
 <div class="bg-gradient-to-br from-amber-900/30 to-dark-800 rounded-xl border border-amber-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-4 flex items-center"><span class="mr-2">🔑</span> A ideia central</h3>
@@ -205,8 +205,8 @@
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">📊</span> O que observar</h3>
 <ul class="space-y-2 text-neutral-300 text-sm">
-<li>O orquestrador não precisa ser "inteligente como o topo da nuvem" — precisa ser <strong>confiável</strong> em seguir passos.</li>
-<li>Tudo que ele faz, você poderia fazer na mão. Ele só automatiza a sequência.</li>
+<li>O orquestrador nêo precisa ser "inteligente como o topo da nuvem" — precisa ser <strong>confiável</strong> em seguir passos.</li>
+<li>Tudo que ele faz, você poderia fazer na mêo. Ele só automatiza a sequência.</li>
 <li>Quanto mais claro o objetivo e mais restritas as ferramentas, melhor o agente se comporta.</li>
 </ul>
 </div>
@@ -233,14 +233,14 @@
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui? — quatro palavras</h3>
 <ul class="space-y-2 text-neutral-300 text-sm">
-<li><strong>Agente:</strong> um LLM com permissão para <em>agir</em> (não só responder), dentro de um loop.</li>
-<li><strong>Ferramenta / tool-calling:</strong> uma ação que o modelo pode pedir para executar (rodar um comando, ler um arquivo, chamar uma API). O programa executa e devolve o resultado ao modelo.</li>
-<li><strong>Loop ReAct:</strong> o padrão <em>Reason + Act</em> — o agente <em>raciocina</em> o próximo passo, <em>age</em> (usa uma ferramenta), <em>observa</em> o resultado e repete.</li>
+<li><strong>Agente:</strong> um LLM com permissêo para <em>agir</em> (nêo só responder), dentro de um loop.</li>
+<li><strong>Ferramenta / tool-calling:</strong> uma açêo que o modelo pode pedir para executar (rodar um comando, ler um arquivo, chamar uma API). O programa executa e devolve o resultado ao modelo.</li>
+<li><strong>Loop ReAct:</strong> o padrêo <em>Reason + Act</em> — o agente <em>raciocina</em> o próximo passo, <em>age</em> (usa uma ferramenta), <em>observa</em> o resultado e repete.</li>
 <li><strong>Orquestrador:</strong> um agente cujo trabalho é coordenar outras peças (modelos, máquinas, ferramentas).</li>
 </ul>
 </div>
 <div class="rounded-2xl border border-amber-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-<svg aria-label="O agente roda um loop: pensa o próximo passo, usa uma ferramenta, observa o resultado e repete até cumprir o objetivo, então entrega a resposta" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
+<svg aria-label="O agente roda um loop: pensa o próximo passo, usa uma ferramenta, observa o resultado e repete até cumprir o objetivo, entêo entrega a resposta" class="w-full h-auto" role="img" viewbox="0 0 1000 300">
 <defs>
 <lineargradient id="m41-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fbbf24"></stop><stop offset="1" stop-color="#f59e0b"></stop></lineargradient>
 <filter height="180%" id="m41-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
@@ -274,7 +274,7 @@
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="11" text-anchor="middle" x="886" y="225">quando resolve</text>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">O coração de qualquer agente é esse <strong class="text-neutral-200">loop ReAct</strong>: <strong class="text-neutral-200">Pensa → Usa ferramenta → Observa</strong> e volta. Ele só sai do laço (em ciano) quando decide que o objetivo foi cumprido — aí <strong class="text-neutral-200">entrega</strong> a resposta.</p>
+<p class="text-sm text-neutral-400 mb-6">O coraçêo de qualquer agente é esse <strong class="text-neutral-200">loop ReAct</strong>: <strong class="text-neutral-200">Pensa → Usa ferramenta → Observa</strong> e volta. Ele só sai do laço (em ciano) quando decide que o objetivo foi cumprido — aí <strong class="text-neutral-200">entrega</strong> a resposta.</p>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
@@ -287,14 +287,14 @@
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">2</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Usa a ferramenta (age)</h4>
-<p class="text-neutral-300 text-sm">O programa executa de verdade o que o modelo pediu — roda <span class="font-mono text-amber-400">ls</span>, lê um arquivo, chama a API. O modelo não toca no sistema; ele <em>pede</em>, o runtime <em>faz</em>.</p>
+<p class="text-neutral-300 text-sm">O programa executa de verdade o que o modelo pediu — roda <span class="font-mono text-amber-400">ls</span>, lê um arquivo, chama a API. O modelo nêo toca no sistema; ele <em>pede</em>, o runtime <em>faz</em>.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Observa e repete</h4>
-<p class="text-neutral-300 text-sm">O resultado volta para o modelo, que decide: terminou? Então entrega. Não terminou? Pensa o próximo passo. O laço continua até o objetivo ou um limite de passos.</p>
+<p class="text-neutral-300 text-sm">O resultado volta para o modelo, que decide: terminou? Entêo entrega. Nêo terminou? Pensa o próximo passo. O laço continua até o objetivo ou um limite de passos.</p>
 </div>
 </div>
 </div>
@@ -302,7 +302,7 @@
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">LLM</div><div class="text-xs text-neutral-400">o cérebro</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Ferramentas</div><div class="text-xs text-neutral-400">os braços</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Loop</div><div class="text-xs text-neutral-400">a vontade</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Limite</div><div class="text-xs text-neutral-400">freio de mão</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Limite</div><div class="text-xs text-neutral-400">freio de mêo</div></div>
 </div>
 <div class="flex justify-start mt-6">
 <button aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 border border-amber-500/30 text-amber-400 hover:bg-amber-500/30 transition-colors" data-inema-read-toggle="" type="button">
@@ -315,16 +315,16 @@
 <section class="mb-16" data-inema-topic="modulo-4-1#topico-3" id="topico-3" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">3</span>
-<h2 class="text-2xl font-bold">🧰 Ferramentas reais de orquestração</h2>
+<h2 class="text-2xl font-bold">🧰 Ferramentas reais de orquestraçêo</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p1">Hora da honestidade. As legendas do vídeo embaralharam nomes e deram um ar de "produto secreto" para algo que é, na real, <strong class="text-amber-400">software aberto e disponível</strong>. Você não precisa de um "Hermes" mágico: precisa de um <strong>agente de código</strong> ou um <strong>framework de agentes</strong> apontado para o seu endpoint local (módulo 3.5). É a mesma coisa, sem o marketing.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t3-p1">Hora da honestidade. As legendas do vídeo embaralharam nomes e deram um ar de "produto secreto" para algo que é, na real, <strong class="text-amber-400">software aberto e disponível</strong>. Você nêo precisa de um "Hermes" mágico: precisa de um <strong>agente de código</strong> ou um <strong>framework de agentes</strong> apontado para o seu endpoint local (módulo 3.5). É a mesma coisa, sem o marketing.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ O que o vídeo dava a entender</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Um assistente único e proprietário que "faz tudo sozinho"</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nomes confusos (legendas erradas) que parecem ferramentas secretas</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mágica indecifrável que você não conseguiria montar</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Mágica indecifrável que você nêo conseguiria montar</span></li>
 </ul>
 </div>
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
@@ -349,7 +349,7 @@
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Comece pelo mais simples que resolve: um <strong>agente de código de CLI</strong> já lê arquivos, roda comandos e edita pastas — ele <em>é</em> um orquestrador útil no primeiro dia. Frameworks como LangGraph/CrewAI valem quando você precisa de <strong>vários agentes coordenados</strong> (tema dos módulos 4.2 em diante). Não suba de complexidade antes da hora.</p>
+<p class="text-neutral-300 text-sm">Comece pelo mais simples que resolve: um <strong>agente de código de CLI</strong> já lê arquivos, roda comandos e edita pastas — ele <em>é</em> um orquestrador útil no primeiro dia. Frameworks como LangGraph/CrewAI valem quando você precisa de <strong>vários agentes coordenados</strong> (tema dos módulos 4.2 em diante). Nêo suba de complexidade antes da hora.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Agente de CLI</div><div class="text-xs text-neutral-400">começo rápido</div></div>
@@ -380,7 +380,7 @@
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">1</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Classifique a tarefa</h4>
-<p class="text-neutral-300 text-sm">É pesada (modelo grande, raciocínio) ou leve (resumo, classificação)? Isso decide o destino.</p>
+<p class="text-neutral-300 text-sm">É pesada (modelo grande, raciocínio) ou leve (resumo, classificaçêo)? Isso decide o destino.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
@@ -394,7 +394,7 @@
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center"><span class="text-amber-400 font-bold">3</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Chame e colete</h4>
-<p class="text-neutral-300 text-sm">O orquestrador faz a requisição ao IP certo e junta os resultados. Para quem usa, parece um agente só — por baixo, são várias máquinas.</p>
+<p class="text-neutral-300 text-sm">O orquestrador faz a requisiçêo ao IP certo e junta os resultados. Para quem usa, parece um agente só — por baixo, sêo várias máquinas.</p>
 </div>
 </div>
 </div>
@@ -428,15 +428,15 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🛡️ Dando ferramentas com segurança</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p1">Um agente com poder de rodar comandos é útil — e perigoso. Ele pode interpretar errado um pedido e apagar a pasta certa pelo motivo errado. A regra de ouro: <strong class="text-amber-400">dê o mínimo de poder que resolve a tarefa</strong>, e exija confirmação para o que não tem volta.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t5-p1">Um agente com poder de rodar comandos é útil — e perigoso. Ele pode interpretar errado um pedido e apagar a pasta certa pelo motivo errado. A regra de ouro: <strong class="text-amber-400">dê o mínimo de poder que resolve a tarefa</strong>, e exija confirmaçêo para o que nêo tem volta.</p>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-amber-900/20 rounded-xl border border-amber-500/30 p-6">
 <h4 class="font-bold text-amber-400 mb-4">✓ Dar ferramentas com segurança</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Escopo:</strong> limite a uma pasta/projeto específico, não ao sistema todo</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Escopo:</strong> limite a uma pasta/projeto específico, nêo ao sistema todo</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Sandbox:</strong> rode num container/usuário sem privilégios, isolado</span></li>
 <li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Confirmar destrutivo:</strong> apagar, sobrescrever, enviar — só com seu "sim"</span></li>
-<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Só-leitura por padrão:</strong> comece observando antes de deixar escrever</span></li>
+<li class="flex items-start space-x-2"><span class="text-amber-400">✓</span><span><strong>Só-leitura por padrêo:</strong> comece observando antes de deixar escrever</span></li>
 </ul>
 </div>
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
@@ -451,11 +451,11 @@
 </div>
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🔓</span> Por que escopo importa tanto</h3>
-<p class="text-neutral-300 text-sm">O modelo não tem "intenção": ele prevê o próximo passo a partir do texto. Se o pedido for ambíguo, ele <strong>vai chutar</strong> — e um chute com poder de root vira estrago. Restringir o escopo não é desconfiança do modelo; é transformar erros possíveis em erros <em>pequenos e reversíveis</em>.</p>
+<p class="text-neutral-300 text-sm">O modelo nêo tem "intençêo": ele prevê o próximo passo a partir do texto. Se o pedido for ambíguo, ele <strong>vai chutar</strong> — e um chute com poder de root vira estrago. Restringir o escopo nêo é desconfiança do modelo; é transformar erros possíveis em erros <em>pequenos e reversíveis</em>.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Crie uma pasta de trabalho dedicada (ex.: <span class="font-mono">~/agente-sandbox</span>) e dê ao agente acesso só a ela. Versione com <span class="font-mono">git</span>: assim, qualquer besteira é desfeita com um <span class="font-mono">git checkout .</span>. Confirmação manual nas ações destrutivas custa 2 segundos e evita o dia ruim.</p>
+<p class="text-neutral-300 text-sm">Crie uma pasta de trabalho dedicada (ex.: <span class="font-mono">~/agente-sandbox</span>) e dê ao agente acesso só a ela. Versione com <span class="font-mono">git</span>: assim, qualquer besteira é desfeita com um <span class="font-mono">git checkout .</span>. Confirmaçêo manual nas ações destrutivas custa 2 segundos e evita o dia ruim.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Escopo</div><div class="text-xs text-neutral-400">pasta única</div></div>
@@ -477,16 +477,16 @@
 <h2 class="text-2xl font-bold">⌨️ Seu primeiro agente útil</h2>
 </div>
 <p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m4-1-t6-p1">Nada de teoria solta: vamos montar o agente mais simples que já entrega valor — um que <strong class="text-amber-400">resume uma pasta de notas</strong>. É o loop ReAct em sua forma mínima: para cada arquivo, pensa ("resumir esta nota"), age (chama o modelo local), observa (guarda o resumo) e repete.</p>
-<!-- COPY-RUN: a instrução / prompt -->
+<!-- COPY-RUN: a instruçêo / prompt -->
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-amber-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: agente que resume sua pasta de notas</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> gerar um <span class="font-mono">resumo.md</span> com 3 bullets por nota, usando só o seu modelo local. Pré-requisito: Ollama servindo (módulo 3.1/3.5) e uma pasta <span class="font-mono">~/notas</span> com arquivos <span class="font-mono">.md</span> ou <span class="font-mono">.txt</span>.</p>
-<p class="text-neutral-400 text-xs uppercase tracking-wide mb-1">A instrução (o prompt que o agente segue)</p>
+<p class="text-neutral-400 text-xs uppercase tracking-wide mb-1">A instruçêo (o prompt que o agente segue)</p>
 <div class="font-mono text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3">
-<div class="text-neutral-500"># Cole isto como a instrução do agente / system prompt</div>
+<div class="text-neutral-500"># Cole isto como a instruçêo do agente / system prompt</div>
 <div>Você é um arquivista. Para cada nota recebida:</div>
 <div>1) resuma em no máximo 3 bullets objetivos, em PT-BR;</div>
-<div>2) NÃO invente nada que não esteja no texto;</div>
+<div>2) NêO invente nada que nêo esteja no texto;</div>
 <div>3) comece com o título do arquivo em negrito.</div>
 </div>
 <p class="text-neutral-400 text-xs uppercase tracking-wide mb-1">O loop (cole no terminal — Linux/mac)</p>
@@ -500,7 +500,7 @@
 <div>  echo "" &gt;&gt; resumo.md</div>
 <div>done</div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> abra <span class="font-mono text-amber-400">resumo.md</span> — deve haver uma seção por nota, cada uma com até 3 bullets. Se algum resumo "inventar" algo, reforce a regra "sem inventar nada" na instrução. Para <em>organizar arquivos</em> em vez de resumir, troque o pedido por "sugira uma pasta de destino para esta nota pelo assunto" e revise antes de mover.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> abra <span class="font-mono text-amber-400">resumo.md</span> — deve haver uma seçêo por nota, cada uma com até 3 bullets. Se algum resumo "inventar" algo, reforce a regra "sem inventar nada" na instruçêo. Para <em>organizar arquivos</em> em vez de resumir, troque o pedido por "sugira uma pasta de destino para esta nota pelo assunto" e revise antes de mover.</p>
 </div>
 <!-- CHECAGEM LEVE -->
 <div class="inema-check mb-6 bg-dark-800 border border-dark-600 rounded-xl p-6" data-inema-check="modulo-4-1#q1">
@@ -513,7 +513,7 @@
 <div aria-live="polite" class="mt-4 text-sm" data-inema-check-feedback="" role="status"></div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Instrução</div><div class="text-xs text-neutral-400">o objetivo</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Instruçêo</div><div class="text-xs text-neutral-400">o objetivo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Loop</div><div class="text-xs text-neutral-400">por arquivo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Modelo local</div><div class="text-xs text-neutral-400">faz o trabalho</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-amber-400 font-bold text-sm mb-1">Saída</div><div class="text-xs text-neutral-400">resumo.md</div></div>
@@ -533,7 +533,7 @@
 <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">O "IT guy" é um orquestrador</strong><span class="text-neutral-400"> — recebe o pedido em português e coordena as peças do seu lab.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Agente = LLM + ferramentas + loop</strong><span class="text-neutral-400"> — o ciclo ReAct: pensa, age, observa, repete.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Ferramentas reais, sem mágica</strong><span class="text-neutral-400"> — agentes de código e frameworks abertos apontados para o endpoint local (3.5).</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Roteie por Tailscale (2.4) e dê poder com segurança</strong><span class="text-neutral-400"> — escopo, sandbox e confirmação no que é destrutivo.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-amber-400 mt-1">✓</span><div><strong class="text-neutral-100">Roteie por Tailscale (2.4) e dê poder com segurança</strong><span class="text-neutral-400"> — escopo, sandbox e confirmaçêo no que é destrutivo.</span></div></div>
 </div>
 <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
 <h3 class="font-semibold text-amber-400 mb-2">Próximo módulo:</h3>
@@ -567,7 +567,7 @@
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-1#q1',{answer:1,explain:{0:'Não. Tamanho ajuda, mas um modelo gigante que só responde texto ainda não é um agente. O que falta é o loop com ferramentas.',1:'Isso. Agente = LLM dentro de um loop ReAct (pensa → age → observa → repete) com ferramentas para agir de verdade.',2:'Não. O "IT guy" do vídeo é só marketing: por baixo são agentes de código e frameworks abertos apontados para o seu modelo local.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-4-1#q1',{answer:1,explain:{0:'Nêo. Tamanho ajuda, mas um modelo gigante que só responde texto ainda nêo é um agente. O que falta é o loop com ferramentas.',1:'Isso. Agente = LLM dentro de um loop ReAct (pensa → age → observa → repete) com ferramentas para agir de verdade.',2:'Nêo. O "IT guy" do vídeo é só marketing: por baixo sêo agentes de código e frameworks abertos apontados para o seu modelo local.'}});}
       }
     });
   </script>

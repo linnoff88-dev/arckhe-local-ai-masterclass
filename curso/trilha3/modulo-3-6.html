@@ -56,10 +56,10 @@
         { "id": "2-3", "title": "Sistema operacional, drivers e base", "topics": 6, "href": "curso/trilha2/modulo-2-3.html" },
         { "id": "2-4", "title": "Rede privada com Tailscale", "topics": 6, "href": "curso/trilha2/modulo-2-4.html" }
       ]},
-      { "n": "3", "title": "Instalação & Técnicas", "modules": [
+      { "n": "3", "title": "Instalaçêo & Técnicas", "modules": [
         { "id": "3-1", "title": "Primeiro modelo rodando: Ollama", "topics": 6, "href": "curso/trilha3/modulo-3-1.html" },
         { "id": "3-2", "title": "Interface tipo ChatGPT: Open WebUI & LM Studio", "topics": 6, "href": "curso/trilha3/modulo-3-2.html" },
-        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantização", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
+        { "id": "3-3", "title": "Escolhendo e baixando o modelo certo: GGUF e quantizaçêo", "topics": 6, "href": "curso/trilha3/modulo-3-3.html" },
         { "id": "3-4", "title": "Parâmetros e qualidade: contexto, temperatura, offload", "topics": 6, "href": "curso/trilha3/modulo-3-4.html" },
         { "id": "3-5", "title": "Servindo via API local compatível com OpenAI", "topics": 6, "href": "curso/trilha3/modulo-3-5.html" },
         { "id": "3-6", "title": "Embeddings, memória & RAG básico", "topics": 6, "href": "curso/trilha3/modulo-3-6.html" }
@@ -130,7 +130,7 @@
 <div class="flex items-center space-x-1 sm:space-x-2">
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors" href="../trilha1/index.html"><span class="sm:hidden">T1</span><span class="hidden sm:inline">Fundamentos</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors" href="../trilha2/index.html"><span class="sm:hidden">T2</span><span class="hidden sm:inline">Hardware</span></a>
-<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalação</span></a>
+<a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-purple-400 bg-purple-500/10" href="../trilha3/index.html"><span class="sm:hidden">T3</span><span class="hidden sm:inline">Instalaçêo</span></a>
 <a class="px-3 py-1.5 rounded-lg text-sm font-semibold text-neutral-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors" href="../trilha4/index.html"><span class="sm:hidden">T4</span><span class="hidden sm:inline">Avançado</span></a>
 <button aria-label="Alternar tema" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" id="theme-toggle">
 <svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -140,10 +140,10 @@
 </div>
 </div>
 </nav>
-<nav aria-label="Trilha de navegação" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+<nav aria-label="Trilha de navegaçêo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 <div class="flex items-center space-x-2 text-sm text-neutral-400">
 <a class="hover:text-purple-400" href="../../index.html">Início</a><span>/</span>
-<a class="hover:text-purple-400" href="index.html">Instalação &amp; Técnicas</a><span>/</span>
+<a class="hover:text-purple-400" href="index.html">Instalaçêo &amp; Técnicas</a><span>/</span>
 <span class="text-purple-400">Módulo 3.6</span>
 </div>
 </nav>
@@ -151,7 +151,7 @@
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 text-xs font-semibold rounded-full mb-4">MÓDULO 3.6</span>
 <h1 class="text-3xl sm:text-4xl font-bold mb-4">🧠 Embeddings, memória &amp; RAG básico</h1>
-<p class="text-lg text-neutral-300 max-w-3xl">Seu modelo local não conhece os <strong class="text-neutral-100">seus</strong> documentos — mas pode passar a conhecer. Neste módulo você aprende o trio que dá memória à IA local: <strong class="text-neutral-100">embeddings</strong> (transformar texto em significado), <strong class="text-neutral-100">banco vetorial</strong> (guardar e buscar) e <strong class="text-neutral-100">RAG</strong> (responder com base nos seus arquivos). No fim, um RAG completo rodando em poucas linhas, 100% local.</p>
+<p class="text-lg text-neutral-300 max-w-3xl">Seu modelo local nêo conhece os <strong class="text-neutral-100">seus</strong> documentos — mas pode passar a conhecer. Neste módulo você aprende o trio que dá memória à IA local: <strong class="text-neutral-100">embeddings</strong> (transformar texto em significado), <strong class="text-neutral-100">banco vetorial</strong> (guardar e buscar) e <strong class="text-neutral-100">RAG</strong> (responder com base nos seus arquivos). No fim, um RAG completo rodando em poucas linhas, 100% local.</p>
 <div class="grid grid-cols-4 gap-4 mt-8 max-w-2xl">
 <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">6</div><div class="text-xs text-neutral-400">Tópicos</div></div>
 <div class="bg-dark-800/50 rounded-lg p-3 border border-dark-600"><div class="text-xl font-bold text-purple-400">~40</div><div class="text-xs text-neutral-400">Minutos</div></div>
@@ -164,9 +164,9 @@
 <!-- TOC -->
 <aside class="hidden lg:block">
 <nav aria-label="Índice da página" class="sticky top-24 self-start" data-inema-toc="">
-<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seção <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
+<p class="text-xs text-neutral-400 mb-2 uppercase tracking-wide">Seçêo <span class="inema-toc-pos" data-inema-section-counter="">1</span> de 6</p>
 <ol class="space-y-1 text-sm">
-<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. O que são embeddings</a></li>
+<li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-1">1. O que sêo embeddings</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-2">2. Por que RAG</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-3">3. Anatomia de um RAG</a></li>
 <li><a class="inema-toc-link text-neutral-400 hover:text-purple-400" href="#topico-4">4. Rodando embeddings local</a></li>
@@ -186,12 +186,12 @@
 <section class="mb-16" data-inema-module="3-6" data-inema-topic="modulo-3-6#topico-1" data-inema-track="3" id="topico-1" style="scroll-margin-top:5rem">
 <div class="flex items-center space-x-4 mb-6">
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">1</span>
-<h2 class="text-2xl font-bold">🔢 O que são embeddings</h2>
+<h2 class="text-2xl font-bold">🔢 O que sêo embeddings</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t1-p1">Computador não entende palavra — entende número. <strong class="text-purple-400">Embedding</strong> é o truque que vira texto em número de um jeito que preserva o <em>significado</em>: cada frase vira uma lista longa de números (um vetor), e textos com sentido parecido caem <strong class="text-purple-400">perto</strong> uns dos outros num espaço imaginário. "Gato" e "felino" ficam vizinhos; "gato" e "caminhão" ficam longe.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t1-p1">Computador nêo entende palavra — entende número. <strong class="text-purple-400">Embedding</strong> é o truque que vira texto em número de um jeito que preserva o <em>significado</em>: cada frase vira uma lista longa de números (um vetor), e textos com sentido parecido caem <strong class="text-purple-400">perto</strong> uns dos outros num espaço imaginário. "Gato" e "felino" ficam vizinhos; "gato" e "caminhêo" ficam longe.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Embedding"</strong> (ou <strong>"vetor"</strong>) é uma lista de números — tipo <span class="font-mono text-purple-400">[0.12, -0.03, 0.88, ...]</span>, geralmente com 384 a 1024 posições — que representa o <em>significado</em> de um texto. Um <strong>"modelo de embeddings"</strong> é uma IA pequena, treinada só pra produzir esses vetores (não gera texto, só "mede sentido"). <strong>"Similaridade"</strong> = quão perto dois vetores estão; perto = sentido parecido.</p>
+<p class="text-neutral-300 text-sm"><strong>"Embedding"</strong> (ou <strong>"vetor"</strong>) é uma lista de números — tipo <span class="font-mono text-purple-400">[0.12, -0.03, 0.88, ...]</span>, geralmente com 384 a 1024 posições — que representa o <em>significado</em> de um texto. Um <strong>"modelo de embeddings"</strong> é uma IA pequena, treinada só pra produzir esses vetores (nêo gera texto, só "mede sentido"). <strong>"Similaridade"</strong> = quêo perto dois vetores estêo; perto = sentido parecido.</p>
 </div>
 <div class="bg-gradient-to-br from-purple-900/30 to-dark-800 rounded-xl border border-purple-500/30 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-4 flex items-center"><span class="mr-2">🔑</span> A ideia central</h3>
@@ -199,7 +199,7 @@
 <ul class="space-y-2 text-neutral-300">
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Cada pedaço de texto vira um <strong>ponto</strong> num espaço de muitas dimensões.</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Significados parecidos ficam <strong>próximos</strong>; significados distantes ficam <strong>longe</strong>.</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Buscar "o que combina com a pergunta" vira achar os <strong>pontos mais próximos</strong> — não importa se as palavras exatas batem.</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400 mt-1">•</span><span>Buscar "o que combina com a pergunta" vira achar os <strong>pontos mais próximos</strong> — nêo importa se as palavras exatas batem.</span></li>
 </ul>
 </div>
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
@@ -221,7 +221,7 @@
 <text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" x="236" y="195">bichano</text>
 <!-- pergunta (ciano) -->
 <g filter="url(#m36-glow2)"><circle cx="248" cy="138" fill="#38bdf8" r="8"></circle></g>
-<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="248" y="235">pergunta: "meu animal de estimação"</text>
+<text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle" x="248" y="235">pergunta: "meu animal de estimaçêo"</text>
 <!-- cluster transporte (longe) -->
 <g filter="url(#m36-glow2)">
 <circle cx="640" cy="78" fill="#c084fc" r="6"></circle><circle cx="708" cy="96" fill="#c084fc" r="6"></circle><circle cx="660" cy="128" fill="#c084fc" r="6"></circle>
@@ -239,7 +239,7 @@
 <text fill="#d8b4fe" font-family="Inter,sans-serif" font-size="12" x="830" y="245">fruta</text>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">Cada palavra vira um <strong class="text-neutral-200">ponto</strong>. A pergunta (em ciano) cai perto do aglomerado de "animais" e longe de "transporte" e "comida" — então a busca devolve <strong class="text-neutral-200">gato, felino, bichano</strong>, mesmo que a pergunta não use nenhuma dessas palavras. Isso é busca por <em>significado</em>, não por palavra exata.</p>
+<p class="text-sm text-neutral-400 mb-6">Cada palavra vira um <strong class="text-neutral-200">ponto</strong>. A pergunta (em ciano) cai perto do aglomerado de "animais" e longe de "transporte" e "comida" — entêo a busca devolve <strong class="text-neutral-200">gato, felino, bichano</strong>, mesmo que a pergunta nêo use nenhuma dessas palavras. Isso é busca por <em>significado</em>, nêo por palavra exata.</p>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Texto</div><div class="text-xs text-neutral-400">vira vetor</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Sentido</div><div class="text-xs text-neutral-400">vira distância</div></div>
@@ -259,34 +259,34 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">2</span>
 <h2 class="text-2xl font-bold">📚 Por que RAG</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t2-p1">O modelo local sabe muita coisa do mundo — mas não sabe nada do <strong class="text-purple-400">seu</strong> mundo: seus PDFs, suas notas, a documentação interna da empresa. Treinar o modelo de novo com isso é caro e lento. <strong class="text-purple-400">RAG</strong> resolve por fora: na hora da pergunta, ele <em>busca</em> os trechos certos dos seus documentos e <em>cola</em> no prompt, como contexto. O modelo responde lendo aquilo — sem retreinar nada.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t2-p1">O modelo local sabe muita coisa do mundo — mas nêo sabe nada do <strong class="text-purple-400">seu</strong> mundo: seus PDFs, suas notas, a documentaçêo interna da empresa. Treinar o modelo de novo com isso é caro e lento. <strong class="text-purple-400">RAG</strong> resolve por fora: na hora da pergunta, ele <em>busca</em> os trechos certos dos seus documentos e <em>cola</em> no prompt, como contexto. O modelo responde lendo aquilo — sem retreinar nada.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>RAG</strong> = <strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration (geração aumentada por recuperação). Em português direto: <em>"antes de responder, vá buscar os trechos relevantes e leia-os"</em>. O modelo continua o mesmo — você só enriquece o prompt com o material certo, na hora certa.</p>
+<p class="text-neutral-300 text-sm"><strong>RAG</strong> = <strong>R</strong>etrieval-<strong>A</strong>ugmented <strong>G</strong>eneration (geraçêo aumentada por recuperaçêo). Em português direto: <em>"antes de responder, vá buscar os trechos relevantes e leia-os"</em>. O modelo continua o mesmo — você só enriquece o prompt com o material certo, na hora certa.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-red-900/20 rounded-xl border border-red-500/30 p-6">
 <h4 class="font-bold text-red-400 mb-4">✗ Só o modelo (sem RAG)</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Não conhece seus documentos privados</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Alucina" quando não sabe — inventa com confiança</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nêo conhece seus documentos privados</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>"Alucina" quando nêo sabe — inventa com confiança</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Conhecimento congelado na data do treino</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Não tem como citar a fonte</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Nêo tem como citar a fonte</span></li>
 </ul>
 </div>
 <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
 <h4 class="font-bold text-purple-400 mb-4">✓ Modelo + RAG</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Responde sobre os SEUS arquivos</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Menos alucinação — fala com base no trecho recuperado</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Menos alucinaçêo — fala com base no trecho recuperado</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Atualiza na hora: trocou o documento, mudou a resposta</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Dá pra mostrar de onde veio a resposta</span></li>
 </ul>
 </div>
 </div>
 <div class="bg-blue-900/20 rounded-xl border border-blue-500/30 p-6 mb-6">
-<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆚</span> RAG não é fine-tuning</h3>
-<p class="text-neutral-300 text-sm"><strong>Fine-tuning</strong> muda os <em>pesos</em> do modelo (ensina um novo jeito de responder) — caro, demorado e difícil de atualizar. <strong>RAG</strong> não toca no modelo: ele só decide <em>o que mostrar</em> no prompt. Para "responder sobre os meus dados", RAG é quase sempre o caminho mais simples, barato e atualizável.</p>
+<h3 class="text-lg font-semibold text-blue-400 mb-3 flex items-center"><span class="mr-2">🆚</span> RAG nêo é fine-tuning</h3>
+<p class="text-neutral-300 text-sm"><strong>Fine-tuning</strong> muda os <em>pesos</em> do modelo (ensina um novo jeito de responder) — caro, demorado e difícil de atualizar. <strong>RAG</strong> nêo toca no modelo: ele só decide <em>o que mostrar</em> no prompt. Para "responder sobre os meus dados", RAG é quase sempre o caminho mais simples, barato e atualizável.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
@@ -311,13 +311,13 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">3</span>
 <h2 class="text-2xl font-bold">🔧 Anatomia de um RAG</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t3-p1">Todo RAG tem duas metades: a <strong class="text-purple-400">ingestão</strong> (feita uma vez, quando você adiciona documentos) e a <strong class="text-purple-400">consulta</strong> (feita a cada pergunta). Entenda o desenho e o resto vira detalhe de código.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t3-p1">Todo RAG tem duas metades: a <strong class="text-purple-400">ingestêo</strong> (feita uma vez, quando você adiciona documentos) e a <strong class="text-purple-400">consulta</strong> (feita a cada pergunta). Entenda o desenho e o resto vira detalhe de código.</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Chunk"</strong> (pedaço) é um trecho do documento — um parágrafo, uns 200–500 tokens. Você quebra o texto em chunks porque (1) o modelo de embeddings tem limite de tamanho e (2) você quer recuperar só o trecho <em>relevante</em>, não o arquivo inteiro. Chunk bom = autocontido (faz sentido sozinho) e nem grande nem minúsculo demais.</p>
+<p class="text-neutral-300 text-sm"><strong>"Chunk"</strong> (pedaço) é um trecho do documento — um parágrafo, uns 200–500 tokens. Você quebra o texto em chunks porque (1) o modelo de embeddings tem limite de tamanho e (2) você quer recuperar só o trecho <em>relevante</em>, nêo o arquivo inteiro. Chunk bom = autocontido (faz sentido sozinho) e nem grande nem minúsculo demais.</p>
 </div>
 <div class="rounded-2xl border border-purple-500/30 bg-dark-900/40 p-3 sm:p-4 mb-3 overflow-hidden">
-<svg aria-label="Pipeline de RAG: o documento é quebrado em pedaços, embedado e guardado no banco vetorial; a pergunta é embedada, busca os vizinhos no banco, e os trechos vão ao LLM local que monta a resposta" class="w-full h-auto" role="img" viewbox="0 0 1000 320">
+<svg aria-label="Pipeline de RAG: o documento é quebrado em pedaços, embedado e guardado no banco vetorial; a pergunta é embedada, busca os vizinhos no banco, e os trechos vêo ao LLM local que monta a resposta" class="w-full h-auto" role="img" viewbox="0 0 1000 320">
 <defs>
 <lineargradient id="m36-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#c084fc"></stop><stop offset="1" stop-color="#a855f7"></stop></lineargradient>
 <filter height="180%" id="m36-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
@@ -327,9 +327,9 @@
 </defs>
 <rect fill="url(#m36-grid)" height="320" width="1000" x="0" y="0"></rect>
 <!-- legendas de lane -->
-<text fill="#c084fc" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="24" y="26">INGESTÃO (uma vez)</text>
+<text fill="#c084fc" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="24" y="26">INGESTêO (uma vez)</text>
 <text fill="#38bdf8" font-family="Inter,sans-serif" font-size="12" font-weight="700" x="24" y="300">CONSULTA (a cada pergunta)</text>
-<!-- arrows ingestão -->
+<!-- arrows ingestêo -->
 <g fill="none" opacity="0.7" stroke="#c084fc" stroke-width="2">
 <path d="M174,68 L210,68" marker-end="url(#m36-ah)"></path>
 <path d="M354,68 L392,68" marker-end="url(#m36-ah)"></path>
@@ -348,7 +348,7 @@
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="192" y="246">embeda</text>
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="452" y="214">busca vizinhos</text>
 <text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="10" text-anchor="middle" x="634" y="158">trechos</text>
-<!-- caixas ingestão -->
+<!-- caixas ingestêo -->
 <g font-family="Inter,sans-serif">
 <g><rect fill="#1a1230" height="56" rx="12" stroke="#c084fc" stroke-width="2" width="150" x="24" y="40"></rect><text fill="#e9d5ff" font-size="14" font-weight="700" text-anchor="middle" x="99" y="66">📄 Documento</text><text fill="#c4b5d6" font-size="11" text-anchor="middle" x="99" y="84">.txt / .pdf</text></g>
 <g><rect fill="#1a1230" height="56" rx="12" stroke="#c084fc" stroke-width="2" width="144" x="210" y="40"></rect><text fill="#e9d5ff" font-size="14" font-weight="700" text-anchor="middle" x="282" y="66">✂️ Pedaços</text><text fill="#c4b5d6" font-size="11" text-anchor="middle" x="282" y="84">(chunks)</text></g>
@@ -369,14 +369,14 @@
 </g>
 </svg>
 </div>
-<p class="text-sm text-neutral-400 mb-6">Leia em duas linhas: em cima (roxo), a <strong class="text-neutral-200">ingestão</strong> — documento → pedaços → vetores → banco. Embaixo (ciano), a <strong class="text-neutral-200">consulta</strong> — pergunta → vetor → busca os vizinhos no banco → o <strong class="text-neutral-200">LLM local</strong> recebe os trechos e escreve a resposta. O mesmo modelo de embeddings é usado dos dois lados.</p>
+<p class="text-sm text-neutral-400 mb-6">Leia em duas linhas: em cima (roxo), a <strong class="text-neutral-200">ingestêo</strong> — documento → pedaços → vetores → banco. Embaixo (ciano), a <strong class="text-neutral-200">consulta</strong> — pergunta → vetor → busca os vizinhos no banco → o <strong class="text-neutral-200">LLM local</strong> recebe os trechos e escreve a resposta. O mesmo modelo de embeddings é usado dos dois lados.</p>
 <h3 class="text-lg font-semibold text-purple-400 mb-4">Os 6 passos, em ordem</h3>
 <div class="space-y-6 mb-6">
 <div class="flex items-start space-x-4">
 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center"><span class="text-purple-400 font-bold">1</span></div>
 <div class="flex-1 bg-dark-800 rounded-xl p-5 border border-dark-600">
 <h4 class="font-semibold text-neutral-100 mb-1">Chunk — quebrar o documento</h4>
-<p class="text-neutral-300 text-sm">Divida o texto em pedaços autocontidos (ex.: 1 parágrafo). Só na ingestão.</p>
+<p class="text-neutral-300 text-sm">Divida o texto em pedaços autocontidos (ex.: 1 parágrafo). Só na ingestêo.</p>
 </div>
 </div>
 <div class="flex items-start space-x-4">
@@ -416,7 +416,7 @@
 </div>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Ingestão</div><div class="text-xs text-neutral-400">chunk·embed·store</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Ingestêo</div><div class="text-xs text-neutral-400">chunk·embed·store</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Consulta</div><div class="text-xs text-neutral-400">query·retrieve·gen</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Mesmo</div><div class="text-xs text-neutral-400">modelo de embed</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">LLM</div><div class="text-xs text-neutral-400">só no fim</div></div>
@@ -434,7 +434,7 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">4</span>
 <h2 class="text-2xl font-bold">⚡ Rodando embeddings local</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t4-p1">Modelos de embeddings são <strong class="text-purple-400">pequenos</strong> — alguns têm poucas centenas de MB e rodam liso até em hardware budget, sem GPU. O <span class="font-mono text-purple-400">nomic-embed-text</span> é um ótimo padrão para começar: leve, bom em português e já empacotado no Ollama. Vamos baixar e gerar o primeiro vetor.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t4-p1">Modelos de embeddings sêo <strong class="text-purple-400">pequenos</strong> — alguns têm poucas centenas de MB e rodam liso até em hardware budget, sem GPU. O <span class="font-mono text-purple-400">nomic-embed-text</span> é um ótimo padrêo para começar: leve, bom em português e já empacotado no Ollama. Vamos baixar e gerar o primeiro vetor.</p>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: seu primeiro embedding</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> baixar um modelo de embeddings e transformar uma frase num vetor. Cole no terminal e depois no Python.</p>
@@ -453,7 +453,7 @@
 <div>                     input="IA local roda na sua máquina")</div>
 <div>print(len(v.data[0].embedding))  <span class="text-neutral-500"># ex.: 768 → o tamanho do vetor</span></div>
 </div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> o <span class="font-mono text-purple-400">curl</span> devolve um JSON com uma lista grande de números — esse é o vetor. No Python, <span class="font-mono text-purple-400">len(...)</span> imprime a <em>dimensão</em> (ex.: 768). Se imprimiu um número, seus embeddings estão rodando 100% local. Guarde esse número: todos os vetores do mesmo modelo têm o mesmo tamanho.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> o <span class="font-mono text-purple-400">curl</span> devolve um JSON com uma lista grande de números — esse é o vetor. No Python, <span class="font-mono text-purple-400">len(...)</span> imprime a <em>dimensêo</em> (ex.: 768). Se imprimiu um número, seus embeddings estêo rodando 100% local. Guarde esse número: todos os vetores do mesmo modelo têm o mesmo tamanho.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
@@ -461,7 +461,7 @@
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Pequeno</div><div class="text-xs text-neutral-400">roda até sem GPU</div></div>
-<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">nomic</div><div class="text-xs text-neutral-400">bom padrão</div></div>
+<div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">nomic</div><div class="text-xs text-neutral-400">bom padrêo</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">768</div><div class="text-xs text-neutral-400">dimensões fixas</div></div>
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Mesmo</div><div class="text-xs text-neutral-400">modelo nos 2 lados</div></div>
 </div>
@@ -478,10 +478,10 @@
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">5</span>
 <h2 class="text-2xl font-bold">🗄️ Banco vetorial simples</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t5-p1">Você poderia guardar os vetores numa lista e comparar um por um — funciona com 10 chunks, vira tartaruga com 100 mil. Um <strong class="text-purple-400">banco vetorial</strong> existe pra isso: armazena os vetores e responde rápido à pergunta "quais são os N mais parecidos com este aqui?".</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t5-p1">Você poderia guardar os vetores numa lista e comparar um por um — funciona com 10 chunks, vira tartaruga com 100 mil. Um <strong class="text-purple-400">banco vetorial</strong> existe pra isso: armazena os vetores e responde rápido à pergunta "quais sêo os N mais parecidos com este aqui?".</p>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-5 mb-6">
 <h3 class="text-base font-semibold text-primary mb-2 flex items-center"><span class="mr-2">🆕</span> Novo aqui?</h3>
-<p class="text-neutral-300 text-sm"><strong>"Vector store" / "banco vetorial"</strong> é um banco de dados especializado em busca por similaridade entre vetores. Opções locais comuns: <strong>Chroma</strong> (mais fácil pra começar, guarda em disco com 2 linhas), <strong>FAISS</strong> (biblioteca da Meta, rapidíssima, sem servidor) e <strong>sqlite-vec</strong> (uma extensão que dá busca vetorial ao SQLite que você já conhece). Todos rodam local, sem nuvem.</p>
+<p class="text-neutral-300 text-sm"><strong>"Vector store" / "banco vetorial"</strong> é um banco de dados especializado em busca por similaridade entre vetores. Opções locais comuns: <strong>Chroma</strong> (mais fácil pra começar, guarda em disco com 2 linhas), <strong>FAISS</strong> (biblioteca da Meta, rapidíssima, sem servidor) e <strong>sqlite-vec</strong> (uma extensêo que dá busca vetorial ao SQLite que você já conhece). Todos rodam local, sem nuvem.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
@@ -492,7 +492,7 @@
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
 <h4 class="font-bold text-purple-400 mb-2">🟣 FAISS</h4>
 <p class="text-neutral-300 text-sm mb-3">Biblioteca de busca da Meta. Muito rápida, ótima em escala.</p>
-<p class="text-xs text-neutral-400"><strong>Use quando:</strong> são muitos vetores e velocidade importa.</p>
+<p class="text-xs text-neutral-400"><strong>Use quando:</strong> sêo muitos vetores e velocidade importa.</p>
 </div>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-5">
 <h4 class="font-bold text-purple-400 mb-2">🟣 sqlite-vec</h4>
@@ -502,7 +502,7 @@
 </div>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Montagem mínima com Chroma</h3>
-<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> guardar um vetor e buscar o mais parecido — o coração do RAG, isolado.</p>
+<p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> guardar um vetor e buscar o mais parecido — o coraçêo do RAG, isolado.</p>
 <div class="font-mono text-xs sm:text-sm bg-dark-900 rounded-lg p-4 border border-dark-600 text-neutral-200 overflow-x-auto mb-3"><pre class="whitespace-pre leading-relaxed"><span class="text-neutral-500"># pip install chromadb</span>
 import chromadb
 
@@ -517,11 +517,11 @@ col.add(ids=["1"],
 <span class="text-neutral-500"># buscar: os 3 mais parecidos com o vetor da pergunta</span>
 hits = col.query(query_embeddings=[[0.10, -0.01, 0.90]], n_results=3)
 print(hits["documents"])   <span class="text-neutral-500"># → o(s) trecho(s) recuperado(s)</span></pre></div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode duas vezes. O <span class="font-mono text-purple-400">PersistentClient</span> grava em <span class="font-mono text-purple-400">./meu_rag</span>, então na segunda execução o documento já está lá sem precisar adicionar de novo. O <span class="font-mono text-purple-400">query</span> deve devolver o texto que você guardou.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> rode duas vezes. O <span class="font-mono text-purple-400">PersistentClient</span> grava em <span class="font-mono text-purple-400">./meu_rag</span>, entêo na segunda execuçêo o documento já está lá sem precisar adicionar de novo. O <span class="font-mono text-purple-400">query</span> deve devolver o texto que você guardou.</p>
 </div>
 <div class="bg-primary/10 rounded-xl border border-primary/40 p-6 mb-6">
 <h3 class="text-lg font-semibold text-primary mb-3 flex items-center"><span class="mr-2">💡</span> Dica prática</h3>
-<p class="text-neutral-300 text-sm">Guarde sempre o <strong>texto original junto do vetor</strong> (o campo <span class="font-mono text-purple-400">documents</span>). O vetor serve só para <em>encontrar</em>; o que você cola no prompt é o texto. Banco vetorial sem o texto guardado é uma busca que acha o ponto certo mas não sabe te mostrar o conteúdo.</p>
+<p class="text-neutral-300 text-sm">Guarde sempre o <strong>texto original junto do vetor</strong> (o campo <span class="font-mono text-purple-400">documents</span>). O vetor serve só para <em>encontrar</em>; o que você cola no prompt é o texto. Banco vetorial sem o texto guardado é uma busca que acha o ponto certo mas nêo sabe te mostrar o conteúdo.</p>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
 <div class="bg-dark-800 rounded-lg p-3 border border-dark-600"><div class="text-purple-400 font-bold text-sm mb-1">Guarda</div><div class="text-xs text-neutral-400">vetor + texto</div></div>
@@ -542,7 +542,7 @@ print(hits["documents"])   <span class="text-neutral-500"># → o(s) trecho(s) r
 <span class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xl">6</span>
 <h2 class="text-2xl font-bold">🚀 Um RAG mínimo end-to-end</h2>
 </div>
-<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t6-p1">Hora de juntar tudo. Este script faz o RAG completo: lê um <span class="font-mono text-purple-400">.txt</span>, quebra em chunks, embeda, guarda, e aí responde uma pergunta usando <strong class="text-purple-400">só o que está no documento</strong> — tudo no seu Ollama. Os trechos marcados com <span class="font-mono text-purple-400">&lt;...&gt;</span> são o que você troca.</p>
+<p class="text-neutral-300 mb-6 leading-relaxed" data-inema-block="m3-6-t6-p1">Hora de juntar tudo. Este script faz o RAG completo: lê um <span class="font-mono text-purple-400">.txt</span>, quebra em chunks, embeda, guarda, e aí responde uma pergunta usando <strong class="text-purple-400">só o que está no documento</strong> — tudo no seu Ollama. Os trechos marcados com <span class="font-mono text-purple-400">&lt;...&gt;</span> sêo o que você troca.</p>
 <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
 <h3 class="text-lg font-semibold text-purple-400 mb-2 flex items-center"><span class="mr-2">⌨️</span> Exemplo prático: RAG completo em ~25 linhas</h3>
 <p class="text-neutral-400 text-sm mb-3"><strong>Objetivo:</strong> responder uma pergunta cuja resposta só existe no seu arquivo. Salve como <span class="font-mono text-purple-400">rag.py</span> e rode.</p>
@@ -557,7 +557,7 @@ LLM = "qwen2.5:7b"                       <span class="text-neutral-500"># &lt;tr
 def embed(txt):
     return client.embeddings.create(model=EMB, input=txt).data[0].embedding
 
-<span class="text-neutral-500"># 1) INGESTÃO: lê o .txt, quebra em chunks, embeda e guarda</span>
+<span class="text-neutral-500"># 1) INGESTêO: lê o .txt, quebra em chunks, embeda e guarda</span>
 texto  = open("notas.txt").read()        <span class="text-neutral-500"># &lt;seu arquivo .txt&gt;</span>
 chunks = [c for c in texto.split("\n\n") if c.strip()]   <span class="text-neutral-500"># 1 parágrafo = 1 chunk</span>
 col = chromadb.Client().create_collection("notas")
@@ -575,14 +575,14 @@ resp = client.chat.completions.create(model=LLM, messages=[
   {"role": "user",   "content": f"Contexto:\n{contexto}\n\nPergunta: {pergunta}"}
 ])
 print(resp.choices[0].message.content)</pre></div>
-<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> crie um <span class="font-mono text-purple-400">notas.txt</span> com um fato que o modelo <em>não teria como saber</em> — ex.: a linha <span class="font-mono text-purple-400">A senha do wifi do escritório é roxo-1234</span>. Rode e faça a pergunta acima: se a resposta trouxer <span class="font-mono text-purple-400">roxo-1234</span>, o RAG funcionou — o modelo só acertou porque o trecho veio do <strong>seu</strong> documento. Agora pergunte algo que <em>não</em> está no arquivo: ele deve responder <span class="font-mono text-purple-400">não sei</span> em vez de inventar.</p>
+<p class="text-neutral-400 text-sm"><strong>Como verificar:</strong> crie um <span class="font-mono text-purple-400">notas.txt</span> com um fato que o modelo <em>nêo teria como saber</em> — ex.: a linha <span class="font-mono text-purple-400">A senha do wifi do escritório é roxo-1234</span>. Rode e faça a pergunta acima: se a resposta trouxer <span class="font-mono text-purple-400">roxo-1234</span>, o RAG funcionou — o modelo só acertou porque o trecho veio do <strong>seu</strong> documento. Agora pergunte algo que <em>nêo</em> está no arquivo: ele deve responder <span class="font-mono text-purple-400">nêo sei</span> em vez de inventar.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <div class="bg-purple-900/20 rounded-xl border border-purple-500/30 p-6">
 <h4 class="font-bold text-purple-400 mb-4">✓ RAG que funciona</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Chunks autocontidos e do tamanho certo</span></li>
-<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mesmo modelo de embeddings na ingestão e na consulta</span></li>
+<li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mesmo modelo de embeddings na ingestêo e na consulta</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>System prompt manda usar SÓ o contexto</span></li>
 <li class="flex items-start space-x-2"><span class="text-purple-400">✓</span><span>Mostra a fonte de cada resposta</span></li>
 </ul>
@@ -591,8 +591,8 @@ print(resp.choices[0].message.content)</pre></div>
 <h4 class="font-bold text-red-400 mb-4">✗ RAG que falha</h4>
 <ul class="space-y-3 text-neutral-300 text-sm">
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Chunk gigante (documento inteiro) ou picado demais</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trocou o modelo de embeddings e não re-indexou</span></li>
-<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem regra de "não inventar" — o modelo alucina</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Trocou o modelo de embeddings e nêo re-indexou</span></li>
+<li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Sem regra de "nêo inventar" — o modelo alucina</span></li>
 <li class="flex items-start space-x-2"><span class="text-red-400">✗</span><span>Joga texto demais no prompt e estoura o contexto</span></li>
 </ul>
 </div>
@@ -627,7 +627,7 @@ print(resp.choices[0].message.content)</pre></div>
 <div class="space-y-4 mb-8">
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Embeddings = significado em números</strong><span class="text-neutral-400"> — textos parecidos viram pontos próximos; buscar vira achar vizinhos.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">RAG dá memória sem retreinar</strong><span class="text-neutral-400"> — busca os trechos certos e cola no prompt; responde sobre os SEUS dados.</span></div></div>
-<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Anatomia: ingestão + consulta</strong><span class="text-neutral-400"> — chunk·embed·store, depois query·retrieve·generate, mesmo modelo de embed.</span></div></div>
+<div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Anatomia: ingestêo + consulta</strong><span class="text-neutral-400"> — chunk·embed·store, depois query·retrieve·generate, mesmo modelo de embed.</span></div></div>
 <div class="flex items-start space-x-3"><span class="text-purple-400 mt-1">✓</span><div><strong class="text-neutral-100">Tudo local e em poucas linhas</strong><span class="text-neutral-400"> — nomic-embed-text + Chroma + Ollama = um RAG completo, sem nuvem.</span></div></div>
 </div>
 <div class="bg-dark-800/50 rounded-lg p-4 mb-8">
@@ -662,7 +662,7 @@ print(resp.choices[0].message.content)</pre></div>
     document.addEventListener('DOMContentLoaded',function(){
       if(window.INEMA&&typeof INEMA.init==='function'){
         INEMA.init();
-        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Não. RAG não treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Não diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
+        if(INEMA.registerCheck){INEMA.registerCheck('modulo-3-6#q1',{answer:1,explain:{0:'Nêo. RAG nêo treina nem altera os pesos do modelo — ele recupera texto e injeta no prompt.',1:'Isso. Busca por similaridade + trechos no prompt = respostas sobre os seus dados, sem retreinar.',2:'Nêo diretamente. O RAG seleciona os trechos mais relevantes para caber no contexto, em vez de só aumentá-lo.'}});}
       }
     });
   </script>
